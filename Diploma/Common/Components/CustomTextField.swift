@@ -9,7 +9,6 @@ struct CustomTextField: View {
 
     private let divider: some View = Rectangle()
         .foregroundColor(Color.customDarkGray)
-        .frame(width: 1, height: .infinity)
     
     init(
         icon: Image? = nil,
@@ -27,7 +26,9 @@ struct CustomTextField: View {
                 .frame(width: 24, height: 24)
                 .foregroundColor(.customOrange)
         
-            if isDividerVisible { divider }
+            if isDividerVisible { divider
+                .frame(width: 1, height: .infinity)
+            }
             
             TextField(placeholder, text: $textFieldValue)
                 .accentColor(.customOrange)

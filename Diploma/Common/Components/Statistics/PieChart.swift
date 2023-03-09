@@ -54,7 +54,7 @@ struct PieChart: View {
                     Circle()
                         .trim(from: index == 0 ? 0.0 : charDataObj.chartData[index-1].value/100,
                               to: charDataObj.chartData[index].value/100)
-                        .stroke(charDataObj.chartData[index].color,lineWidth: 50)
+                        .stroke(charDataObj.chartData[index].color,lineWidth: 24)
                         .onTapGesture {
                             indexOfTappedSlice = indexOfTappedSlice == index ? -1 : index
                         }
@@ -63,16 +63,16 @@ struct PieChart: View {
                 }
                 if indexOfTappedSlice != -1 {
                     Text(String(format: "%.2f", Double(charDataObj.chartData[indexOfTappedSlice].percent))+"%")
-                        .font(.title)
+                        .font(.customSubtitle)
                 }
             }
-            .frame(width: 200, height: 250)
+            .frame(width: 96, height: 96)
             .padding()
             .onAppear() {
                 self.charDataObj.calc()
             }
             Spacer()
-            VStack {
+            VStack(alignment: .trailing) {
                 ForEach(0..<charDataObj.chartData.count) { index in
                     HStack {
                         Text(String(format: "%.2f", Double(charDataObj.chartData[index].percent))+"%")

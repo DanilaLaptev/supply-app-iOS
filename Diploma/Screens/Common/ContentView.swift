@@ -2,21 +2,28 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var selectedTab: CustomTab = NavigationTabs.customerTabs[0]
+    @StateObject private var viewTools = ViewTools()
     
     var body: some View {
-        GeometryReader { geometry in
-            VStack {
-                ZStack {
+            VStack(spacing: 0) {
+                NavigationView {
                     MainScreen()
+                        .edgesIgnoringSafeArea(.all)
+                        .navigationBarBackButtonHidden(true)
+                        .navigationBarHidden(true)
                 }
-                .frame(maxHeight: .infinity)
-                BottomNavigation(navTabs: NavigationTabs.customerTabs,
-                                 safeAreaInsets: geometry.safeAreaInsets,
-                                 selectedTab: $selectedTab)
+                .edgesIgnoringSafeArea(.all)
+                .navigationViewStyle(.stack)
+                .statusBar(hidden: true)
+                
+                if viewTools.bottomBarIsVisible {
+                    BottomNavigation(navTabs: NavigationTabs.customerTabs,
+                                     selectedTab: $selectedTab)
+                }
             }
-            .edgesIgnoringSafeArea(.bottom)
+            .background(Color.customLightGray.edgesIgnoringSafeArea(.all))
+            .environmentObject(viewTools)
         }
-    }
 }
 
 struct ContentView_Previews: PreviewProvider {
@@ -24,4 +31,3 @@ struct ContentView_Previews: PreviewProvider {
         ContentView()
     }
 }
-

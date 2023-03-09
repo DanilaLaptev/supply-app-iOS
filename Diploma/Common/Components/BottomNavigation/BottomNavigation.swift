@@ -1,15 +1,8 @@
 import SwiftUI
 
 struct BottomNavigation: View {
-    let navTabs: [CustomTab]
-    let safeAreaInsets: EdgeInsets
+    var navTabs: [CustomTab]
     @Binding var selectedTab: CustomTab
-    
-    init(navTabs: [CustomTab], safeAreaInsets: EdgeInsets, selectedTab: Binding<CustomTab>) {
-        self.navTabs = navTabs
-        self.safeAreaInsets = safeAreaInsets
-        self._selectedTab = selectedTab
-    }
     
     var body: some View {
         VStack {
@@ -41,9 +34,8 @@ struct BottomNavigation: View {
                 }
             }
         }
-        .scaledToFit()
-        .padding([.top, .horizontal], 8)
-        .padding(.bottom, safeAreaInsets.bottom)
+        .padding(8)
+        .padding(.bottom, safeAreaEdgeInsets.bottom)
         .background(Color.customWhite)
         .cornerRadius(8, corners: [.topLeft, .topRight])
         .topShadow()
@@ -52,6 +44,6 @@ struct BottomNavigation: View {
 
 struct BottomNavigation_Previews: PreviewProvider {
     static var previews: some View {
-        BottomNavigation(navTabs: NavigationTabs.customerTabs, safeAreaInsets: EdgeInsets(), selectedTab: .constant(NavigationTabs.customerTabs[0]))
+        BottomNavigation(navTabs: NavigationTabs.customerTabs, selectedTab: .constant(NavigationTabs.customerTabs[0]))
     }
 }
