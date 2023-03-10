@@ -7,13 +7,12 @@ struct ContentView: View {
     var body: some View {
             VStack(spacing: 0) {
                 NavigationView {
-                    MainScreen()
+                    SupplierMainScreen()
                         .edgesIgnoringSafeArea(.all)
                         .navigationBarBackButtonHidden(true)
                         .navigationBarHidden(true)
                 }
                 .edgesIgnoringSafeArea(.all)
-                .navigationViewStyle(.stack)
                 .statusBar(hidden: true)
                 
                 if viewTools.bottomBarIsVisible {

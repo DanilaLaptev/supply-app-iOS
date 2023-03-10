@@ -17,10 +17,12 @@ struct ExtendableSectionHeader<Content: View>: View {
             content
             Spacer()
             CustomSmallButton(icon: .customBackShort, background: .clear, foregroundColor: .customOrange) {
-                isCollapsed.toggle()
+                withAnimation {
+                    isCollapsed.toggle()
+                }
             }
             .rotationEffect(.degrees(isCollapsed ? 180 : 270))
-            .animation(.easeInOut)
+            .animation(.easeInOut, value: isCollapsed)
         }
     }
 }

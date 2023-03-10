@@ -2,7 +2,24 @@ import SwiftUI
 
 struct SignUpScreen: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Spacer()
+            BottomSheet {
+                VStack(alignment: .leading, spacing: 8) {
+                    Header()
+                    
+                    CustomTextField(placeholder: "Роль")
+                    CustomTextField(placeholder: "Название организации")
+                    CustomTextField(placeholder: "Логин")
+                    CustomTextField(placeholder: "Пароль")
+                    CustomTextField(placeholder: "Подтверхдение пароля")
+                        .padding(.bottom, 24)
+                    
+                    CustomButton(label: Text("Продолжить"))
+                }
+            }
+        }
+        .background(Color.customLightGray)
     }
 }
 

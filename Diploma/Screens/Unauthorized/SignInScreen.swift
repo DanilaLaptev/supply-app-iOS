@@ -1,13 +1,32 @@
 import SwiftUI
 
-struct LoginScreen: View {
+struct SignInScreen: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Spacer()
+            BottomSheet {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text("Вход в аккаунт").font(.customTitle)
+                        .padding(.bottom, 8)
+                    
+                    CustomTextField(placeholder: "Логин")
+                    CustomTextField(placeholder: "Пароль")
+                        .padding(.bottom, 24)
+                    
+                    VStack(alignment: .center, spacing: 8) {
+                        CustomButton(label: Text("Войти"))
+                        Text("Создать аккаунт").font(.customStandard)
+                            .foregroundColor(.customOrange)	
+                    }
+                }
+            }
+        }
+        .background(Color.customLightGray)
     }
 }
 
-struct LoginScreen_Previews: PreviewProvider {
+struct SignInScreen_Previews: PreviewProvider {
     static var previews: some View {
-        LoginScreen()
+        SignInScreen()
     }
 }

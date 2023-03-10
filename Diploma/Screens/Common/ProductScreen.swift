@@ -1,10 +1,3 @@
-//
-//  ProductScreen.swift
-//  Diploma
-//
-//  Created by Dunice on 04.03.2023.
-//
-
 import SwiftUI
 
 struct ProductScreen: View {
@@ -48,11 +41,11 @@ struct ProductScreen: View {
             .padding(.top, 8)
         }
         .padding(.top, safeAreaEdgeInsets.top)
-        .edgesIgnoringSafeArea(.all)
         .frame(maxHeight: .infinity)
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
         .background(Color.customLightGray)
+        .edgesIgnoringSafeArea(.all)
     }
 }
 

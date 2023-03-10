@@ -16,8 +16,7 @@ struct BottomSheet<Content: View>: View {
         content
             .frame(maxWidth: .infinity)
             .padding(.bottom, enableSafeAreaBottomInset ? safeAreaEdgeInsets.bottom : 0)
-            .padding(.horizontal, 16)
-            .padding(.vertical, 8)
+            .padding(.all, 16)
             .background(Color.customWhite)
             .cornerRadius(8, corners: [.topLeft, .topRight])
             .topShadow()
