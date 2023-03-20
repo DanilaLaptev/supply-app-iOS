@@ -2,19 +2,19 @@ import SwiftUI
 
 enum CalendarCellState {
     case inRange
+    case selected
     case enabled
     case disabled
     case today
 }
 
 struct CustomCalendarCell: View {
-    @State var selected = false
-    @State var cellState: CalendarCellState = .disabled
+    var cellState: CalendarCellState
     var date: Date
     var onTap: (() -> ())?
     
     private var dateOfMonth: Int {
-        return Calendar.current.component(.day, from: date)
+        return Calendar(identifier: .gregorian).component(.day, from: date)
     }
     
     private var cellForeground: Color {
@@ -26,6 +26,8 @@ struct CustomCalendarCell: View {
         case .disabled:
             return .customDarkGray
         case .today:
+            return .customOrange
+        case .selected:
             return .customWhite
         }
     }
@@ -38,25 +40,33 @@ struct CustomCalendarCell: View {
             return .customWhite
         case .disabled:
             return .customWhite
-        case .today:
+        case .selected:
             return .customOrange
+        case .today:
+            return .customWhite
         }
+    }
+    
+    private var isToday: Bool {
+        if case .today = cellState {
+            return true
+        }
+        return false
     }
     
     var body: some View {
         ZStack(alignment: .center) {
             Circle()
-                .foregroundColor(selected ? .customOrange : cellBackground)
+                .strokeBorder(Color.customOrange, lineWidth: isToday ? 1 : 0)
+                .background(Circle().foregroundColor(cellBackground))
                 .frame(height: 32)
-                .aspectRatio(1 / 1, contentMode: .fit)
             
             Text("\(dateOfMonth)")
-                .foregroundColor(selected ? .customWhite : cellForeground)
+                .foregroundColor(cellForeground)
                 .font(.customStandard)
         }
         .onTapGesture {
             if case .disabled = cellState { return }
-            selected.toggle()
             onTap?()
         }
     }
@@ -68,5 +78,6 @@ struct CustomCalendarCell_Previews: PreviewProvider {
         CustomCalendarCell(cellState: .enabled, date: Date())
         CustomCalendarCell(cellState: .inRange, date: Date())
         CustomCalendarCell(cellState: .today, date: Date())
+        CustomCalendarCell(cellState: .selected, date: Date())
     }
 }

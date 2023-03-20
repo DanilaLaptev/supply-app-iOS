@@ -5,10 +5,15 @@ struct CustomCalendar: View {
     @Binding var rangeStartDate: Date?
     @Binding var rangeEndDate: Date?
     
-    var numberOfMonths = 3
+    var numberOfMonths = 2
+    var disablePastDays = true
     
     private let calendar = Calendar(identifier: .gregorian)
     private let currentDate = Date()
+    
+    private var currentMonth: Int {
+        calendar.component(.month, from: currentDate)
+    }
     
     internal func actualDate(day: Int, month: Int) -> Date? {
         let firstDayOfMonth = calendar.date(from: DateComponents(
@@ -41,7 +46,7 @@ struct CustomCalendar: View {
                 HStack(spacing: 16) {
                     CustomSmallButton(icon: .customBackShort)
                     
-                    Text("\(Calendar.current.component(.month, from: actualDate(day: 6, month: 0)!))")
+                    Text("\(Calendar(identifier: .gregorian).component(.month, from: actualDate(day: 6, month: 0)!))")
                         .font(.customSubtitle)
                         .foregroundColor(.customOrange)
                     
@@ -64,13 +69,14 @@ struct CustomCalendar: View {
                 
                 ScrollView(.horizontal) {
                     HStack(alignment: .top) {
-                        ForEach(0...11, id: \.self) { month in
+                        ForEach(0...1, id: \.self) { month in
                             VStack {
                                 ForEach(calendar.range(of: .weekOfMonth, in: .month, for: calendar.date(byAdding: .month, value: month, to: currentDate)!)!, id: \.self) { week in
                                     HStack{
                                         ForEach(1...7, id: \.self) { day in
                                             if let date = actualDate(day: (day + (week-1) * 7), month: month) {
-                                                CustomCalendarCell(cellState: .enabled, date: date) {
+                                                let cellState = getCellState(date)
+                                                CustomCalendarCell(cellState: cellState, date: date) {
                                                     if isRangeStartSelected {
                                                         rangeStartDate = date
                                                     } else {
@@ -78,7 +84,6 @@ struct CustomCalendar: View {
                                                     }
                                                 }
                                                 .frame(maxWidth: .infinity)
-                                                
                                             } else {
                                                 Circle()
                                                     .foregroundColor(.clear)
@@ -86,9 +91,6 @@ struct CustomCalendar: View {
                                             }
                                         }
                                     }
-                                }
-                                .onAppear() {
-                                    print(calendar.range(of: .weekOfMonth, in: .month, for: calendar.date(byAdding: .month, value: month, to: currentDate)!)!, calendar.monthSymbols[month])
                                 }
                             }
                             .frame(width: geo.size.width - 48)
@@ -102,6 +104,36 @@ struct CustomCalendar: View {
             .cornerRadius(8)
         }
         .scaledToFit()
+    }
+    
+    func getCellState(_ date: Date) -> CalendarCellState {
+        if let rangeStartDate,
+           calendar.isDate(date, equalTo: rangeStartDate, toGranularity: .day) {
+            return .selected
+        }
+        
+        if let rangeEndDate,
+           calendar.isDate(date, equalTo: rangeEndDate, toGranularity: .day) {
+            return .selected
+        }
+        
+        if let rangeStartDate,
+           let rangeEndDate,
+           date < rangeEndDate,
+           date > rangeStartDate {
+            return .inRange
+        }
+        
+        if calendar.isDate(date, equalTo: currentDate, toGranularity: .day) {
+            return .today
+        }
+        
+        if disablePastDays,
+           date < currentDate {
+            return .disabled
+        }
+
+        return .enabled
     }
 }
 

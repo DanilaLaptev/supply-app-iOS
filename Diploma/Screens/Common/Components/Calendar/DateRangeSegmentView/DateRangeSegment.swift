@@ -27,7 +27,7 @@ struct DateRangeSegment: View {
                     .font(.customStandard)
                     .foregroundColor(.customBlack)
                 Text(selectedDate?.description.prefix(10) ?? "select")
-                    .font(.customStandard)
+                    .font(.customHint)
                     .foregroundColor(valueColor)
             }
             Spacer()
