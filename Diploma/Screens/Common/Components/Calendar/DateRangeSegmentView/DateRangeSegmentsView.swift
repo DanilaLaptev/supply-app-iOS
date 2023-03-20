@@ -12,6 +12,7 @@ struct DateRangeSegmentsView: View {
                 isRangeStartSelected = true
             } onDismiss: {
                 startRangeDate = nil
+                endRangeDate = nil
             }
             
             DateRangeSegment(selectedDate: $endRangeDate, isSelected: .constant(!isRangeStartSelected), title: "End") {

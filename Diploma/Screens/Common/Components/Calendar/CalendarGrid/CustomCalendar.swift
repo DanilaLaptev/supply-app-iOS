@@ -15,6 +15,11 @@ struct CustomCalendar: View {
         calendar.component(.month, from: currentDate)
     }
     
+    private var isRangeSelected: Bool {
+        rangeStartDate != nil && rangeEndDate != nil
+    }
+    
+    
     internal func actualDate(day: Int, month: Int) -> Date? {
         let firstDayOfMonth = calendar.date(from: DateComponents(
             calendar: calendar,
@@ -72,16 +77,12 @@ struct CustomCalendar: View {
                         ForEach(0...1, id: \.self) { month in
                             VStack {
                                 ForEach(calendar.range(of: .weekOfMonth, in: .month, for: calendar.date(byAdding: .month, value: month, to: currentDate)!)!, id: \.self) { week in
-                                    HStack{
+                                    HStack {
                                         ForEach(1...7, id: \.self) { day in
                                             if let date = actualDate(day: (day + (week-1) * 7), month: month) {
                                                 let cellState = getCellState(date)
-                                                CustomCalendarCell(cellState: cellState, date: date) {
-                                                    if isRangeStartSelected {
-                                                        rangeStartDate = date
-                                                    } else {
-                                                        rangeEndDate = date
-                                                    }
+                                                CustomCalendarCell(rangeSelected: isRangeSelected, cellState: cellState, date: date) {
+                                                    selectCell(date)
                                                 }
                                                 .frame(maxWidth: .infinity)
                                             } else {
@@ -93,6 +94,7 @@ struct CustomCalendar: View {
                                     }
                                 }
                             }
+                            .clipped()
                             .frame(width: geo.size.width - 48)
                         }
                     }
@@ -109,12 +111,12 @@ struct CustomCalendar: View {
     func getCellState(_ date: Date) -> CalendarCellState {
         if let rangeStartDate,
            calendar.isDate(date, equalTo: rangeStartDate, toGranularity: .day) {
-            return .selected
+            return .startRange
         }
         
         if let rangeEndDate,
            calendar.isDate(date, equalTo: rangeEndDate, toGranularity: .day) {
-            return .selected
+            return .endRange
         }
         
         if let rangeStartDate,
@@ -134,6 +136,38 @@ struct CustomCalendar: View {
         }
 
         return .enabled
+    }
+    
+    func selectCell(_ date: Date) {
+        if isRangeStartSelected, let endRange = rangeEndDate {
+            rangeStartDate = date
+            if endRange < date {
+                rangeEndDate = nil
+                isRangeStartSelected = false
+            }
+            return
+        }
+        
+        if !isRangeStartSelected, let startRange = rangeStartDate {
+            rangeEndDate = date
+            if startRange > date {
+                rangeEndDate = nil
+                rangeStartDate = date
+                isRangeStartSelected = false
+            }
+            
+            return
+        }
+        
+        if isRangeStartSelected {
+            rangeStartDate = date
+        } else {
+            rangeEndDate = date
+        }
+        
+        if rangeStartDate == nil || rangeEndDate == nil {
+            isRangeStartSelected.toggle()
+        }
     }
 }
 
