@@ -1,22 +1,14 @@
 import SwiftUI
 
-extension Date {
-    func startOfMonth() -> Date {
-        return Calendar.current.date(from: Calendar.current.dateComponents([.year, .month], from: Calendar.current.startOfDay(for: self)))!
-    }
-    
-    func endOfMonth() -> Date {
-        return Calendar.current.date(byAdding: DateComponents(month: 1, day: -1), to: self.startOfMonth())!
-    }
-}
-
 struct CustomCalendar: View {
-    @State private var rangeStartDate = Date()
-    @State private var rangeEndDate = Date()
-    private var numberOfMonths = 3
-    @State private var currentDate = Date()
+    @Binding var isRangeStartSelected: Bool
+    @Binding var rangeStartDate: Date?
+    @Binding var rangeEndDate: Date?
+    
+    var numberOfMonths = 3
     
     private let calendar = Calendar(identifier: .gregorian)
+    private let currentDate = Date()
     
     internal func actualDate(day: Int, month: Int) -> Date? {
         let firstDayOfMonth = calendar.date(from: DateComponents(
@@ -77,12 +69,19 @@ struct CustomCalendar: View {
                                 ForEach(calendar.range(of: .weekOfMonth, in: .month, for: calendar.date(byAdding: .month, value: month, to: currentDate)!)!, id: \.self) { week in
                                     HStack{
                                         ForEach(1...7, id: \.self) { day in
-                                            if let d = actualDate(day: (day + (week-1) * 7)-1 , month: month) {
-                                                CustomCalendarCell(dayNumber: calendar.component(.day, from: d), cellState: .enabled)
-                                                    .frame(maxWidth: .infinity)
+                                            if let date = actualDate(day: (day + (week-1) * 7), month: month) {
+                                                CustomCalendarCell(cellState: .enabled, date: date) {
+                                                    if isRangeStartSelected {
+                                                        rangeStartDate = date
+                                                    } else {
+                                                        rangeEndDate = date
+                                                    }
+                                                }
+                                                .frame(maxWidth: .infinity)
                                                 
                                             } else {
-                                                CustomCalendarCell(dayNumber: -1, cellState: .empty)
+                                                Circle()
+                                                    .foregroundColor(.clear)
                                                     .frame(maxWidth: .infinity)
                                             }
                                         }
@@ -108,6 +107,6 @@ struct CustomCalendar: View {
 
 struct CustomCalendar_Previews: PreviewProvider {
     static var previews: some View {
-        CustomCalendar()
+        CustomCalendar(isRangeStartSelected: .constant(true), rangeStartDate: .constant(nil), rangeEndDate: .constant(nil))
     }
 }

@@ -27,6 +27,7 @@ struct PlaceCard: View {
                 
                 HStack {
                     Image.customMarker
+                        .frame(width: 16, height: 16)
                         .foregroundColor(.customOrange)
                     Text("0 ₽")
                         .font(.customHint)
@@ -35,6 +36,7 @@ struct PlaceCard: View {
                 
                 HStack {
                     Image.customClock
+                        .frame(width: 16, height: 16)
                         .foregroundColor(.customOrange)
                     Text("0 ₽")
                         .font(.customHint)

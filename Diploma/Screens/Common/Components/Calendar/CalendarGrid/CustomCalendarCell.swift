@@ -5,20 +5,19 @@ enum CalendarCellState {
     case enabled
     case disabled
     case today
-    case empty
 }
 
 struct CustomCalendarCell: View {
-    @State private var selected = false
-    @State private var cellState: CalendarCellState
-    private let dayNumber: Int
+    @State var selected = false
+    @State var cellState: CalendarCellState = .disabled
+    var date: Date
+    var onTap: (() -> ())?
     
-    init(dayNumber: Int, cellState: CalendarCellState) {
-        self.dayNumber = dayNumber
-        self.cellState = cellState
+    private var dateOfMonth: Int {
+        return Calendar.current.component(.day, from: date)
     }
     
-    var cellForeground: Color {
+    private var cellForeground: Color {
         switch cellState {
         case .inRange:
             return .customOrange
@@ -26,22 +25,18 @@ struct CustomCalendarCell: View {
             return .customBlack
         case .disabled:
             return .customDarkGray
-        case .empty:
-            return .customWhite
         case .today:
             return .customWhite
         }
     }
     
-    var cellBackground: Color {
+    private var cellBackground: Color {
         switch cellState {
         case .inRange:
             return .customLightOrange
         case .enabled:
             return .customWhite
         case .disabled:
-            return .customWhite
-        case .empty:
             return .customWhite
         case .today:
             return .customOrange
@@ -55,24 +50,23 @@ struct CustomCalendarCell: View {
                 .frame(height: 32)
                 .aspectRatio(1 / 1, contentMode: .fit)
             
-            Text("\(dayNumber)")
+            Text("\(dateOfMonth)")
                 .foregroundColor(selected ? .customWhite : cellForeground)
                 .font(.customStandard)
         }
         .onTapGesture {
             if case .disabled = cellState { return }
-            if case .empty = cellState { return }
             selected.toggle()
+            onTap?()
         }
     }
 }
 
 struct CustomCalendarCell_Previews: PreviewProvider {
     static var previews: some View {
-        CustomCalendarCell(dayNumber: 1, cellState: .empty)
-        CustomCalendarCell(dayNumber: 1, cellState: .disabled)
-        CustomCalendarCell(dayNumber: 1, cellState: .enabled)
-        CustomCalendarCell(dayNumber: 1, cellState: .inRange)
-        CustomCalendarCell(dayNumber: 1, cellState: .today)
+        CustomCalendarCell(cellState: .disabled, date: Date())
+        CustomCalendarCell(cellState: .enabled, date: Date())
+        CustomCalendarCell(cellState: .inRange, date: Date())
+        CustomCalendarCell(cellState: .today, date: Date())
     }
 }

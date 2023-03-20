@@ -1,6 +1,10 @@
 import SwiftUI
 
 struct MainScreen: View {
+    public static let tag = "MainScreen"
+    
+    @EnvironmentObject private var tools: ViewTools
+    
     var body: some View {
         VStack {
             ScrollView(.horizontal, showsIndicators: false) {
@@ -21,7 +25,6 @@ struct MainScreen: View {
                         } label: {
                             DynamicProductCard()
                         }
-                        .buttonStyle(PlainButtonStyle())
                     }
                 }
                 .padding(.horizontal, 16)
@@ -29,11 +32,20 @@ struct MainScreen: View {
         }
         .padding(.top, safeAreaEdgeInsets.top)
         .background(Color.customLightGray)
+        .defaultScreenSettings()
+        .onAppear {
+            tools.setBottomBarVisibility(true)
+        }
     }
 }
 
 struct MainScreen_Previews: PreviewProvider {
+    @StateObject static var viewTools = ViewTools()
+    
     static var previews: some View {
-        MainScreen()
+        NavigationView {
+            MainScreen()
+                .environmentObject(viewTools)
+        }
     }
 }

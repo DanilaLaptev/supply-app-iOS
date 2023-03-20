@@ -1,8 +1,15 @@
 import SwiftUI
 
 struct ProfileScreen: View {
+    public static let tag = "ProfileScreen"
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Text("Profile!")
+        }
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.customLightGray)
+        .defaultScreenSettings()
     }
 }
 

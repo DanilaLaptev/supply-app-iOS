@@ -1,10 +1,14 @@
 import SwiftUI
 
 struct StatisticsScreen: View {
+    public static let tag = "StatisticsScreen"
+    
+    @EnvironmentObject private var tools: ViewTools
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
-                CustomCalendar()
+                CalendarView()
                     .padding(.bottom, 8)
                 
                 HStack {
@@ -38,11 +42,20 @@ struct StatisticsScreen: View {
         }
         .padding(.horizontal, 16)
         .background(Color.customLightGray)
+        .defaultScreenSettings()
+        .onAppear {
+            tools.setBottomBarVisibility(true)
+        }
     }
 }
 
 struct StatisticsScreen_Previews: PreviewProvider {
+    @StateObject static var viewTools = ViewTools()
+    
     static var previews: some View {
-        StatisticsScreen()
+        NavigationView {
+            StatisticsScreen()
+                .environmentObject(viewTools)
+        }
     }
 }

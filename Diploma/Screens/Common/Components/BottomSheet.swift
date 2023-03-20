@@ -2,13 +2,16 @@ import SwiftUI
 
 struct BottomSheet<Content: View>: View {
     let enableSafeAreaBottomInset: Bool
+    let background: Color
     let content: Content
     
     init(
         enableSafeAreaBottomInset: Bool = true,
+        background: Color = .customWhite,
         @ViewBuilder content: () -> Content
     ) {
         self.enableSafeAreaBottomInset = enableSafeAreaBottomInset
+        self.background = background
         self.content = content()
     }
     
@@ -17,7 +20,7 @@ struct BottomSheet<Content: View>: View {
             .frame(maxWidth: .infinity)
             .padding(.bottom, enableSafeAreaBottomInset ? safeAreaEdgeInsets.bottom : 0)
             .padding(.all, 16)
-            .background(Color.customWhite)
+            .background(background)
             .cornerRadius(8, corners: [.topLeft, .topRight])
             .topShadow()
     }

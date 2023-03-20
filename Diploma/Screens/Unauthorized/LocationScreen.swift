@@ -1,6 +1,11 @@
 import SwiftUI
 
 struct LocationScreen: View {
+    public static let tag = "LocationScreen"
+    
+    @State private var tagSelection: String? = nil
+    @EnvironmentObject private var tools: ViewTools
+    
     @State var landmarks: [Landmark] = [
         Landmark(name: "Sydney Harbour Bridge", location: .init(latitude: -33.852222, longitude: 151.210556)),
         Landmark(name: "Brooklyn Bridge", location: .init(latitude: 40.706, longitude: -73.997)),
@@ -8,7 +13,7 @@ struct LocationScreen: View {
     ]
     
     @State var selectedLandmark: Landmark? = nil
-    
+    @State private var counter = 0 // TODO: remove counter
     var body: some View {
         VStack(spacing: 0) {
             MapView(landmarks: $landmarks,
@@ -25,16 +30,24 @@ struct LocationScreen: View {
                     CustomTextField(placeholder: "Адрес организации")
                         .padding(.bottom, 24)
                     
-                    CustomButton(label: Text("Завершить регистрацию"))
+                    NavigationLink(destination: MainScreen(), tag: MainScreen.tag, selection: $tagSelection) {
+                        CustomButton(label: Text("Завершить регистрацию")) {
+                            counter += 1
+                            tools.showAlert(AlertModel(type: .error, description: "description \(counter)"))
+                        }
+                    }
                 }
             }
         }
         .background(Color.customLightGray)
+        .defaultScreenSettings()
     }
 }
 
 struct LocationScreen_Previews: PreviewProvider {
     static var previews: some View {
-        LocationScreen()
+        NavigationView {
+            LocationScreen()
+        }
     }
 }

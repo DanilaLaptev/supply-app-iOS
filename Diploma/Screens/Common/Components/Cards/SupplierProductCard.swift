@@ -2,6 +2,8 @@ import SwiftUI
 
 struct SupplierProductCard: View {
     @State private var showExtraOptions = false
+    var tapEditingButton: (()->())? = nil
+    var tapDeletingButton: (()->())? = nil
     
     var body: some View {
         ZStack(alignment: .trailing) {
@@ -27,15 +29,23 @@ struct SupplierProductCard: View {
                 .frame(width: 24, height: 24)
                 
                 HStack(spacing: 8) {
-                    CustomButton(icon: .customBox, background: .customOrange, foreground: .customWhite, isCircleShape: true)
-                        .frame(width: 48, height: .infinity)
+                    CustomButton(icon: .customBox, background: .customOrange, foreground: .customWhite, isCircleShape: true) {
+                        showExtraOptions.toggle()
+                        tapEditingButton?()
+                    }
+                    .frame(width: 48)
+                    .frame(maxHeight: .infinity)
                     
-                    CustomButton(icon: .customMinus, background: .customOrange, foreground: .customWhite, isCircleShape: true)
-                        .frame(width: 48, height: .infinity)
+                    CustomButton(icon: .customMinus, background: .customOrange, foreground: .customWhite, isCircleShape: true) {
+                        showExtraOptions.toggle()
+                        tapDeletingButton?()
+                    }
+                    .frame(width: 48)
+                    .frame(maxHeight: .infinity)
                 }
             }
             .padding(12)
-            .frame(height: .infinity)
+            .frame(maxHeight: .infinity)
             .background(Color.customLightOrange)
             .offset(x: showExtraOptions ? 0 : 116)
         }

@@ -37,7 +37,10 @@ struct SuppliersListFilterScreen: View {
             }
             .padding(.horizontal, 16)
         }
+        .padding(.top, safeAreaEdgeInsets.top)
+        .padding(.top, 16)
         .background(Color.customLightGray)
+        .defaultScreenSettings()
     }
 }
 

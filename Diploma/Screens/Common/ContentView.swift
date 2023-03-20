@@ -1,28 +1,32 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State private var selectedTab: CustomTab = NavigationTabs.customerTabs[0]
     @StateObject private var viewTools = ViewTools()
     
     var body: some View {
+        ZStack {
             VStack(spacing: 0) {
                 NavigationView {
-                    SupplierMainScreen()
-                        .edgesIgnoringSafeArea(.all)
-                        .navigationBarBackButtonHidden(true)
-                        .navigationBarHidden(true)
+                    StartLoadingScreen()
                 }
-                .edgesIgnoringSafeArea(.all)
                 .statusBar(hidden: true)
-                
-                if viewTools.bottomBarIsVisible {
-                    BottomNavigation(navTabs: NavigationTabs.customerTabs,
-                                     selectedTab: $selectedTab)
-                }
+                .navigationViewStyle(.stack)
             }
-            .background(Color.customLightGray.edgesIgnoringSafeArea(.all))
-            .environmentObject(viewTools)
+            
+            VStack(spacing: 8) {
+                ForEach(viewTools.alertsList) { alertModel in
+                    CustomAlert(alertModel)
+                }
+                .animation(.easeInOut)
+                Spacer()
+            }
+            .padding(.top, safeAreaEdgeInsets.top)
+            .clipped()
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
+        .edgesIgnoringSafeArea(.all)
+        .environmentObject(viewTools)
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {

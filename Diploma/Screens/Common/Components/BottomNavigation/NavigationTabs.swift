@@ -2,17 +2,18 @@ import Foundation
 
 class NavigationTabs {
     public static let customerTabs = [
-        CustomTab(icon: .customHome, name: "Главная"),
-        CustomTab(icon: .customBox, name: "Поставки"),
-        CustomTab(icon: .customRoute, name: "Заказы"),
-        CustomTab(icon: .customChart, name: "Учёт"),
-        CustomTab(icon: .customUser, name: "Профиль")
+        CustomTab(icon: .customHome, name: "Главная", screenTag: MainScreen.tag),
+        CustomTab(icon: .customBox, name: "Поставки", screenTag: SuppliersListScreen.tag),
+        CustomTab(icon: .customRoute, name: "Заказы", screenTag: OrdersListScreen.tag),
+        CustomTab(icon: .customChart, name: "Учёт", screenTag: StatisticsScreen.tag),
+        CustomTab(icon: .customUser, name: "Профиль", screenTag: ProfileScreen.tag)
     ]
-    
+
     public static let supplierTabs = [
-        CustomTab(icon: .customHome, name: "Главная"),
-        CustomTab(icon: .customRoute, name: "Заказы"),
-        CustomTab(icon: .customChart, name: "Учёт"),
-        CustomTab(icon: .customUser, name: "Профиль")
+        CustomTab(icon: .customHome, name: "Главная", screenTag: SupplierMainScreen.tag),
+        CustomTab(icon: .customBox, name: "Поставки", screenTag: SupplierClientsScreen.tag),
+        CustomTab(icon: .customRoute, name: "Заказы", screenTag: SupplierMainScreen.tag),
+        CustomTab(icon: .customChart, name: "Учёт", screenTag: SupplierMainScreen.tag),
+        CustomTab(icon: .customUser, name: "Профиль", screenTag: ProfileScreen.tag)
     ]
 }

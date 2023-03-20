@@ -7,13 +7,16 @@ enum AlertType : String {
 }
 
 struct CustomAlert: View {
-    private let description: String
+    @EnvironmentObject private var tools: ViewTools
+    @State private var autoDismissTimer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
+    
+    private let model: AlertModel
     private let icon: Image
     private let primaryColor: Color
     
-    init(type: AlertType, description: String) {
-        self.description = description
-        switch type {
+    init(_ alertModel: AlertModel) {
+        self.model = alertModel
+        switch alertModel.type {
         case .info:
             icon = .customInfoAlert
             primaryColor = .customBlue
@@ -33,15 +36,16 @@ struct CustomAlert: View {
                 .frame(width: 30, height: 30)
             
             VStack(alignment: .leading, spacing: 4) {
-                Text(description).font(.customStandard)
+                Text(model.description).font(.customStandard)
                 Text("hint").font(.customStandard).foregroundColor(primaryColor)
             }
             
             Spacer()
             Button {
-                print("dismiss")
+                tools.removeAlert(model)
             } label: {
                 Image.customPlus
+                    .frame(width: 16, height: 16)
                     .foregroundColor(primaryColor)
                     .rotationEffect(.degrees(45))
             }
@@ -52,13 +56,16 @@ struct CustomAlert: View {
         .cornerRadius(32)
         .bottomShadow()
         .padding(.horizontal, 24)
+        .onReceive(autoDismissTimer) { _ in
+            tools.removeAlert(model)
+        }
     }
 }
 
 struct CustomAlert_Previews: PreviewProvider {
     static var previews: some View {
-        CustomAlert(type: .error, description: "error")
-        CustomAlert(type: .success, description: "success")
-        CustomAlert(type: .info, description: "info")
+        CustomAlert(AlertModel(type: .error, description: "error"))
+        CustomAlert(AlertModel(type: .success, description: "success"))
+        CustomAlert(AlertModel(type: .info, description: "info"))
     }
 }

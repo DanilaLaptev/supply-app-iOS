@@ -8,9 +8,9 @@ struct CustomButton: View {
 
     var background: Color = .customOrange
     var foreground: Color = .customWhite
-    var onClick: (() -> ())? = nil
     var isCircleShape: Bool = false
-    
+    var onClick: (() -> ())? = nil
+
     var body: some View {
         Button {
             onClick?()

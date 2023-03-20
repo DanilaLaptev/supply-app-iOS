@@ -1,8 +1,11 @@
 import SwiftUI
 
 struct SupplierScreen: View {
+    public static let tag = "SupplierScreen"
+
     @EnvironmentObject var viewTools: ViewTools
-    
+    @State private var tagSelection: String? = nil
+
     var body: some View {
         VStack(spacing: 0) {
             Header()
@@ -39,7 +42,11 @@ struct SupplierScreen: View {
                     
                     VStack {
                         ForEach((0...8), id: \.self) { _ in
-                            DynamicProductCard()
+                            NavigationLink {
+                                ProductScreen()
+                            } label: {
+                                DynamicProductCard()
+                            }
                         }
                     }
                     .padding(.horizontal, 16)
@@ -57,8 +64,13 @@ struct SupplierScreen: View {
                         Spacer()
                         
                         NavigationLink(destination: OrderScreen()) {
-                            CustomButton(icon: .customBox)
+                            NavigationLink(destination: OrderingScreen(), tag: OrderingScreen.tag, selection: $tagSelection) {
+                                CustomButton(icon: .customBox) {
+                                    tagSelection = OrderingScreen.tag
+                                }
                                 .frame(width: 48)
+                            }
+                            
                         }
                     }
                     Text("Выберите хотя бы один продукт, чтобы оформить заказ")
@@ -69,8 +81,9 @@ struct SupplierScreen: View {
         }
         .padding(.top, safeAreaEdgeInsets.top)
         .background(Color.customLightGray)
+        .defaultScreenSettings()
         .onAppear {
-            viewTools.bottomBarIsVisible = false
+            viewTools.setBottomBarVisibility(false)
         }
     }
 }
@@ -78,7 +91,9 @@ struct SupplierScreen: View {
 struct SupplierScreen_Previews: PreviewProvider {
     @State static var tools = ViewTools()
     static var previews: some View {
-        SupplierScreen()
-            .environmentObject(tools)
+        NavigationView {
+            SupplierScreen()
+                .environmentObject(tools)
+        }
     }
 }

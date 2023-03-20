@@ -17,6 +17,7 @@ struct Counter: View {
 
             Text("\(counterValue)")
                 .font(.customStandard)
+                .foregroundColor(.customBlack)
                 .frame(width: 26)
             
             CustomSmallButton(icon: .customPlus) {

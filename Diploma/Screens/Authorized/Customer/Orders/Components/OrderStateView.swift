@@ -1,17 +1,17 @@
 import SwiftUI
 
-enum OrderState {
+enum OrderDeliveryState {
     case current
     case passed
     case next
 }
 
 struct OrderStateCircle<Content: View>: View {
-    var stepState: OrderState
+    var stepState: OrderDeliveryState
     var icon: Content
     
     init(
-        stepState: OrderState,
+        stepState: OrderDeliveryState,
         @ViewBuilder icon: () -> Content
     ) {
         self.stepState = stepState
@@ -56,7 +56,7 @@ struct OrderStateCircle<Content: View>: View {
 }
 
 struct OrderStateView: View {
-    var stepState: OrderState
+    var stepState: OrderDeliveryState
     
     private var foreground: Color {
         switch stepState {

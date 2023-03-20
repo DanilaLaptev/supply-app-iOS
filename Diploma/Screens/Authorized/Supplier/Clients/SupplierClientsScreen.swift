@@ -1,13 +1,8 @@
 import SwiftUI
 
 // TODO: Map elements rewrite
-struct SuppliersListScreen: View {
-    public static let tag = "SuppliersListScreen"
-    
-    @EnvironmentObject private var tools: ViewTools
-    
-    @State private var tagSelection: String? = nil
-
+struct SupplierClientsScreen: View {
+    public static let tag = "SupplierClientsScreen"
     
     @State var landmarks: [Landmark] = [
         Landmark(name: "Sydney Harbour Bridge", location: .init(latitude: -33.852222, longitude: 151.210556)),
@@ -15,8 +10,8 @@ struct SuppliersListScreen: View {
         Landmark(name: "Golden Gate Bridge", location: .init(latitude: 37.819722, longitude: -122.478611))
     ]
     
-    @State private var selectedLandmark: Landmark? = nil
-    @State private var showFilters = false
+    @State var selectedLandmark: Landmark? = nil
+    @State var showFilters = false
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -28,10 +23,10 @@ struct SuppliersListScreen: View {
                     .frame(height: 320)
                     .padding(.bottom, -8)
                 
-                BottomSheet(background: .customLightGray) {
+                BottomSheet {
                     VStack {
                         HStack(spacing: 8) {
-                            CustomTextField(icon: .customSearch, isDividerVisible: true, placeholder: "Поиск", background: .customWhite)
+                            CustomTextField(icon: .customSearch, isDividerVisible: true, placeholder: "Поиск")
                             CustomButton(icon: .customFilter) {
                                 showFilters.toggle()
                             }
@@ -41,12 +36,7 @@ struct SuppliersListScreen: View {
                         
                         VStack {
                             ForEach((0...8), id: \.self) { _ in
-                                NavigationLink(destination: SupplierScreen(), tag: SupplierScreen.tag, selection: $tagSelection) {
-                                    PlaceCard(name: "Название", distance: 24, openingTime: "")
-                                        .onTapGesture {
-                                            tagSelection = SupplierScreen.tag
-                                        }
-                                }
+                                StaticProductCard(name: "Название", price: 100, itemsNumber: 12)
                             }
                         }
                     }
@@ -58,19 +48,13 @@ struct SuppliersListScreen: View {
         }
         .background(Color.customLightGray)
         .defaultScreenSettings()
-        .onAppear {
-            tools.setBottomBarVisibility(true)
-        }
     }
 }
 
-struct SuppliersScreen_Previews: PreviewProvider {
-    @StateObject static var viewTools = ViewTools()
-    
+struct SupplierClientsScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SuppliersListScreen()
-                .environmentObject(viewTools)
+            SupplierClientsScreen()
         }
     }
 }

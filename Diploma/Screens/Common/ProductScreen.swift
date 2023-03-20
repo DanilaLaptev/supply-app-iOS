@@ -1,6 +1,9 @@
 import SwiftUI
 
 struct ProductScreen: View {
+    public static let tag = "ProductScreen"
+    @EnvironmentObject private var tools: ViewTools
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 8) {
@@ -36,21 +39,25 @@ struct ProductScreen: View {
                     Text("Пищевая ценность").font(.customSubtitle)
                 }
                 .padding(.horizontal, 16)
-
             }
             .padding(.top, 8)
         }
         .padding(.top, safeAreaEdgeInsets.top)
-        .frame(maxHeight: .infinity)
-        .navigationBarBackButtonHidden(true)
-        .navigationBarHidden(true)
         .background(Color.customLightGray)
-        .edgesIgnoringSafeArea(.all)
+        .defaultScreenSettings()
+        .onAppear {
+            tools.setBottomBarVisibility(false)
+        }
     }
 }
 
 struct ProductScreen_Previews: PreviewProvider {
+    @StateObject static var viewTools = ViewTools()
+    
     static var previews: some View {
-        ProductScreen()
+        NavigationView {
+            ProductScreen()
+                .environmentObject(viewTools)
+        }
     }
 }

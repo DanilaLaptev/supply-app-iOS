@@ -19,7 +19,7 @@ struct MainApp {
 struct MyView: App {
     var body: some Scene {
         WindowGroup {
-            ContentView() // Add another view with content Text("From iOS 14+") to test both block runs
+            ContentView()
         }
     }
 }
@@ -44,7 +44,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        let contentView = ContentView() // Add another view with content Text("From iOS 13") to test both block runs
+        let contentView = ContentView()
 
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)

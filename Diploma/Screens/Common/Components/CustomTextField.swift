@@ -1,25 +1,16 @@
 import SwiftUI
 
 struct CustomTextField: View {
-    @State private var textFieldValue = ""
+    @State var textFieldValue = ""
     
-    private let icon: Image?
-    private let isDividerVisible: Bool
-    private let placeholder: String
+    var icon: Image? = nil
+    var isDividerVisible: Bool = false
+    var placeholder: String
+    var background: Color = .clear
 
     private let divider: some View = Rectangle()
         .foregroundColor(Color.customDarkGray)
-    
-    init(
-        icon: Image? = nil,
-        isDividerVisible: Bool? = nil,
-        placeholder: String
-    ) {
-        self.icon = icon
-        self.isDividerVisible = isDividerVisible ?? false
-        self.placeholder = placeholder
-    }
-    
+
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
             icon?
@@ -27,7 +18,8 @@ struct CustomTextField: View {
                 .foregroundColor(.customOrange)
         
             if isDividerVisible { divider
-                .frame(width: 1, height: .infinity)
+                .frame(width: 1)
+                .frame(maxHeight: .infinity)
             }
             
             TextField(placeholder, text: $textFieldValue)
@@ -37,7 +29,7 @@ struct CustomTextField: View {
         .padding([.leading, .trailing], 16)
         .padding([.top, .bottom], 8)
         .frame(height: 48)
-        .background(Color.clear)
+        .background(background.cornerRadius(8))
         .overlay(
             RoundedRectangle(cornerRadius: 8)
                 .stroke(Color.customDarkGray, lineWidth: 1)

@@ -1,15 +1,28 @@
 import Foundation
 import SwiftUI
 
-class ViewTools: ObservableObject {
-    @Published var bottomBarIsVisible: Bool = false
-    @Published var safeAreaInsets: EdgeInsets = EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
-}
-
-extension View {
+final class ViewTools: ObservableObject {
+    @Published private(set) var bottomBarIsVisible: Bool = false
+    @Published private(set) var alertsList: [AlertModel] = []
+    private let alertsLimit = 3
+    
     func setBottomBarVisibility(_ isVisible: Bool) {
-        @EnvironmentObject var viewTools: ViewTools
-        
-        viewTools.bottomBarIsVisible = isVisible
+        bottomBarIsVisible = isVisible
+    }
+    
+    func showAlert(_ alert: AlertModel) {
+        alertsList.insert(alert, at: 0)
+        alertsList = alertsList.count > alertsLimit ? Array(alertsList[0..<alertsLimit]) : alertsList
+    }
+    
+    func removeAlert(_ alert: AlertModel) {
+        alertsList.removeAll { visibleAlert in
+            visibleAlert.id == alert.id
+        }
+    }
+    
+    func removeAllAlerts() {
+        alertsList = []
     }
 }
+

@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct OrderingScreen: View {
+    public static let tag = "OrderingScreen"
+
     @EnvironmentObject var viewTools: ViewTools
 
     var body: some View {
@@ -42,8 +44,9 @@ struct OrderingScreen: View {
         }
         .padding(.top, safeAreaEdgeInsets.top)
         .background(Color.customLightGray)
+        .defaultScreenSettings()
         .onAppear {
-            viewTools.bottomBarIsVisible = false
+            viewTools.setBottomBarVisibility(false)
         }
     }
 }

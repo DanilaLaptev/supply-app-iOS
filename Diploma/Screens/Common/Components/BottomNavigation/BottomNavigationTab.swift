@@ -5,4 +5,5 @@ struct CustomTab: Identifiable, Equatable {
     let id = UUID()
     let icon: Image
     let name: String
+    let screenTag: String
 }

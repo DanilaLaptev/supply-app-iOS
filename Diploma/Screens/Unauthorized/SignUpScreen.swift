@@ -1,6 +1,10 @@
 import SwiftUI
 
 struct SignUpScreen: View {
+    public static let tag = "SignUpScreen"
+    
+    @State private var tagSelection: String? = nil
+    
     var body: some View {
         VStack {
             Spacer()
@@ -15,16 +19,21 @@ struct SignUpScreen: View {
                     CustomTextField(placeholder: "Подтверхдение пароля")
                         .padding(.bottom, 24)
                     
-                    CustomButton(label: Text("Продолжить"))
+                    NavigationLink(destination: ContactsScreen(), tag: ContactsScreen.tag, selection: $tagSelection) {
+                        CustomButton(label: Text("Продолжить")) { tagSelection = ContactsScreen.tag }
+                    }
                 }
             }
         }
         .background(Color.customLightGray)
+        .defaultScreenSettings()
     }
 }
 
 struct SignUpScreen_Previews: PreviewProvider {
     static var previews: some View {
-        SignUpScreen()
+        NavigationView {
+            SignUpScreen()
+        }
     }
 }
