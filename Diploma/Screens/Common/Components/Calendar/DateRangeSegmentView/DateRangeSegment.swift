@@ -20,13 +20,18 @@ struct DateRangeSegment: View {
         return .customBlack
     }
     
+    private var selectedDateLabel: String? {
+        guard let date = selectedDate else { return nil }
+        return DateFormatManager.shared.getFormattedString(date, dateFormat: "MMM d, yyyy")
+    }
+    
     var body: some View {
         HStack(alignment: .center, spacing: 8) {
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.customStandard)
                     .foregroundColor(.customBlack)
-                Text(selectedDate?.description.prefix(10) ?? "select")
+                Text(selectedDateLabel ?? "select")
                     .font(.customHint)
                     .foregroundColor(valueColor)
             }

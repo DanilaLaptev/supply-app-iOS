@@ -11,6 +11,9 @@ struct CalendarView: View {
                 .padding(.horizontal, 24)
             CustomCalendar(isRangeStartSelected: $isStartRangeSelected, rangeStartDate: $startDate, rangeEndDate: $endDate)
         }
+        .padding(16)
+        .background(Color.customWhite)
+        .cornerRadius(8)
     }
 }
 

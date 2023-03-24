@@ -33,21 +33,26 @@ struct SupplierProductCard: View {
                         showExtraOptions.toggle()
                         tapEditingButton?()
                     }
-                    .frame(width: 48)
-                    .frame(maxHeight: .infinity)
+                    .frame(width: 48, height: 48)
+
+                    CustomButton(icon: .customDate, background: .customOrange, foreground: .customWhite, isCircleShape: true) {
+                        showExtraOptions.toggle()
+                        tapDeletingButton?()
+                    }
+                    .frame(width: 48, height: 48)
                     
                     CustomButton(icon: .customMinus, background: .customOrange, foreground: .customWhite, isCircleShape: true) {
                         showExtraOptions.toggle()
                         tapDeletingButton?()
                     }
-                    .frame(width: 48)
-                    .frame(maxHeight: .infinity)
+                    .frame(width: 48, height: 48)
                 }
             }
-            .padding(12)
-            .frame(maxHeight: .infinity)
+            .padding(.vertical, 12)
+            .padding(.horizontal, 8)
+            .frame(height: nil)
             .background(Color.customLightOrange)
-            .offset(x: showExtraOptions ? 0 : 116)
+            .offset(x: showExtraOptions ? 0 : 172)
         }
         .frame(height: nil)
         .background(Color.customWhite)

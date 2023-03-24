@@ -25,7 +25,6 @@ struct CustomerTabBarWrapper: View {
             
             BottomNavigation(navTabs: NavigationTabs.customerTabs, selectedTab: $selectedTab)
                 .frame(height: tools.bottomBarIsVisible ? nil : 0)
-                .clipped()
         }
         .defaultScreenSettings()
     }

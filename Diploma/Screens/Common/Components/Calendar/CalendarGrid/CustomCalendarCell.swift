@@ -70,8 +70,8 @@ struct CustomCalendarCell: View {
             if case .inRange = cellState {
                 Rectangle()
                     .foregroundColor(cellBackground)
-                    .frame(height: 32)
-                    .padding(.horizontal, -16)
+                    .frame(height: 33)
+                    .padding(.horizontal, -17)
             }
             
             if rangeSelected,
@@ -79,8 +79,8 @@ struct CustomCalendarCell: View {
                 Rectangle()
                     .foregroundColor(.customLightOrange)
                     .frame(height: 32)
-                    .padding(.leading, 16)
-                    .padding(.trailing, -4)
+                    .padding(.leading, 20)
+                    .padding(.trailing, -12)
             }
             
             if rangeSelected,
@@ -88,8 +88,8 @@ struct CustomCalendarCell: View {
                 Rectangle()
                     .foregroundColor(.customLightOrange)
                     .frame(height: 32)
-                    .padding(.trailing, 16)
-                    .padding(.leading, -4)
+                    .padding(.trailing, 20)
+                    .padding(.leading, -12)
             }
             
             Circle()
@@ -101,6 +101,7 @@ struct CustomCalendarCell: View {
                 .foregroundColor(cellForeground)
                 .font(.customStandard)
         }
+        .frame(width: 32, height: 32)
         .zIndex(zIndex)
         .onTapGesture {
             if case .disabled = cellState { return }

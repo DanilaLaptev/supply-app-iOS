@@ -5,6 +5,21 @@ struct StatisticsScreen: View {
     
     @EnvironmentObject private var tools: ViewTools
     
+    @State private var isSharePresented: Bool = false
+    
+    var statistic: URL? {
+        let csvBulderResult = FileManager.shared.exportCSV(dataArray: [
+            StatisticModel(product: "apple", price: 50, ammount: 34),
+            StatisticModel(product: "banana", price: 70, ammount: 41),
+            StatisticModel(product: "potato", price: 40, ammount: 300)
+        ])
+        
+        if case .success(let filePath) = csvBulderResult {
+            return filePath
+        }
+        return nil
+    }
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
@@ -14,11 +29,16 @@ struct StatisticsScreen: View {
                 HStack {
                     Text("Статистика за 25 фев - 29 фев").font(.customSubtitle)
                     Spacer()
-                    CustomButton(icon: .customFile)
-                        .frame(width: 48, height: 48)
+                    CustomButton(icon: .customFile) {
+                        isSharePresented = true
+                    }
+                    .frame(width: 48, height: 48)
+                    .sheet(isPresented: $isSharePresented) {
+                        ActivityViewController(activityItems: [statistic!])
+                    }
                 }
-                
-                ExtendableSection {
+                                
+                ExtendableSection(isCollapsed: false) {
                     PieChart()
                 } headerContent: {
                     VStack(alignment: .leading, spacing: 4) {
@@ -27,8 +47,8 @@ struct StatisticsScreen: View {
                     }
                 }
                 
-                ExtendableSection {
-                    PieChart()
+                ExtendableSection(isCollapsed: false) {
+                    BarChart()
                 } headerContent: {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Доступная продукция").font(.customSubtitle)
@@ -39,13 +59,11 @@ struct StatisticsScreen: View {
             }
             .padding(.vertical, 8)
             .padding(.top, safeAreaEdgeInsets.top)
+            .padding(.bottom, safeAreaEdgeInsets.bottom)
         }
         .padding(.horizontal, 16)
         .background(Color.customLightGray)
         .defaultScreenSettings()
-        .onAppear {
-            tools.setBottomBarVisibility(true)
-        }
     }
 }
 

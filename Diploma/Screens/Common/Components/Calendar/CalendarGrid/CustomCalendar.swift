@@ -5,30 +5,35 @@ struct CustomCalendar: View {
     @Binding var rangeStartDate: Date?
     @Binding var rangeEndDate: Date?
     
+    @State var monthOffset = 0
+    
     var numberOfMonths = 2
     var disablePastDays = true
     
     private let calendar = Calendar(identifier: .gregorian)
     private let currentDate = Date()
     
-    private var currentMonth: Int {
-        calendar.component(.month, from: currentDate)
+    private var currentMonth: String {
+        return DateFormatManager.shared.getFormattedString(currentDate, dateFormat: "MMMM yyyy")
     }
     
     private var isRangeSelected: Bool {
         rangeStartDate != nil && rangeEndDate != nil
     }
     
-    
     internal func actualDate(day: Int, month: Int) -> Date? {
         let firstDayOfMonth = calendar.date(from: DateComponents(
             calendar: calendar,
             timeZone: .current,
             year: calendar.component(.year, from: Date()),
-            month: calendar.component(.month, from: Date()) + month
+            month: calendar.component(.month, from: Date()) + month,
+            hour: 0,
+            minute: 0,
+            second: 0,
+            nanosecond: 0
         ))
         
-        let actualDay = day - calendar.component(.weekday, from: firstDayOfMonth ?? Date()) + 2
+        let actualDay = day - calendar.component(.weekday, from: firstDayOfMonth ?? Date()) + 1
         let lastDay = calendar.component(.day, from: firstDayOfMonth!.endOfMonth())
         
         guard actualDay > 0 && actualDay <= lastDay else {
@@ -49,24 +54,31 @@ struct CustomCalendar: View {
         GeometryReader { geo in
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 16) {
-                    CustomSmallButton(icon: .customBackShort)
+                    CustomSmallButton(icon: .customBackShort) {
+                        if monthOffset > 0 {
+                            monthOffset -= 1
+                        }
+                    }
                     
-                    Text("\(Calendar(identifier: .gregorian).component(.month, from: actualDate(day: 6, month: 0)!))")
+                    Text(currentMonth)
                         .font(.customSubtitle)
                         .foregroundColor(.customOrange)
                     
-                    CustomSmallButton(icon: .customBackShort).rotationEffect(Angle(degrees: 180))
+                    CustomSmallButton(icon: .customBackShort) {
+                        monthOffset += 1
+                    }
+                    .rotationEffect(Angle(degrees: 180))
                 }
                 
-                HStack(spacing: 8) {
+                HStack(spacing: 0) {
                     ForEach((calendar.shortWeekdaySymbols), id: \.self) { day in
                         Text("\(day)")
+                            .lineLimit(1)
                             .foregroundColor(.customOrange)
                             .font(.customStandard)
                             .frame(maxWidth: .infinity)
                     }
                 }
-                .frame(width: geo.size.width - 48)
                 
                 RoundedRectangle(cornerRadius: .infinity)
                     .frame(height: 1)
@@ -74,34 +86,37 @@ struct CustomCalendar: View {
                 
                 ScrollView(.horizontal) {
                     HStack(alignment: .top) {
-                        ForEach(0...1, id: \.self) { month in
-                            VStack {
-                                ForEach(calendar.range(of: .weekOfMonth, in: .month, for: calendar.date(byAdding: .month, value: month, to: currentDate)!)!, id: \.self) { week in
+                        ForEach(0...16, id: \.self) { month in
+                            VStack(spacing: 0) {
+                                ForEach(getNumberOfWeeksInMonth(calendar.date(byAdding: .month, value: month, to: currentDate)!), id: \.self) { week in
+                                    Spacer()
                                     HStack {
                                         ForEach(1...7, id: \.self) { day in
+                                            Spacer()
                                             if let date = actualDate(day: (day + (week-1) * 7), month: month) {
                                                 let cellState = getCellState(date)
                                                 CustomCalendarCell(rangeSelected: isRangeSelected, cellState: cellState, date: date) {
                                                     selectCell(date)
                                                 }
-                                                .frame(maxWidth: .infinity)
                                             } else {
                                                 Circle()
                                                     .foregroundColor(.clear)
-                                                    .frame(maxWidth: .infinity)
+                                                    .frame(height: 32)
                                             }
+                                            Spacer()
                                         }
                                     }
+                                    Spacer()
                                 }
                             }
                             .clipped()
-                            .frame(width: geo.size.width - 48)
+                            .frame(width: geo.size.width)
                         }
                     }
+                    .offset(x: -(geo.size.width * CGFloat(monthOffset)) - CGFloat(monthOffset * 8))
                 }
             }
             .padding(.vertical , 16)
-            .padding(.horizontal , 24)
             .background(Color.customWhite)
             .cornerRadius(8)
         }
@@ -136,6 +151,11 @@ struct CustomCalendar: View {
         }
 
         return .enabled
+    }
+    
+    func getNumberOfWeeksInMonth(_ date: Date) -> Range<Int> {
+        let weeks = calendar.range(of: .weekOfMonth, in: .month, for: date)!
+        return weeks
     }
     
     func selectCell(_ date: Date) {

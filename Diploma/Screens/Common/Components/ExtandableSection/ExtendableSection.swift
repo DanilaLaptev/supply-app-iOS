@@ -6,9 +6,11 @@ struct ExtendableSection<Content: View, Header: View>: View {
     let headerContent: Header
     
     init(
+        isCollapsed: Bool = true,
         @ViewBuilder content: () -> Content,
         @ViewBuilder headerContent: () -> Header
     ) {
+        self._isCollapsed = .init(initialValue: isCollapsed)
         self.content = content()
         self.headerContent = headerContent()
     }

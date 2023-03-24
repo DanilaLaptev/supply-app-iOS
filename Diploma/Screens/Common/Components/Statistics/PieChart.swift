@@ -54,7 +54,7 @@ struct PieChart: View {
                     Circle()
                         .trim(from: index == 0 ? 0.0 : charDataObj.chartData[index-1].value/100,
                               to: charDataObj.chartData[index].value/100)
-                        .stroke(charDataObj.chartData[index].color,lineWidth: 24)
+                        .stroke(charDataObj.chartData[index].color, lineWidth: 24)
                         .onTapGesture {
                             indexOfTappedSlice = indexOfTappedSlice == index ? -1 : index
                         }

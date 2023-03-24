@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct StartLoadingScreen: View {
+    @StateObject var viewModel = LoadingScreenViewModel()
+    
     var body: some View {
         NavigationLink {
             SignInScreen()
