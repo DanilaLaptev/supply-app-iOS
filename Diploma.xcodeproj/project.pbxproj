@@ -40,6 +40,10 @@
 		99AA128C29CD935A002219E0 /* EncodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA128B29CD935A002219E0 /* EncodableExtension.swift */; };
 		99AA128E29CD943D002219E0 /* StatisticModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA128D29CD943D002219E0 /* StatisticModel.swift */; };
 		99AA129129CDE6B7002219E0 /* LoadingScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA129029CDE6B7002219E0 /* LoadingScreenViewModel.swift */; };
+		99AA129829D229C7002219E0 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA129729D229C7002219E0 /* UserRole.swift */; };
+		99AA129A29D22BC7002219E0 /* AuthorizationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA129929D22BC7002219E0 /* AuthorizationWrapper.swift */; };
+		99AA12A129D5713F002219E0 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA12A029D5713F002219E0 /* SignUpViewModel.swift */; };
+		99AA12A329D57391002219E0 /* TemplateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99AA12A229D57391002219E0 /* TemplateInfo.plist */; };
 		99D4541829AC7E7700462A8F /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541729AC7E7700462A8F /* CustomButton.swift */; };
 		99D4541B29AC7ECD00462A8F /* BottomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541A29AC7ECD00462A8F /* BottomNavigation.swift */; };
 		99D4541D29AC7EDD00462A8F /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541C29AC7EDD00462A8F /* Counter.swift */; };
@@ -121,6 +125,10 @@
 		99AA128B29CD935A002219E0 /* EncodableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableExtension.swift; sourceTree = "<group>"; };
 		99AA128D29CD943D002219E0 /* StatisticModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticModel.swift; sourceTree = "<group>"; };
 		99AA129029CDE6B7002219E0 /* LoadingScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreenViewModel.swift; sourceTree = "<group>"; };
+		99AA129729D229C7002219E0 /* UserRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
+		99AA129929D22BC7002219E0 /* AuthorizationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationWrapper.swift; sourceTree = "<group>"; };
+		99AA12A029D5713F002219E0 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		99AA12A229D57391002219E0 /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
 		99D4541729AC7E7700462A8F /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		99D4541A29AC7ECD00462A8F /* BottomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigation.swift; sourceTree = "<group>"; };
 		99D4541C29AC7EDD00462A8F /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
@@ -272,6 +280,7 @@
 		99A561DF29A0FCFD00F9932A /* Diploma */ = {
 			isa = PBXGroup;
 			children = (
+				99AA12A229D57391002219E0 /* TemplateInfo.plist */,
 				99A561EE29A0FDB900F9932A /* Info.plist */,
 				99D4542129AC7F1600462A8F /* Common */,
 				99D4547629B362A400462A8F /* Screens */,
@@ -323,6 +332,15 @@
 				99AA129029CDE6B7002219E0 /* LoadingScreenViewModel.swift */,
 			);
 			path = LoadingScreen;
+			sourceTree = "<group>";
+		};
+		99AA129B29D22BE7002219E0 /* SignUp */ = {
+			isa = PBXGroup;
+			children = (
+				99A0952129B70B2300C0286D /* SignUpScreen.swift */,
+				99AA12A029D5713F002219E0 /* SignUpViewModel.swift */,
+			);
+			path = SignUp;
 			sourceTree = "<group>";
 		};
 		99D4541629AC7E5200462A8F /* Components */ = {
@@ -437,11 +455,12 @@
 		99D4547529B3628E00462A8F /* Unauthorized */ = {
 			isa = PBXGroup;
 			children = (
+				99A0952529B70B8C00C0286D /* LocationScreen.swift */,
+				99A0952329B70B7400C0286D /* ContactsScreen.swift */,
+				99AA129B29D22BE7002219E0 /* SignUp */,
 				99AA128F29CDE69E002219E0 /* LoadingScreen */,
 				99A0951F29B70B1800C0286D /* SignInScreen.swift */,
-				99A0952129B70B2300C0286D /* SignUpScreen.swift */,
-				99A0952329B70B7400C0286D /* ContactsScreen.swift */,
-				99A0952529B70B8C00C0286D /* LocationScreen.swift */,
+				99AA129929D22BC7002219E0 /* AuthorizationWrapper.swift */,
 			);
 			path = Unauthorized;
 			sourceTree = "<group>";
@@ -463,6 +482,7 @@
 				99D4548129B36DEB00462A8F /* Profile */,
 				99A561E229A0FCFD00F9932A /* ContentView.swift */,
 				99D4549029B3CB8800462A8F /* ProductScreen.swift */,
+				99AA129729D229C7002219E0 /* UserRole.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -627,6 +647,7 @@
 				99A561E829A0FCFE00F9932A /* Preview Assets.xcassets in Resources */,
 				99D4543429AE4E5100462A8F /* Icons.xcassets in Resources */,
 				99A561E529A0FCFE00F9932A /* Assets.xcassets in Resources */,
+				99AA12A329D57391002219E0 /* TemplateInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -659,6 +680,7 @@
 				99A0951329B5B51700C0286D /* OrderingScreen.swift in Sources */,
 				99AA128629CCB0B2002219E0 /* Debugger.swift in Sources */,
 				99D4548F29B3C9F200462A8F /* Header.swift in Sources */,
+				99AA12A129D5713F002219E0 /* SignUpViewModel.swift in Sources */,
 				99AA128C29CD935A002219E0 /* EncodableExtension.swift in Sources */,
 				99D4542629AC807800462A8F /* ColorExtension.swift in Sources */,
 				99A0954A29BAFCB600C0286D /* SupplierMainScreen.swift in Sources */,
@@ -678,6 +700,7 @@
 				99A0956729BC981800C0286D /* ImageModifier.swift in Sources */,
 				99D4544629AFC84E00462A8F /* PieChart.swift in Sources */,
 				99D4542F29AE027400462A8F /* CustomButtonStyles.swift in Sources */,
+				99AA129829D229C7002219E0 /* UserRole.swift in Sources */,
 				99A0952429B70B7400C0286D /* ContactsScreen.swift in Sources */,
 				99AA126029C82273002219E0 /* DateRangeSegment.swift in Sources */,
 				99D4544829AFC87A00462A8F /* BarChart.swift in Sources */,
@@ -687,6 +710,7 @@
 				99D4548729B39C4C00462A8F /* ProfileScreen.swift in Sources */,
 				99A0951E29B6305B00C0286D /* OrderStateView.swift in Sources */,
 				99A0957F29BFA39100C0286D /* SupplierTabBarWrapper.swift in Sources */,
+				99AA129A29D22BC7002219E0 /* AuthorizationWrapper.swift in Sources */,
 				99AA126429C82BEB002219E0 /* CalendarView.swift in Sources */,
 				99D4544329AE923F00462A8F /* ShadowViewExtension.swift in Sources */,
 				99D4549D29B45D3B00462A8F /* ExtendableSectionHeader.swift in Sources */,

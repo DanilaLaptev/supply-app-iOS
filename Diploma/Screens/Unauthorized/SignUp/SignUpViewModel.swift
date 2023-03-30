@@ -1,16 +1,13 @@
 import Foundation
 import SwiftUI
 
-protocol LoadingScreenViewModelProtocol {
+protocol SignUpViewModelProtocol {
     func checkUserAuth()
 }
 
-class LoadingScreenViewModel: ObservableObject, LoadingScreenViewModelProtocol {
+class SignUpViewModel: ObservableObject, LoadingScreenViewModelProtocol {
     @Published var nextScreenTag: String? = nil
-
-    func binding() {
-        
-    }
+    
     
     func checkUserAuth() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
