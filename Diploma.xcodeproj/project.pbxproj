@@ -51,7 +51,8 @@
 		99C14C5829D6FACF00B8D3E2 /* StoragesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5729D6FACF00B8D3E2 /* StoragesProvider.swift */; };
 		99C14C5B29D6FB0100B8D3E2 /* RequestHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5A29D6FB0100B8D3E2 /* RequestHeader.swift */; };
 		99C14C5D29D6FB4400B8D3E2 /* RequestDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5C29D6FB4400B8D3E2 /* RequestDefaults.swift */; };
-		99C14C6029D7150A00B8D3E2 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5F29D7150A00B8D3E2 /* Loader.swift */; };
+		99C14C6029D7150A00B8D3E2 /* LoadingIndicator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5F29D7150A00B8D3E2 /* LoadingIndicator.swift */; };
+		99C14C6229D72A5800B8D3E2 /* LoaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C6129D72A5800B8D3E2 /* LoaderView.swift */; };
 		99D4541829AC7E7700462A8F /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541729AC7E7700462A8F /* CustomButton.swift */; };
 		99D4541B29AC7ECD00462A8F /* BottomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541A29AC7ECD00462A8F /* BottomNavigation.swift */; };
 		99D4541D29AC7EDD00462A8F /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541C29AC7EDD00462A8F /* Counter.swift */; };
@@ -145,7 +146,8 @@
 		99C14C5729D6FACF00B8D3E2 /* StoragesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoragesProvider.swift; sourceTree = "<group>"; };
 		99C14C5A29D6FB0100B8D3E2 /* RequestHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHeader.swift; sourceTree = "<group>"; };
 		99C14C5C29D6FB4400B8D3E2 /* RequestDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDefaults.swift; sourceTree = "<group>"; };
-		99C14C5F29D7150A00B8D3E2 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
+		99C14C5F29D7150A00B8D3E2 /* LoadingIndicator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingIndicator.swift; sourceTree = "<group>"; };
+		99C14C6129D72A5800B8D3E2 /* LoaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderView.swift; sourceTree = "<group>"; };
 		99D4541729AC7E7700462A8F /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		99D4541A29AC7ECD00462A8F /* BottomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigation.swift; sourceTree = "<group>"; };
 		99D4541C29AC7EDD00462A8F /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
@@ -419,7 +421,8 @@
 				99D454A029B4959200462A8F /* BottomSheet.swift */,
 				99D454AB29B4E48700462A8F /* MapView.swift */,
 				99AA128729CCB411002219E0 /* ActivityViewController.swift */,
-				99C14C5F29D7150A00B8D3E2 /* Loader.swift */,
+				99C14C5F29D7150A00B8D3E2 /* LoadingIndicator.swift */,
+				99C14C6129D72A5800B8D3E2 /* LoaderView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -834,6 +837,7 @@
 				99D4544329AE923F00462A8F /* ShadowViewExtension.swift in Sources */,
 				99D4549D29B45D3B00462A8F /* ExtendableSectionHeader.swift in Sources */,
 				99A0952229B70B2300C0286D /* SignUpScreen.swift in Sources */,
+				99C14C6229D72A5800B8D3E2 /* LoaderView.swift in Sources */,
 				99D4549829B45BA300462A8F /* OrderCard.swift in Sources */,
 				99D4548529B36E0A00462A8F /* OrdersListScreen.swift in Sources */,
 				99AA128329CCAE73002219E0 /* FileManager.swift in Sources */,
@@ -851,7 +855,7 @@
 				99A0956F29BD0AFD00C0286D /* CustomerTabBarWrapper.swift in Sources */,
 				99AA125D29C821E5002219E0 /* DateRangeSegmentsView.swift in Sources */,
 				99D4549A29B45CC900462A8F /* ExtendableSection.swift in Sources */,
-				99C14C6029D7150A00B8D3E2 /* Loader.swift in Sources */,
+				99C14C6029D7150A00B8D3E2 /* LoadingIndicator.swift in Sources */,
 				99D4544129AE8CA700462A8F /* CustomAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
