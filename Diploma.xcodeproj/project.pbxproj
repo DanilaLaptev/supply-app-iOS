@@ -45,6 +45,13 @@
 		99AA129A29D22BC7002219E0 /* AuthorizationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA129929D22BC7002219E0 /* AuthorizationWrapper.swift */; };
 		99AA12A129D5713F002219E0 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA12A029D5713F002219E0 /* SignUpViewModel.swift */; };
 		99AA12A329D57391002219E0 /* TemplateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99AA12A229D57391002219E0 /* TemplateInfo.plist */; };
+		99C14C5229D6FA3300B8D3E2 /* AuthorizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5129D6FA3300B8D3E2 /* AuthorizationProvider.swift */; };
+		99C14C5429D6FA9200B8D3E2 /* OrganizationsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5329D6FA9200B8D3E2 /* OrganizationsProvider.swift */; };
+		99C14C5629D6FA9E00B8D3E2 /* SuppliesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5529D6FA9E00B8D3E2 /* SuppliesProvider.swift */; };
+		99C14C5829D6FACF00B8D3E2 /* StoragesProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5729D6FACF00B8D3E2 /* StoragesProvider.swift */; };
+		99C14C5B29D6FB0100B8D3E2 /* RequestHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5A29D6FB0100B8D3E2 /* RequestHeader.swift */; };
+		99C14C5D29D6FB4400B8D3E2 /* RequestDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5C29D6FB4400B8D3E2 /* RequestDefaults.swift */; };
+		99C14C6029D7150A00B8D3E2 /* Loader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5F29D7150A00B8D3E2 /* Loader.swift */; };
 		99D4541829AC7E7700462A8F /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541729AC7E7700462A8F /* CustomButton.swift */; };
 		99D4541B29AC7ECD00462A8F /* BottomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541A29AC7ECD00462A8F /* BottomNavigation.swift */; };
 		99D4541D29AC7EDD00462A8F /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541C29AC7EDD00462A8F /* Counter.swift */; };
@@ -132,6 +139,13 @@
 		99AA129929D22BC7002219E0 /* AuthorizationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationWrapper.swift; sourceTree = "<group>"; };
 		99AA12A029D5713F002219E0 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
 		99AA12A229D57391002219E0 /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
+		99C14C5129D6FA3300B8D3E2 /* AuthorizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationProvider.swift; sourceTree = "<group>"; };
+		99C14C5329D6FA9200B8D3E2 /* OrganizationsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationsProvider.swift; sourceTree = "<group>"; };
+		99C14C5529D6FA9E00B8D3E2 /* SuppliesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuppliesProvider.swift; sourceTree = "<group>"; };
+		99C14C5729D6FACF00B8D3E2 /* StoragesProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoragesProvider.swift; sourceTree = "<group>"; };
+		99C14C5A29D6FB0100B8D3E2 /* RequestHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestHeader.swift; sourceTree = "<group>"; };
+		99C14C5C29D6FB4400B8D3E2 /* RequestDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RequestDefaults.swift; sourceTree = "<group>"; };
+		99C14C5F29D7150A00B8D3E2 /* Loader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Loader.swift; sourceTree = "<group>"; };
 		99D4541729AC7E7700462A8F /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		99D4541A29AC7ECD00462A8F /* BottomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigation.swift; sourceTree = "<group>"; };
 		99D4541C29AC7EDD00462A8F /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
@@ -295,6 +309,7 @@
 		99A561DF29A0FCFD00F9932A /* Diploma */ = {
 			isa = PBXGroup;
 			children = (
+				99C14C5029D6FA0B00B8D3E2 /* Network */,
 				99AA12A229D57391002219E0 /* TemplateInfo.plist */,
 				99A561EE29A0FDB900F9932A /* Info.plist */,
 				99D4542129AC7F1600462A8F /* Common */,
@@ -358,6 +373,35 @@
 			path = SignUp;
 			sourceTree = "<group>";
 		};
+		99C14C5029D6FA0B00B8D3E2 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+				99C14C5E29D6FC2500B8D3E2 /* Dtos */,
+				99C14C5929D6FAE700B8D3E2 /* Providers */,
+				99C14C5A29D6FB0100B8D3E2 /* RequestHeader.swift */,
+				99C14C5C29D6FB4400B8D3E2 /* RequestDefaults.swift */,
+			);
+			path = Network;
+			sourceTree = "<group>";
+		};
+		99C14C5929D6FAE700B8D3E2 /* Providers */ = {
+			isa = PBXGroup;
+			children = (
+				99C14C5129D6FA3300B8D3E2 /* AuthorizationProvider.swift */,
+				99C14C5329D6FA9200B8D3E2 /* OrganizationsProvider.swift */,
+				99C14C5529D6FA9E00B8D3E2 /* SuppliesProvider.swift */,
+				99C14C5729D6FACF00B8D3E2 /* StoragesProvider.swift */,
+			);
+			path = Providers;
+			sourceTree = "<group>";
+		};
+		99C14C5E29D6FC2500B8D3E2 /* Dtos */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Dtos;
+			sourceTree = "<group>";
+		};
 		99D4541629AC7E5200462A8F /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -375,6 +419,7 @@
 				99D454A029B4959200462A8F /* BottomSheet.swift */,
 				99D454AB29B4E48700462A8F /* MapView.swift */,
 				99AA128729CCB411002219E0 /* ActivityViewController.swift */,
+				99C14C5F29D7150A00B8D3E2 /* Loader.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -606,7 +651,6 @@
 				EA15C5ED5EB5F0EA9CB9DE51 /* Pods-Diploma.debug.xcconfig */,
 				88207BC184EEB39CAF3D85A0 /* Pods-Diploma.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -621,6 +665,7 @@
 				99A561D929A0FCFD00F9932A /* Sources */,
 				99A561DA29A0FCFD00F9932A /* Frameworks */,
 				99A561DB29A0FCFD00F9932A /* Resources */,
+				FE87C5F7A07B68EEE9CD94FE /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -702,6 +747,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		FE87C5F7A07B68EEE9CD94FE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Diploma/Pods-Diploma-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Diploma/Pods-Diploma-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Diploma/Pods-Diploma-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -709,6 +771,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				99C14C5B29D6FB0100B8D3E2 /* RequestHeader.swift in Sources */,
 				99D4548329B36DFA00462A8F /* MainScreen.swift in Sources */,
 				99AA128A29CD8419002219E0 /* DateFormatManager.swift in Sources */,
 				99D4541D29AC7EDD00462A8F /* Counter.swift in Sources */,
@@ -728,6 +791,7 @@
 				99D454AE29B50C4600462A8F /* SuppliersListFilterScreen.swift in Sources */,
 				99AA129129CDE6B7002219E0 /* LoadingScreenViewModel.swift in Sources */,
 				99D4542829AD242A00462A8F /* FontsExtension.swift in Sources */,
+				99C14C5429D6FA9200B8D3E2 /* OrganizationsProvider.swift in Sources */,
 				99A0951329B5B51700C0286D /* OrderingScreen.swift in Sources */,
 				99AA128629CCB0B2002219E0 /* Debugger.swift in Sources */,
 				99D4548F29B3C9F200462A8F /* Header.swift in Sources */,
@@ -735,6 +799,7 @@
 				99AA128C29CD935A002219E0 /* EncodableExtension.swift in Sources */,
 				99D4542629AC807800462A8F /* ColorExtension.swift in Sources */,
 				99A0954A29BAFCB600C0286D /* SupplierMainScreen.swift in Sources */,
+				99C14C5229D6FA3300B8D3E2 /* AuthorizationProvider.swift in Sources */,
 				99D4547129B35CBB00462A8F /* PlaceCard.swift in Sources */,
 				99D4549529B3D6BD00462A8F /* BottomNavigationExtension.swift in Sources */,
 				99D454A829B4E11500462A8F /* SmallTag.swift in Sources */,
@@ -747,8 +812,10 @@
 				99AA126229C82BB4002219E0 /* DateExtensions.swift in Sources */,
 				99D4549129B3CB8800462A8F /* ProductScreen.swift in Sources */,
 				99D4541B29AC7ECD00462A8F /* BottomNavigation.swift in Sources */,
+				99C14C5D29D6FB4400B8D3E2 /* RequestDefaults.swift in Sources */,
 				99D454AA29B4E28100462A8F /* BigTag.swift in Sources */,
 				99A0956729BC981800C0286D /* ImageModifier.swift in Sources */,
+				99C14C5829D6FACF00B8D3E2 /* StoragesProvider.swift in Sources */,
 				99D4544629AFC84E00462A8F /* PieChart.swift in Sources */,
 				99D4542F29AE027400462A8F /* CustomButtonStyles.swift in Sources */,
 				99AA129829D229C7002219E0 /* UserRole.swift in Sources */,
@@ -756,6 +823,7 @@
 				99AA126029C82273002219E0 /* DateRangeSegment.swift in Sources */,
 				99D4544829AFC87A00462A8F /* BarChart.swift in Sources */,
 				99D4543B29AE6FF500462A8F /* BottomNavigationTab.swift in Sources */,
+				99C14C5629D6FA9E00B8D3E2 /* SuppliesProvider.swift in Sources */,
 				99D4548929B39C5F00462A8F /* StatisticsScreen.swift in Sources */,
 				99A0955529BB333500C0286D /* EditProductScreen.swift in Sources */,
 				99D4548729B39C4C00462A8F /* ProfileScreen.swift in Sources */,
@@ -783,6 +851,7 @@
 				99A0956F29BD0AFD00C0286D /* CustomerTabBarWrapper.swift in Sources */,
 				99AA125D29C821E5002219E0 /* DateRangeSegmentsView.swift in Sources */,
 				99D4549A29B45CC900462A8F /* ExtendableSection.swift in Sources */,
+				99C14C6029D7150A00B8D3E2 /* Loader.swift in Sources */,
 				99D4544129AE8CA700462A8F /* CustomAlert.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
