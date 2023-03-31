@@ -4,7 +4,7 @@ struct AuthorizationWrapper: View {
     public static let tag = "AuthorizationWrapper"
 
     @EnvironmentObject private var tools: ViewTools
-    @State var isUserAuthorized = true
+    @State var isUserAuthorized = false
     @State var userRole: UserRole = .supplier
 
     var body: some View {

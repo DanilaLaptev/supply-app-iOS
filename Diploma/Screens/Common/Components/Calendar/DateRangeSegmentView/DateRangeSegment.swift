@@ -26,7 +26,7 @@ struct DateRangeSegment: View {
     }
     
     var body: some View {
-        HStack(alignment: .center, spacing: 8) {
+        HStack(alignment: .center, spacing: 2) {
             VStack(alignment: .leading, spacing: 4) {
                 Text(title)
                     .font(.customStandard)

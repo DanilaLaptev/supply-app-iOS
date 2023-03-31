@@ -1,11 +1,7 @@
 import Foundation
 import SwiftUI
 
-protocol SignUpViewModelProtocol {
-    func checkUserAuth()
-}
-
-class SignUpViewModel: ObservableObject, LoadingScreenViewModelProtocol {
+class SignUpViewModel: ObservableObject {
     @Published var nextScreenTag: String? = nil
     
     

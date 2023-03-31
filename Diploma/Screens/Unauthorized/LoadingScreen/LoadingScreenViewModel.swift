@@ -1,11 +1,7 @@
 import Foundation
 import SwiftUI
 
-protocol LoadingScreenViewModelProtocol {
-    func checkUserAuth()
-}
-
-class LoadingScreenViewModel: ObservableObject, LoadingScreenViewModelProtocol {
+class LoadingScreenViewModel: ObservableObject {
     @Published var nextScreenTag: String? = nil
 
     func binding() {
