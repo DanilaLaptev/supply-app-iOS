@@ -2,7 +2,8 @@ import SwiftUI
 
 struct ProductScreen: View {
     public static let tag = "ProductScreen"
-    @EnvironmentObject private var tools: ViewTools
+    
+    @StateObject private var tools = ViewManager.shared
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -52,12 +53,9 @@ struct ProductScreen: View {
 }
 
 struct ProductScreen_Previews: PreviewProvider {
-    @StateObject static var viewTools = ViewTools()
-    
     static var previews: some View {
         NavigationView {
             ProductScreen()
-                .environmentObject(viewTools)
         }
     }
 }

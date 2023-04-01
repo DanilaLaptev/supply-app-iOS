@@ -7,7 +7,7 @@ enum AlertType : String {
 }
 
 struct CustomAlert: View {
-    @EnvironmentObject private var tools: ViewTools
+    private var alertsManager = AlertManager.shared
     @State private var autoDismissTimer = Timer.publish(every: 3, on: .main, in: .common).autoconnect()
     
     private let model: AlertModel
@@ -42,7 +42,7 @@ struct CustomAlert: View {
             
             Spacer()
             Button {
-                tools.removeAlert(model)
+                alertsManager.removeAlert(model)
             } label: {
                 Image.customPlus
                     .frame(width: 16, height: 16)
@@ -57,7 +57,7 @@ struct CustomAlert: View {
         .bottomShadow()
         .padding(.horizontal, 24)
         .onReceive(autoDismissTimer) { _ in
-            tools.removeAlert(model)
+            alertsManager.removeAlert(model)
         }
     }
 }

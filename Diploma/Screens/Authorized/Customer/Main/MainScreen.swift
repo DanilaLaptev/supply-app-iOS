@@ -3,7 +3,8 @@ import SwiftUI
 struct MainScreen: View {
     public static let tag = "MainScreen"
     
-    @EnvironmentObject private var tools: ViewTools
+    
+    @StateObject private var tools = ViewManager.shared
     
     var body: some View {
         VStack {
@@ -40,12 +41,9 @@ struct MainScreen: View {
 }
 
 struct MainScreen_Previews: PreviewProvider {
-    @StateObject static var viewTools = ViewTools()
-    
     static var previews: some View {
         NavigationView {
             MainScreen()
-                .environmentObject(viewTools)
         }
     }
 }

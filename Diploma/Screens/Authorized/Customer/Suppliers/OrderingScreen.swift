@@ -3,7 +3,8 @@ import SwiftUI
 struct OrderingScreen: View {
     public static let tag = "OrderingScreen"
 
-    @EnvironmentObject var viewTools: ViewTools
+    
+    @StateObject private var tools = ViewManager.shared
 
     var body: some View {
         VStack(spacing: 0) {
@@ -46,16 +47,13 @@ struct OrderingScreen: View {
         .background(Color.customLightGray)
         .defaultScreenSettings()
         .onAppear {
-            viewTools.setBottomBarVisibility(false)
+            tools.setBottomBarVisibility(false)
         }
     }
 }
 
 struct OrderingScreen_Previews: PreviewProvider {
-    @State static var tools = ViewTools()
-
     static var previews: some View {
         OrderingScreen()
-            .environmentObject(tools)
     }
 }

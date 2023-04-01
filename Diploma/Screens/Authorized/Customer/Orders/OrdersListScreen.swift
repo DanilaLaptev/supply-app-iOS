@@ -3,7 +3,8 @@ import SwiftUI
 struct OrdersListScreen: View {
     public static let tag = "OrdersListScreen"
     
-    @EnvironmentObject private var tools: ViewTools
+    
+    @StateObject private var tools = ViewManager.shared
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -49,12 +50,9 @@ struct OrdersListScreen: View {
 }
 
 struct OrdersScreen_Previews: PreviewProvider {
-    @StateObject static var viewTools = ViewTools()
-    
     static var previews: some View {
         NavigationView {
             OrdersListScreen()
-                .environmentObject(viewTools)
         }
     }
 }

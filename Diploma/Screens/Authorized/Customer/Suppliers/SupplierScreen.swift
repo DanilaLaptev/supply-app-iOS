@@ -3,7 +3,8 @@ import SwiftUI
 struct SupplierScreen: View {
     public static let tag = "SupplierScreen"
 
-    @EnvironmentObject var viewTools: ViewTools
+    
+    @StateObject private var tools = ViewManager.shared
     @State private var tagSelection: String? = nil
 
     var body: some View {
@@ -83,17 +84,15 @@ struct SupplierScreen: View {
         .background(Color.customLightGray)
         .defaultScreenSettings()
         .onAppear {
-            viewTools.setBottomBarVisibility(false)
+            tools.setBottomBarVisibility(false)
         }
     }
 }
 
 struct SupplierScreen_Previews: PreviewProvider {
-    @State static var tools = ViewTools()
     static var previews: some View {
         NavigationView {
             SupplierScreen()
-                .environmentObject(tools)
         }
     }
 }

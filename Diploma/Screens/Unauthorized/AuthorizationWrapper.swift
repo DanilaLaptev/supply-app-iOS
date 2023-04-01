@@ -3,7 +3,8 @@ import SwiftUI
 struct AuthorizationWrapper: View {
     public static let tag = "AuthorizationWrapper"
 
-    @EnvironmentObject private var tools: ViewTools
+    
+    @StateObject private var tools = ViewManager.shared
     @State var isUserAuthorized = false
     @State var userRole: UserRole = .supplier
 
@@ -22,12 +23,9 @@ struct AuthorizationWrapper: View {
 }
 
 struct AuthorizationWrapper_Previews: PreviewProvider {
-    @StateObject private static var tools = ViewTools()
-
     static var previews: some View {
         NavigationView {
             AuthorizationWrapper()
-                .environmentObject(tools)
         }
     }
 }

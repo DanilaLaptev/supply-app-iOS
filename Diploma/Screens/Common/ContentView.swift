@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewTools = ViewTools()
+    @StateObject private var alertsManager = AlertManager.shared
     
     var body: some View {
         ZStack {
@@ -14,7 +14,7 @@ struct ContentView: View {
             }
             
             VStack(spacing: 8) {
-                ForEach(viewTools.alertsList) { alertModel in
+                ForEach(alertsManager.alertsList) { alertModel in
                     CustomAlert(alertModel)
                 }
                 .animation(.easeInOut)
@@ -25,7 +25,6 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .edgesIgnoringSafeArea(.all)
-        .environmentObject(viewTools)
     }
 }
 

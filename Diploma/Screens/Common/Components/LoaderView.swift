@@ -7,7 +7,7 @@ struct LoaderView: View {
             LoadingIndicator(isLoading: $loading, loaderStyle: .medium)
         }
         .padding(16)
-        .background(Color.customGray)
+        .background(Color.customGray.opacity(0.6))
         .cornerRadius(8)
     }
 }

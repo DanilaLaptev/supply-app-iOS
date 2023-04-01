@@ -2,7 +2,9 @@ import SwiftUI
 
 struct CustomerTabBarWrapper: View {
     public static let tag = "CustomerTabBarWrapper"
-    @EnvironmentObject private var tools: ViewTools
+    
+    @StateObject private var tools = ViewManager.shared
+    
     @State private var selectedTab: CustomTab = NavigationTabs.customerTabs[0]
     
     var body: some View {
@@ -31,12 +33,9 @@ struct CustomerTabBarWrapper: View {
 }
 
 struct CustomerTabBarWrapper_Previews: PreviewProvider {
-    @StateObject static var viewTools = ViewTools()
-    
     static var previews: some View {
         NavigationView {
             CustomerTabBarWrapper()
-                .environmentObject(viewTools)
         }
     }
 }

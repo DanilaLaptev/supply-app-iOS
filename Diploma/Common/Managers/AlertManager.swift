@@ -1,14 +1,12 @@
 import Foundation
-import SwiftUI
 
-final class ViewTools: ObservableObject {
-    @Published private(set) var bottomBarIsVisible: Bool = false
+final class AlertManager: ObservableObject {
+    static let shared = AlertManager()
+    private init() { }
+    
     @Published private(set) var alertsList: [AlertModel] = []
     private let alertsLimit = 3
     
-    func setBottomBarVisibility(_ isVisible: Bool) {
-        bottomBarIsVisible = isVisible
-    }
     
     func showAlert(_ alert: AlertModel) {
         alertsList.insert(alert, at: 0)
@@ -25,4 +23,3 @@ final class ViewTools: ObservableObject {
         alertsList = []
     }
 }
-

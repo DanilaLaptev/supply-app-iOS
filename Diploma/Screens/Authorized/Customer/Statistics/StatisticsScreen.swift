@@ -3,7 +3,8 @@ import SwiftUI
 struct StatisticsScreen: View {
     public static let tag = "StatisticsScreen"
     
-    @EnvironmentObject private var tools: ViewTools
+    
+    @StateObject private var tools = ViewManager.shared
     
     @State private var isSharePresented: Bool = false
     
@@ -68,12 +69,9 @@ struct StatisticsScreen: View {
 }
 
 struct StatisticsScreen_Previews: PreviewProvider {
-    @StateObject static var viewTools = ViewTools()
-    
     static var previews: some View {
         NavigationView {
             StatisticsScreen()
-                .environmentObject(viewTools)
         }
     }
 }

@@ -4,7 +4,9 @@ struct LocationScreen: View {
     public static let tag = "LocationScreen"
     
     @State private var tagSelection: String? = nil
-    @EnvironmentObject private var tools: ViewTools
+    
+    @StateObject private var tools = ViewManager.shared
+    @StateObject private var alertManager = AlertManager.shared
     
     @State var landmarks: [Landmark] = [
         Landmark(name: "Sydney Harbour Bridge", location: .init(latitude: -33.852222, longitude: 151.210556)),
@@ -33,7 +35,7 @@ struct LocationScreen: View {
                     NavigationLink(destination: MainScreen(), tag: MainScreen.tag, selection: $tagSelection) {
                         CustomButton(label: Text("Завершить регистрацию")) {
                             counter += 1
-                            tools.showAlert(AlertModel(type: .error, description: "description \(counter)"))
+                            alertManager.showAlert(AlertModel(type: .error, description: "description \(counter)"))
                         }
                     }
                 }

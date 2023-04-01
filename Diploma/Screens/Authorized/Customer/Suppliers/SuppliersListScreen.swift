@@ -4,7 +4,8 @@ import SwiftUI
 struct SuppliersListScreen: View {
     public static let tag = "SuppliersListScreen"
     
-    @EnvironmentObject private var tools: ViewTools
+    
+    @StateObject private var tools = ViewManager.shared
     
     @State private var tagSelection: String? = nil
 
@@ -65,12 +66,9 @@ struct SuppliersListScreen: View {
 }
 
 struct SuppliersScreen_Previews: PreviewProvider {
-    @StateObject static var viewTools = ViewTools()
-    
     static var previews: some View {
         NavigationView {
             SuppliersListScreen()
-                .environmentObject(viewTools)
         }
     }
 }

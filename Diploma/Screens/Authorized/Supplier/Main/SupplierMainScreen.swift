@@ -4,7 +4,7 @@ struct SupplierMainScreen: View {
     public static let tag = "SupplierMainScreen"
     @State var showEditProductScreen = false
     
-    @EnvironmentObject var tools: ViewTools
+    @StateObject private var tools = ViewManager.shared
     
     @State private var tagSelection: String? = nil
     
@@ -53,11 +53,9 @@ struct SupplierMainScreen: View {
 }
 
 struct SupplierMainScreen_Previews: PreviewProvider {
-    @StateObject static var tools = ViewTools()
     static var previews: some View {
         NavigationView {
             SupplierMainScreen()
         }
-        .environmentObject(tools)
     }
 }
