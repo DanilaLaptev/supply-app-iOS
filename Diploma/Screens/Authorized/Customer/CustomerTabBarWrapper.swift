@@ -29,6 +29,9 @@ struct CustomerTabBarWrapper: View {
                 .frame(height: tools.bottomBarIsVisible ? nil : 0)
         }
         .defaultScreenSettings()
+        .onAppear {
+            tools.bottomBarIsVisible = true
+        }
     }
 }
 

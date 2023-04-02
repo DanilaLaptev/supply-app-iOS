@@ -32,7 +32,7 @@ struct SuppliersListScreen: View {
                 BottomSheet(background: .customLightGray) {
                     VStack {
                         HStack(spacing: 8) {
-                            CustomTextField(icon: .customSearch, isDividerVisible: true, placeholder: "Поиск", background: .customWhite)
+                            CustomTextField(textFieldValue: .constant(""), icon: .customSearch, isDividerVisible: true, placeholder: "Поиск", background: .customWhite)
                             CustomButton(icon: .customFilter) {
                                 showFilters.toggle()
                             }
@@ -60,7 +60,7 @@ struct SuppliersListScreen: View {
         .background(Color.customLightGray)
         .defaultScreenSettings()
         .onAppear {
-            tools.setBottomBarVisibility(true)
+            self.tools.bottomBarIsVisible = true
         }
     }
 }

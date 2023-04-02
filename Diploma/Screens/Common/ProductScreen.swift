@@ -8,7 +8,7 @@ struct ProductScreen: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 8) {
-                Header()
+                Header(title: "Title")
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                 
@@ -47,7 +47,7 @@ struct ProductScreen: View {
         .background(Color.customLightGray)
         .defaultScreenSettings()
         .onAppear {
-            tools.setBottomBarVisibility(false)
+            self.tools.bottomBarIsVisible = false
         }
     }
 }

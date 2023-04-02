@@ -13,9 +13,7 @@ struct OrderScreen: View {
         VStack {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    Header {
-                        
-                    }
+                    Header(title: "Title") { }
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                     

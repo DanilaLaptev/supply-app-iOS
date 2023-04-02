@@ -1,7 +1,7 @@
 import Foundation
 import SwiftUI
 
-class SignUpViewModel: ObservableObject {
+class MainSignUpViewModel: ObservableObject {
     @Published var nextScreenTag: String? = nil
     
     

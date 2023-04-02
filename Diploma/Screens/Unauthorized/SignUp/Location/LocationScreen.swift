@@ -27,9 +27,9 @@ struct LocationScreen: View {
             
             BottomSheet {
                 VStack(alignment: .leading, spacing: 8) {
-                    Header()
-                    
-                    CustomTextField(placeholder: "Адрес организации")
+                    Header(title: "Адрес")
+
+                    CustomTextField(textFieldValue: .constant(""), placeholder: "Адрес организации")
                         .padding(.bottom, 24)
                     
                     NavigationLink(destination: MainScreen(), tag: MainScreen.tag, selection: $tagSelection) {

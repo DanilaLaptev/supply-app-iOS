@@ -2,10 +2,14 @@ import SwiftUI
 
 struct ProfileScreen: View {
     public static let tag = "ProfileScreen"
+    @StateObject private var authManager = AuthManager.shared
     
     var body: some View {
         VStack {
-            Text("Profile!")
+            CustomButton(label: Text("log out")) {
+                authManager.clearData()
+            }
+                .padding(32)
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.customLightGray)

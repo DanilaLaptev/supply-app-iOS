@@ -5,10 +5,7 @@ final class ViewManager: ObservableObject {
     static let shared = ViewManager()
     private init() { }
     
-    @Published private(set) var bottomBarIsVisible: Bool = false
+    @Published var bottomBarIsVisible: Bool = false
+    @Published var isLoading: Bool = false
 
-    func setBottomBarVisibility(_ isVisible: Bool) {
-        bottomBarIsVisible = isVisible
-    }
 }
-

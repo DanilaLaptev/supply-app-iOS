@@ -3,21 +3,19 @@ import SwiftUI
 struct AuthorizationWrapper: View {
     public static let tag = "AuthorizationWrapper"
 
+    @StateObject private var authManager = AuthManager.shared
     
-    @StateObject private var tools = ViewManager.shared
-    @State var isUserAuthorized = false
-    @State var userRole: UserRole = .supplier
-
     var body: some View {
-        if isUserAuthorized {
-            switch userRole {
+        if authManager.authData != nil,
+           let authData = authManager.authData {
+            switch authData.role {
             case .worker:
                 CustomerTabBarWrapper()
             case .supplier:
-                SupplierMainScreen()
+                SupplierTabBarWrapper()
             }
         } else {
-            SignInScreen()
+            SignInView()
         }
     }
 }

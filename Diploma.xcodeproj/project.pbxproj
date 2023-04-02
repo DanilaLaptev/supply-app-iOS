@@ -11,8 +11,8 @@
 		99A0951329B5B51700C0286D /* OrderingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951229B5B51700C0286D /* OrderingScreen.swift */; };
 		99A0951C29B62D9F00C0286D /* CustomCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951B29B62D9F00C0286D /* CustomCalendarCell.swift */; };
 		99A0951E29B6305B00C0286D /* OrderStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951D29B6305B00C0286D /* OrderStateView.swift */; };
-		99A0952029B70B1800C0286D /* SignInScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951F29B70B1800C0286D /* SignInScreen.swift */; };
-		99A0952229B70B2300C0286D /* SignUpScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0952129B70B2300C0286D /* SignUpScreen.swift */; };
+		99A0952029B70B1800C0286D /* SignInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951F29B70B1800C0286D /* SignInView.swift */; };
+		99A0952229B70B2300C0286D /* MainSignUpView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0952129B70B2300C0286D /* MainSignUpView.swift */; };
 		99A0952429B70B7400C0286D /* ContactsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0952329B70B7400C0286D /* ContactsScreen.swift */; };
 		99A0952629B70B8C00C0286D /* LocationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0952529B70B8C00C0286D /* LocationScreen.swift */; };
 		99A0954329BA67C900C0286D /* StartLoadingScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0954229BA67C900C0286D /* StartLoadingScreen.swift */; };
@@ -43,7 +43,7 @@
 		99AA129129CDE6B7002219E0 /* LoadingScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA129029CDE6B7002219E0 /* LoadingScreenViewModel.swift */; };
 		99AA129829D229C7002219E0 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA129729D229C7002219E0 /* UserRole.swift */; };
 		99AA129A29D22BC7002219E0 /* AuthorizationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA129929D22BC7002219E0 /* AuthorizationWrapper.swift */; };
-		99AA12A129D5713F002219E0 /* SignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA12A029D5713F002219E0 /* SignUpViewModel.swift */; };
+		99AA12A129D5713F002219E0 /* MainSignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA12A029D5713F002219E0 /* MainSignUpViewModel.swift */; };
 		99AA12A329D57391002219E0 /* TemplateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99AA12A229D57391002219E0 /* TemplateInfo.plist */; };
 		99C14C5229D6FA3300B8D3E2 /* AuthorizationProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5129D6FA3300B8D3E2 /* AuthorizationProvider.swift */; };
 		99C14C5429D6FA9200B8D3E2 /* OrganizationsProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C5329D6FA9200B8D3E2 /* OrganizationsProvider.swift */; };
@@ -56,6 +56,9 @@
 		99C14C6529D8932000B8D3E2 /* AuthManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C6429D8932000B8D3E2 /* AuthManager.swift */; };
 		99C14C6729D8937400B8D3E2 /* AlertManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C6629D8937400B8D3E2 /* AlertManager.swift */; };
 		99C14C6C29D8B11200B8D3E2 /* SignInViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C6A29D8B11200B8D3E2 /* SignInViewModel.swift */; };
+		99C14C6E29D955EE00B8D3E2 /* OverflowScroll.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C6D29D955EE00B8D3E2 /* OverflowScroll.swift */; };
+		99C14C7929D9B25B00B8D3E2 /* FormError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C7829D9B25B00B8D3E2 /* FormError.swift */; };
+		99C14C7B29D9B6F300B8D3E2 /* ResultVoidExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C7A29D9B6F300B8D3E2 /* ResultVoidExtension.swift */; };
 		99D4541829AC7E7700462A8F /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541729AC7E7700462A8F /* CustomButton.swift */; };
 		99D4541B29AC7ECD00462A8F /* BottomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541A29AC7ECD00462A8F /* BottomNavigation.swift */; };
 		99D4541D29AC7EDD00462A8F /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541C29AC7EDD00462A8F /* Counter.swift */; };
@@ -107,8 +110,8 @@
 		99A0951229B5B51700C0286D /* OrderingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderingScreen.swift; sourceTree = "<group>"; };
 		99A0951B29B62D9F00C0286D /* CustomCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendarCell.swift; sourceTree = "<group>"; };
 		99A0951D29B6305B00C0286D /* OrderStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStateView.swift; sourceTree = "<group>"; };
-		99A0951F29B70B1800C0286D /* SignInScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInScreen.swift; sourceTree = "<group>"; };
-		99A0952129B70B2300C0286D /* SignUpScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpScreen.swift; sourceTree = "<group>"; };
+		99A0951F29B70B1800C0286D /* SignInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInView.swift; sourceTree = "<group>"; };
+		99A0952129B70B2300C0286D /* MainSignUpView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSignUpView.swift; sourceTree = "<group>"; };
 		99A0952329B70B7400C0286D /* ContactsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactsScreen.swift; sourceTree = "<group>"; };
 		99A0952529B70B8C00C0286D /* LocationScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationScreen.swift; sourceTree = "<group>"; };
 		99A0954229BA67C900C0286D /* StartLoadingScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartLoadingScreen.swift; sourceTree = "<group>"; };
@@ -141,7 +144,7 @@
 		99AA129029CDE6B7002219E0 /* LoadingScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreenViewModel.swift; sourceTree = "<group>"; };
 		99AA129729D229C7002219E0 /* UserRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
 		99AA129929D22BC7002219E0 /* AuthorizationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationWrapper.swift; sourceTree = "<group>"; };
-		99AA12A029D5713F002219E0 /* SignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewModel.swift; sourceTree = "<group>"; };
+		99AA12A029D5713F002219E0 /* MainSignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSignUpViewModel.swift; sourceTree = "<group>"; };
 		99AA12A229D57391002219E0 /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
 		99C14C5129D6FA3300B8D3E2 /* AuthorizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationProvider.swift; sourceTree = "<group>"; };
 		99C14C5329D6FA9200B8D3E2 /* OrganizationsProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationsProvider.swift; sourceTree = "<group>"; };
@@ -154,6 +157,9 @@
 		99C14C6429D8932000B8D3E2 /* AuthManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthManager.swift; sourceTree = "<group>"; };
 		99C14C6629D8937400B8D3E2 /* AlertManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertManager.swift; sourceTree = "<group>"; };
 		99C14C6A29D8B11200B8D3E2 /* SignInViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewModel.swift; sourceTree = "<group>"; };
+		99C14C6D29D955EE00B8D3E2 /* OverflowScroll.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverflowScroll.swift; sourceTree = "<group>"; };
+		99C14C7829D9B25B00B8D3E2 /* FormError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormError.swift; sourceTree = "<group>"; };
+		99C14C7A29D9B6F300B8D3E2 /* ResultVoidExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultVoidExtension.swift; sourceTree = "<group>"; };
 		99D4541729AC7E7700462A8F /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		99D4541A29AC7ECD00462A8F /* BottomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigation.swift; sourceTree = "<group>"; };
 		99D4541C29AC7EDD00462A8F /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
@@ -275,6 +281,7 @@
 			children = (
 				99A0956429BC950400C0286D /* ViewModifier.swift */,
 				99A0956629BC981800C0286D /* ImageModifier.swift */,
+				99C14C6D29D955EE00B8D3E2 /* OverflowScroll.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -375,8 +382,9 @@
 		99AA129B29D22BE7002219E0 /* SignUp */ = {
 			isa = PBXGroup;
 			children = (
-				99A0952129B70B2300C0286D /* SignUpScreen.swift */,
-				99AA12A029D5713F002219E0 /* SignUpViewModel.swift */,
+				99C14C7C29D9D9FB00B8D3E2 /* MainSignUp */,
+				99C14C7D29D9DA1900B8D3E2 /* Contact */,
+				99C14C7E29D9DA2800B8D3E2 /* Location */,
 			);
 			path = SignUp;
 			sourceTree = "<group>";
@@ -423,15 +431,58 @@
 		99C14C6829D8B0F200B8D3E2 /* SignIn */ = {
 			isa = PBXGroup;
 			children = (
-				99A0951F29B70B1800C0286D /* SignInScreen.swift */,
+				99A0951F29B70B1800C0286D /* SignInView.swift */,
 				99C14C6A29D8B11200B8D3E2 /* SignInViewModel.swift */,
 			);
 			path = SignIn;
 			sourceTree = "<group>";
 		};
+		99C14C6F29D97A7C00B8D3E2 /* AuthWrapper */ = {
+			isa = PBXGroup;
+			children = (
+				99AA129929D22BC7002219E0 /* AuthorizationWrapper.swift */,
+			);
+			path = AuthWrapper;
+			sourceTree = "<group>";
+		};
+		99C14C7429D985A800B8D3E2 /* Loading */ = {
+			isa = PBXGroup;
+			children = (
+				99C14C5F29D7150A00B8D3E2 /* LoadingIndicator.swift */,
+				99C14C6129D72A5800B8D3E2 /* LoaderView.swift */,
+			);
+			path = Loading;
+			sourceTree = "<group>";
+		};
+		99C14C7C29D9D9FB00B8D3E2 /* MainSignUp */ = {
+			isa = PBXGroup;
+			children = (
+				99A0952129B70B2300C0286D /* MainSignUpView.swift */,
+				99AA12A029D5713F002219E0 /* MainSignUpViewModel.swift */,
+			);
+			path = MainSignUp;
+			sourceTree = "<group>";
+		};
+		99C14C7D29D9DA1900B8D3E2 /* Contact */ = {
+			isa = PBXGroup;
+			children = (
+				99A0952329B70B7400C0286D /* ContactsScreen.swift */,
+			);
+			path = Contact;
+			sourceTree = "<group>";
+		};
+		99C14C7E29D9DA2800B8D3E2 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				99A0952529B70B8C00C0286D /* LocationScreen.swift */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
 		99D4541629AC7E5200462A8F /* Components */ = {
 			isa = PBXGroup;
 			children = (
+				99C14C7429D985A800B8D3E2 /* Loading */,
 				99A0956B29BCD1A900C0286D /* Alerts */,
 				99A0951A29B62D8500C0286D /* Calendar */,
 				99D454A229B4D71F00462A8F /* Tags */,
@@ -446,8 +497,6 @@
 				99D454A029B4959200462A8F /* BottomSheet.swift */,
 				99D454AB29B4E48700462A8F /* MapView.swift */,
 				99AA128729CCB411002219E0 /* ActivityViewController.swift */,
-				99C14C5F29D7150A00B8D3E2 /* LoadingIndicator.swift */,
-				99C14C6129D72A5800B8D3E2 /* LoaderView.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -473,6 +522,7 @@
 				99A561E029A0FCFD00F9932A /* DiplomaApp.swift */,
 				99D4543229AE4E2300462A8F /* Resources */,
 				99D4542229AC7F2200462A8F /* Extensions */,
+				99C14C7829D9B25B00B8D3E2 /* FormError.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -488,6 +538,7 @@
 				99D454B029B519A700462A8F /* ViewExtensions.swift */,
 				99AA126129C82BB4002219E0 /* DateExtensions.swift */,
 				99AA128B29CD935A002219E0 /* EncodableExtension.swift */,
+				99C14C7A29D9B6F300B8D3E2 /* ResultVoidExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -543,12 +594,10 @@
 		99D4547529B3628E00462A8F /* Unauthorized */ = {
 			isa = PBXGroup;
 			children = (
-				99C14C6829D8B0F200B8D3E2 /* SignIn */,
-				99A0952529B70B8C00C0286D /* LocationScreen.swift */,
-				99A0952329B70B7400C0286D /* ContactsScreen.swift */,
-				99AA129B29D22BE7002219E0 /* SignUp */,
 				99AA128F29CDE69E002219E0 /* LoadingScreen */,
-				99AA129929D22BC7002219E0 /* AuthorizationWrapper.swift */,
+				99C14C6F29D97A7C00B8D3E2 /* AuthWrapper */,
+				99C14C6829D8B0F200B8D3E2 /* SignIn */,
+				99AA129B29D22BE7002219E0 /* SignUp */,
 			);
 			path = Unauthorized;
 			sourceTree = "<group>";
@@ -814,17 +863,19 @@
 				99D4543129AE117200462A8F /* CustomTextField.swift in Sources */,
 				99D4548B29B39C7500462A8F /* SuppliersListScreen.swift in Sources */,
 				99A0955029BB1A0100C0286D /* AddProductButton.swift in Sources */,
+				99C14C7B29D9B6F300B8D3E2 /* ResultVoidExtension.swift in Sources */,
 				99D4549329B3CC8600462A8F /* OrderScreen.swift in Sources */,
 				99A0955729BB4AD300C0286D /* SupplierClientsScreen.swift in Sources */,
 				99D4541F29AC7EEA00462A8F /* CustomCalendar.swift in Sources */,
 				99D454AE29B50C4600462A8F /* SuppliersListFilterScreen.swift in Sources */,
 				99AA129129CDE6B7002219E0 /* LoadingScreenViewModel.swift in Sources */,
 				99D4542829AD242A00462A8F /* FontsExtension.swift in Sources */,
+				99C14C6E29D955EE00B8D3E2 /* OverflowScroll.swift in Sources */,
 				99C14C5429D6FA9200B8D3E2 /* OrganizationsProvider.swift in Sources */,
 				99A0951329B5B51700C0286D /* OrderingScreen.swift in Sources */,
 				99AA128629CCB0B2002219E0 /* Debugger.swift in Sources */,
 				99D4548F29B3C9F200462A8F /* Header.swift in Sources */,
-				99AA12A129D5713F002219E0 /* SignUpViewModel.swift in Sources */,
+				99AA12A129D5713F002219E0 /* MainSignUpViewModel.swift in Sources */,
 				99AA128C29CD935A002219E0 /* EncodableExtension.swift in Sources */,
 				99D4542629AC807800462A8F /* ColorExtension.swift in Sources */,
 				99A0954A29BAFCB600C0286D /* SupplierMainScreen.swift in Sources */,
@@ -862,15 +913,16 @@
 				99A0957F29BFA39100C0286D /* SupplierTabBarWrapper.swift in Sources */,
 				99AA129A29D22BC7002219E0 /* AuthorizationWrapper.swift in Sources */,
 				99AA126429C82BEB002219E0 /* CalendarView.swift in Sources */,
+				99C14C7929D9B25B00B8D3E2 /* FormError.swift in Sources */,
 				99D4544329AE923F00462A8F /* ShadowViewExtension.swift in Sources */,
 				99D4549D29B45D3B00462A8F /* ExtendableSectionHeader.swift in Sources */,
-				99A0952229B70B2300C0286D /* SignUpScreen.swift in Sources */,
+				99A0952229B70B2300C0286D /* MainSignUpView.swift in Sources */,
 				99C14C6229D72A5800B8D3E2 /* LoaderView.swift in Sources */,
 				99D4549829B45BA300462A8F /* OrderCard.swift in Sources */,
 				99D4548529B36E0A00462A8F /* OrdersListScreen.swift in Sources */,
 				99AA128329CCAE73002219E0 /* FileManager.swift in Sources */,
 				99D4542429AC800500462A8F /* ImageIconsExtension.swift in Sources */,
-				99A0952029B70B1800C0286D /* SignInScreen.swift in Sources */,
+				99A0952029B70B1800C0286D /* SignInView.swift in Sources */,
 				99AA128829CCB411002219E0 /* ActivityViewController.swift in Sources */,
 				99D4543F29AE88E000462A8F /* CustomTag.swift in Sources */,
 				99D454A129B4959200462A8F /* BottomSheet.swift in Sources */,

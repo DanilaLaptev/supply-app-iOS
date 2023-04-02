@@ -6,8 +6,6 @@ struct StartLoadingScreen: View {
     var body: some View {
         ZStack(alignment: .center) {
             NavigationLink("", destination: AuthorizationWrapper(), tag: AuthorizationWrapper.tag, selection: $viewModel.nextScreenTag)
-            
-            LoaderView(loading: viewModel.isLoading)
         }
         .defaultScreenSettings()
         .onAppear {

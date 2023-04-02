@@ -35,7 +35,7 @@ struct MainScreen: View {
         .background(Color.customLightGray)
         .defaultScreenSettings()
         .onAppear {
-            tools.setBottomBarVisibility(true)
+            self.tools.bottomBarIsVisible = true
         }
     }
 }

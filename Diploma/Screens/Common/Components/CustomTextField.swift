@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct CustomTextField: View {
-    @State var textFieldValue = ""
+    @Binding var textFieldValue: String
     
     var icon: Image? = nil
     var isDividerVisible: Bool = false
@@ -39,8 +39,8 @@ struct CustomTextField: View {
 
 struct CustomTextField_Previews: PreviewProvider {
     static var previews: some View {
-        CustomTextField(placeholder: "placeholder")
-        CustomTextField(icon: .customRoute, placeholder: "placeholder")
-        CustomTextField(icon: .customSearch, isDividerVisible: true, placeholder: "placeholder")
+        CustomTextField(textFieldValue: .constant(""), placeholder: "placeholder")
+        CustomTextField(textFieldValue: .constant(""), icon: .customRoute, placeholder: "placeholder")
+        CustomTextField(textFieldValue: .constant(""), icon: .customSearch, isDividerVisible: true, placeholder: "placeholder")
     }
 }

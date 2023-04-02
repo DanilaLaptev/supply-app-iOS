@@ -10,11 +10,11 @@ struct ContactsScreen: View {
             Spacer()
             BottomSheet {
                 VStack(alignment: .leading, spacing: 8) {
-                    Header()
-                    
-                    CustomTextField(placeholder: "ФИО")
-                    CustomTextField(placeholder: "Номер телефона")
-                    CustomTextField(placeholder: "Электронная почта")
+                    Header(title: "Контактное лицо")
+
+                    CustomTextField(textFieldValue: .constant(""), placeholder: "ФИО")
+                    CustomTextField(textFieldValue: .constant(""), placeholder: "Номер телефона")
+                    CustomTextField(textFieldValue: .constant(""), placeholder: "Электронная почта")
                         .padding(.bottom, 24)
                     
                     NavigationLink(destination: LocationScreen(), tag: LocationScreen.tag, selection: $tagSelection) {

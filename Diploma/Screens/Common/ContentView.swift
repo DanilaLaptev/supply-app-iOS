@@ -2,7 +2,8 @@ import SwiftUI
 
 struct ContentView: View {
     @StateObject private var alertsManager = AlertManager.shared
-    
+    @StateObject private var viewManager = ViewManager.shared
+
     var body: some View {
         ZStack {
             VStack(spacing: 0) {
@@ -23,6 +24,8 @@ struct ContentView: View {
             .padding(.top, safeAreaEdgeInsets.top)
             .clipped()
             .frame(maxWidth: .infinity, maxHeight: .infinity)
+            
+            LoaderView(isLoading: $viewManager.isLoading)
         }
         .edgesIgnoringSafeArea(.all)
     }

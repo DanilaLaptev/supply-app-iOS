@@ -8,7 +8,7 @@ struct OrderingScreen: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Header()
+            Header(title: "Title")
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
             
@@ -33,8 +33,8 @@ struct OrderingScreen: View {
                     VStack(alignment: .leading ,spacing: 16) {
                         Text("Выберите дату и время получения заказа").font(.customStandard)
                         VStack(spacing: 8) {
-                            CustomTextField(icon: .customDate, placeholder: "Дата")
-                            CustomTextField(icon: .customClock, placeholder: "Время")
+                            CustomTextField(textFieldValue: .constant(""), icon: .customDate, placeholder: "Дата")
+                            CustomTextField(textFieldValue: .constant(""), icon: .customClock, placeholder: "Время")
                         }
                     }
                     
@@ -47,7 +47,7 @@ struct OrderingScreen: View {
         .background(Color.customLightGray)
         .defaultScreenSettings()
         .onAppear {
-            tools.setBottomBarVisibility(false)
+            self.tools.bottomBarIsVisible = false
         }
     }
 }

@@ -9,7 +9,7 @@ struct SupplierScreen: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            Header()
+            Header(title: "Title")
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
             
@@ -84,7 +84,7 @@ struct SupplierScreen: View {
         .background(Color.customLightGray)
         .defaultScreenSettings()
         .onAppear {
-            tools.setBottomBarVisibility(false)
+            self.tools.bottomBarIsVisible = false
         }
     }
 }

@@ -12,6 +12,8 @@ struct SupplierTabBarWrapper: View {
                 SupplierMainScreen()
             case SupplierClientsScreen.tag:
                 SupplierClientsScreen()
+            case ProfileScreen.tag:
+                ProfileScreen()
             default:
                 Text("View doesnt exist")
                     .frame(maxHeight: .infinity)
@@ -22,6 +24,9 @@ struct SupplierTabBarWrapper: View {
                 .clipped()
         }
         .defaultScreenSettings()
+        .onAppear {
+            tools.bottomBarIsVisible = true
+        }
     }
 }
 

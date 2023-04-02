@@ -17,7 +17,7 @@ struct SuppliersListFilterScreen: View {
                 
                 ExtendableSection {
                     VStack(spacing: 16) {
-                        CustomTextField(icon: .customSearch, isDividerVisible: true, placeholder: "Тип продукта")
+                        CustomTextField(textFieldValue: .constant(""), icon: .customSearch, isDividerVisible: true, placeholder: "Тип продукта")
                         
                         ScrollView(.horizontal) {
                             HStack(spacing: 8) {

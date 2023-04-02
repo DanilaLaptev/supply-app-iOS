@@ -1,9 +1,10 @@
 import SwiftUI
 
 struct Header: View {
-    @Environment(\.presentationMode) var presentation
+    @Environment(\.presentationMode) private var presentation
+    var title: String
     var tapExtra: (() -> ())? = nil
-    
+        
     var body: some View {
         HStack(alignment: .center, spacing: 16) {
             CustomButton(icon: .customBack, background: .customWhite, foreground: .customOrange, isCircleShape: true) {
@@ -12,7 +13,7 @@ struct Header: View {
             .frame(width: 48)
             
             ScrollView(.horizontal, showsIndicators: true) {
-                Text("Название")
+                Text(title)
                     .font(.customTitle)
             }
             
@@ -30,8 +31,8 @@ struct Header: View {
 
 struct Header_Previews: PreviewProvider {
     static var previews: some View {
-        Header()
-        Header {
+        Header(title: "Title")
+        Header(title: "Title") {
             
         }
     }

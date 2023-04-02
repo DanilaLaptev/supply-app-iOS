@@ -35,12 +35,10 @@ struct CustomAlert: View {
                 .resizable()
                 .frame(width: 30, height: 30)
             
-            VStack(alignment: .leading, spacing: 4) {
-                Text(model.description).font(.customStandard)
-                Text("hint").font(.customStandard).foregroundColor(primaryColor)
-            }
+            Text(model.description)
+                .font(.customStandard)
+                .frame(maxWidth: .infinity, alignment: .leading)
             
-            Spacer()
             Button {
                 alertsManager.removeAlert(model)
             } label: {

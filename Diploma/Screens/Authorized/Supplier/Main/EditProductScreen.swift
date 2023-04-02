@@ -6,8 +6,8 @@ struct EditProductScreen: View {
     var body: some View {
         VStack {
             VStack(spacing: 16) {
-                Header()
-                
+                Header(title: "Title")
+
                 // TODO: async image
                 ZStack(alignment: .center) {
                     Rectangle()
@@ -22,10 +22,10 @@ struct EditProductScreen: View {
                 }
                 .padding(.bottom, 8)
                 
-                CustomTextField(placeholder: "Цена")
-                CustomTextField(placeholder: "Описание")
-                CustomTextField(placeholder: "Состав")
-                CustomTextField(placeholder: "Пищевая ценность")
+                CustomTextField(textFieldValue: .constant(""), placeholder: "Цена")
+                CustomTextField(textFieldValue: .constant(""), placeholder: "Описание")
+                CustomTextField(textFieldValue: .constant(""), placeholder: "Состав")
+                CustomTextField(textFieldValue: .constant(""), placeholder: "Пищевая ценность")
             }
             .padding(.horizontal, 16)
 

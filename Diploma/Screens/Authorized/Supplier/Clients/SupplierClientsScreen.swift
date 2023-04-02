@@ -26,7 +26,7 @@ struct SupplierClientsScreen: View {
                 BottomSheet {
                     VStack {
                         HStack(spacing: 8) {
-                            CustomTextField(icon: .customSearch, isDividerVisible: true, placeholder: "Поиск")
+                            CustomTextField(textFieldValue: .constant(""), icon: .customSearch, isDividerVisible: true, placeholder: "Поиск")
                             CustomButton(icon: .customFilter) {
                                 showFilters.toggle()
                             }
