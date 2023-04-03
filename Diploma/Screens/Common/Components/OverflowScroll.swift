@@ -14,19 +14,27 @@ struct OverflowScroll<Content: View>: View {
             content()
                 .background(
                     GeometryReader { contentGeo in
-                        Color.clear.onAppear {
-                            contentOverflow = contentGeo.size.height > mainGeo.size.height
+                        ZStack(alignment: .top) {
+                            Color.clear.onAppear {
+                                contentOverflow = contentGeo.size.height > mainGeo.size.height
+                            }
                         }
                     }
                 )
+                .keyboardModifier()
                 .scrollViewWrapper(contentOverflow)
         }
-        
     }
 }
 
 struct OverflowScroll_Previews: PreviewProvider {
     static var previews: some View {
+        OverflowScroll {
+            Rectangle()
+                .frame(height: 2400)
+                .foregroundColor(.customBlue)
+        }
+        .defaultScreenSettings()
         OverflowScroll {}
     }
 }
@@ -36,6 +44,8 @@ extension View {
     func scrollViewWrapper(_ contentOverflow: Bool) -> some View {
         if contentOverflow {
             ScrollView { self }
+            .onAppear { UIScrollView.appearance().bounces = false }
+            .onDisappear { UIScrollView.appearance().bounces = true }
         } else { self }
     }
 }

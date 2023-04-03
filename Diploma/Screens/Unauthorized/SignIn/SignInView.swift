@@ -6,34 +6,37 @@ struct SignInView: View {
     @StateObject private var viewModel = SignInViewModel()
     
     var body: some View {
-        VStack {
-            NavigationLink("", destination: SupplierTabBarWrapper(), tag: SupplierTabBarWrapper.tag, selection: $viewModel.nextScreenTag)
-            NavigationLink("", destination: CustomerTabBarWrapper(), tag: CustomerTabBarWrapper.tag, selection: $viewModel.nextScreenTag)
-            NavigationLink("", destination: MainSignUpView(), tag: MainSignUpView.tag, selection: $viewModel.nextScreenTag)
-            
-            Spacer()
-            BottomSheet {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text("Вход в аккаунт").font(.customTitle)
-                        .padding(.bottom, 8)
-                    
-                    CustomTextField(textFieldValue: $viewModel.email, placeholder: "Логин")
-                    CustomTextField(textFieldValue: $viewModel.password, placeholder: "Пароль")
-                        .padding(.bottom, 24)
-                    
-                    VStack(alignment: .center, spacing: 8) {
-                        CustomButton(label: Text("Войти")) {
-                            self.viewModel.signInUser()
-                        }
+        OverflowScroll {
+            VStack {
+                NavigationLink("", destination: SupplierTabBarWrapper(), tag: SupplierTabBarWrapper.tag, selection: $viewModel.nextScreenTag)
+                NavigationLink("", destination: CustomerTabBarWrapper(), tag: CustomerTabBarWrapper.tag, selection: $viewModel.nextScreenTag)
+                NavigationLink("", destination: MainSignUpView(), tag: MainSignUpView.tag, selection: $viewModel.nextScreenTag)
+                
+                Spacer()
+                BottomSheet {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Text("Вход в аккаунт").font(.customTitle)
+                            .padding(.bottom, 8)
                         
-                        Text("Создать аккаунт").font(.customStandard)
-                            .foregroundColor(.customOrange)
-                            .onTapGesture {
-                                viewModel.nextScreenTag = MainSignUpView.tag
+                        CustomTextField(textFieldValue: $viewModel.email, placeholder: "Логин")
+                        CustomTextField(textFieldValue: $viewModel.password, placeholder: "Пароль")
+                            .padding(.bottom, 24)
+                        
+                        VStack(alignment: .center, spacing: 8) {
+                            CustomButton(label: Text("Войти")) {
+                                self.viewModel.signInUser()
                             }
+                            
+                            Text("Создать аккаунт").font(.customStandard)
+                                .foregroundColor(.customOrange)
+                                .onTapGesture {
+                                    viewModel.nextScreenTag = MainSignUpView.tag
+                                }
+                        }
                     }
                 }
             }
+            .frame(maxHeight: .infinity)
         }
         .background(Color.customLightGray)
         .defaultScreenSettings()

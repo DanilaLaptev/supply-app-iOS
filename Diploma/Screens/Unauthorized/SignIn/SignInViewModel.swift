@@ -39,25 +39,31 @@ class SignInViewModel: ObservableObject {
         }
     }
     
+    private func checkEmailRequest() {
+        
+    }
+    
     private func signInRequest() {
         viewManager.isLoading = true
         
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+            self?.viewManager.isLoading = false
+
             if self?.email == "1" {
                 let authData = AuthData(userId: 1, token: "token 1", role: .worker) // TODO: real data
                 self?.authManager.setData(authData)
                 self?.nextScreenTag = CustomerTabBarWrapper.tag
+                return
             }
             
             if self?.email == "1a" {
                 let authData = AuthData(userId: 2, token: "token 2", role: .supplier) // TODO: real data
                 self?.authManager.setData(authData)
                 self?.nextScreenTag = SupplierTabBarWrapper.tag
-            } else {
-                self?.alertManager.showAlert(AlertModel(type: .error, description: "Пользователь не найден"))
+                return
             }
             
-            self?.viewManager.isLoading = false
+            self?.alertManager.showAlert(AlertModel(type: .error, description: "Пользователь не найден"))
         }
     }
 }
