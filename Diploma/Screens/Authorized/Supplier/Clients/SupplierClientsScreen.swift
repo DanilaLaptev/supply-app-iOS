@@ -12,7 +12,8 @@ struct SupplierClientsScreen: View {
     
     @State var selectedLandmark: Landmark? = nil
     @State var showFilters = false
-    
+    @State var search = ""
+
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 0) {
@@ -26,7 +27,7 @@ struct SupplierClientsScreen: View {
                 BottomSheet {
                     VStack {
                         HStack(spacing: 8) {
-                            CustomTextField(textFieldValue: .constant(""), icon: .customSearch, isDividerVisible: true, placeholder: "Поиск")
+                            CustomTextField(textFieldValue: $search, icon: .customSearch, isDividerVisible: true, placeholder: "Поиск")
                             CustomButton(icon: .customFilter) {
                                 showFilters.toggle()
                             }

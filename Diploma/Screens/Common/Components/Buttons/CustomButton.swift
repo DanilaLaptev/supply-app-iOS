@@ -19,7 +19,7 @@ struct CustomButton: View {
                 icon?
                     .resizable()
                     .scaledToFit()
-                    .frame(width: 16, height: 16)
+                    .frame(width: 20, height: 20)
                 label?.font(.customStandard)
             }
             .frame(height: 48)

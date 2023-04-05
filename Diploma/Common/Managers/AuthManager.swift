@@ -3,7 +3,7 @@ import Foundation
 struct AuthData {
     let userId: Int
     let token: String
-    let role: UserRole
+    let role: OrganizationType
 }
 
 final class AuthManager: ObservableObject {

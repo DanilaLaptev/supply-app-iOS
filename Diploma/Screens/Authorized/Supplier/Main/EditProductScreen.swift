@@ -2,25 +2,24 @@ import SwiftUI
 
 struct EditProductScreen: View {
     public static let tag = "EditProductScreen"
+    @State var isSharePresented = false
+    
+    @State private var selectedImage: UIImage?
     
     var body: some View {
         VStack {
             VStack(spacing: 16) {
                 Header(title: "Title")
-
+                
                 // TODO: async image
-                ZStack(alignment: .center) {
-                    Rectangle()
-                        .foregroundColor(Color.customWhite)
-                        .frame(height: 200)
-                        .frame(maxWidth: .infinity)
-                        .cornerRadius(8)
-                    
-                    Image.customBox
-                        .frame(width: 24, height: 24)
-                        .foregroundColor(.customOrange)
-                }
-                .padding(.bottom, 8)
+                SelectedImage()
+                    .padding(.bottom, 8)
+                    .onTapGesture {
+                        isSharePresented.toggle()
+                    }
+                    .sheet(isPresented: $isSharePresented) {
+                        PhotoPicker(selectedImage: $selectedImage)
+                    }
                 
                 CustomTextField(textFieldValue: .constant(""), placeholder: "Цена")
                 CustomTextField(textFieldValue: .constant(""), placeholder: "Описание")
@@ -28,12 +27,12 @@ struct EditProductScreen: View {
                 CustomTextField(textFieldValue: .constant(""), placeholder: "Пищевая ценность")
             }
             .padding(.horizontal, 16)
-
+            
             Spacer()
             
             BottomSheet {
                 NavigationLink(destination: OrderScreen()) {
-                    CustomButton(label: Text("Опубликовать новую позицию").font(.customStandard))
+                    CustomButton(label: Text("Сохранить").font(.customStandard))
                 }
             }
         }
@@ -41,6 +40,30 @@ struct EditProductScreen: View {
         .background(Color.customLightGray)
         .defaultScreenSettings()
     }
+    
+    @ViewBuilder
+    func SelectedImage() -> some View {
+        ZStack(alignment: .center) {
+            if let image = selectedImage {
+                Image(uiImage: image)
+                    .resizable()
+                    .scaledToFill()
+            } else {
+                Rectangle()
+                    .foregroundColor(Color.customWhite)
+                    .frame(maxWidth: .infinity, maxHeight: .infinity)
+                
+                Image.customImage
+                    .frame(width: 24, height: 24)
+                    .foregroundColor(.customOrange)
+            }
+        }
+        .frame(height: 200)
+        .frame(maxWidth: .infinity)
+        .clipped()
+        .cornerRadius(8)
+    }
+    
 }
 
 struct EditProductScreen_Previews: PreviewProvider {

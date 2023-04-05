@@ -41,7 +41,7 @@
 		99AA128C29CD935A002219E0 /* EncodableExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA128B29CD935A002219E0 /* EncodableExtension.swift */; };
 		99AA128E29CD943D002219E0 /* StatisticModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA128D29CD943D002219E0 /* StatisticModel.swift */; };
 		99AA129129CDE6B7002219E0 /* LoadingScreenViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA129029CDE6B7002219E0 /* LoadingScreenViewModel.swift */; };
-		99AA129829D229C7002219E0 /* UserRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA129729D229C7002219E0 /* UserRole.swift */; };
+		99AA129829D229C7002219E0 /* OrganizationType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA129729D229C7002219E0 /* OrganizationType.swift */; };
 		99AA129A29D22BC7002219E0 /* AuthorizationWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA129929D22BC7002219E0 /* AuthorizationWrapper.swift */; };
 		99AA12A129D5713F002219E0 /* MainSignUpViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99AA12A029D5713F002219E0 /* MainSignUpViewModel.swift */; };
 		99AA12A329D57391002219E0 /* TemplateInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = 99AA12A229D57391002219E0 /* TemplateInfo.plist */; };
@@ -62,13 +62,13 @@
 		99C14C8129D9DC1700B8D3E2 /* OrganizationCreationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C8029D9DC1700B8D3E2 /* OrganizationCreationModel.swift */; };
 		99C14C8329D9DD2B00B8D3E2 /* ContactPersonModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C8229D9DD2B00B8D3E2 /* ContactPersonModel.swift */; };
 		99C14C8529D9DD7800B8D3E2 /* Address.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C8429D9DD7800B8D3E2 /* Address.swift */; };
-		99C14C8729DA0AE000B8D3E2 /* KeyboardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C8629DA0AE000B8D3E2 /* KeyboardModifier.swift */; };
 		99C14C8929DAA34A00B8D3E2 /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C8829DAA34A00B8D3E2 /* ContactViewModel.swift */; };
 		99C14C8B29DAA48700B8D3E2 /* LocationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C8A29DAA48700B8D3E2 /* LocationViewModel.swift */; };
 		99C14C8D29DAB1EB00B8D3E2 /* TargetTypeExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C8C29DAB1EB00B8D3E2 /* TargetTypeExtension.swift */; };
 		99C14C9029DAB40800B8D3E2 /* MoyaProviderExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C8F29DAB40800B8D3E2 /* MoyaProviderExtension.swift */; };
 		99C14C9229DAF10A00B8D3E2 /* AuthorizationDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C9129DAF10A00B8D3E2 /* AuthorizationDto.swift */; };
 		99C14C9429DAF21400B8D3E2 /* OrganizationDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C9329DAF21400B8D3E2 /* OrganizationDto.swift */; };
+		99C14C9629DAF85300B8D3E2 /* DropDownList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99C14C9529DAF85300B8D3E2 /* DropDownList.swift */; };
 		99D4541829AC7E7700462A8F /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541729AC7E7700462A8F /* CustomButton.swift */; };
 		99D4541B29AC7ECD00462A8F /* BottomNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541A29AC7ECD00462A8F /* BottomNavigation.swift */; };
 		99D4541D29AC7EDD00462A8F /* Counter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4541C29AC7EDD00462A8F /* Counter.swift */; };
@@ -90,7 +90,7 @@
 		99D4544829AFC87A00462A8F /* BarChart.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4544729AFC87A00462A8F /* BarChart.swift */; };
 		99D4546D29B3592500462A8F /* DynamicProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4546C29B3592500462A8F /* DynamicProductCard.swift */; };
 		99D4546F29B35ABF00462A8F /* StaticProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4546E29B35ABF00462A8F /* StaticProductCard.swift */; };
-		99D4547129B35CBB00462A8F /* PlaceCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4547029B35CBB00462A8F /* PlaceCard.swift */; };
+		99D4547129B35CBB00462A8F /* OrganizationCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4547029B35CBB00462A8F /* OrganizationCard.swift */; };
 		99D4547929B3644E00462A8F /* NavigationTabs.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4547829B3644E00462A8F /* NavigationTabs.swift */; };
 		99D4548329B36DFA00462A8F /* MainScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4548229B36DFA00462A8F /* MainScreen.swift */; };
 		99D4548529B36E0A00462A8F /* OrdersListScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D4548429B36E0A00462A8F /* OrdersListScreen.swift */; };
@@ -112,6 +112,14 @@
 		99D454AC29B4E48700462A8F /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D454AB29B4E48700462A8F /* MapView.swift */; };
 		99D454AE29B50C4600462A8F /* SuppliersListFilterScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D454AD29B50C4600462A8F /* SuppliersListFilterScreen.swift */; };
 		99D454B129B519A700462A8F /* ViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D454B029B519A700462A8F /* ViewExtensions.swift */; };
+		99F1789429DC6C54001903F2 /* DatePickerField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1789329DC6C54001903F2 /* DatePickerField.swift */; };
+		99F1789829DD42B5001903F2 /* OrganizationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1789729DD42B5001903F2 /* OrganizationModel.swift */; };
+		99F1789B29DD5622001903F2 /* PhotoPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1789A29DD5622001903F2 /* PhotoPicker.swift */; };
+		99F1789E29DD58F5001903F2 /* SupplierOrdersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1789C29DD58F5001903F2 /* SupplierOrdersView.swift */; };
+		99F1789F29DD58F5001903F2 /* SupplierOrdersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1789D29DD58F5001903F2 /* SupplierOrdersViewModel.swift */; };
+		99F178A229DD5907001903F2 /* SupplierStatisticsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178A029DD5907001903F2 /* SupplierStatisticsView.swift */; };
+		99F178A329DD5907001903F2 /* SupplierStatisticsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178A129DD5907001903F2 /* SupplierStatisticsViewModel.swift */; };
+		99F178A529DD7065001903F2 /* KeyboardModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178A429DD7065001903F2 /* KeyboardModifier.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -152,7 +160,7 @@
 		99AA128B29CD935A002219E0 /* EncodableExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EncodableExtension.swift; sourceTree = "<group>"; };
 		99AA128D29CD943D002219E0 /* StatisticModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatisticModel.swift; sourceTree = "<group>"; };
 		99AA129029CDE6B7002219E0 /* LoadingScreenViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingScreenViewModel.swift; sourceTree = "<group>"; };
-		99AA129729D229C7002219E0 /* UserRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserRole.swift; sourceTree = "<group>"; };
+		99AA129729D229C7002219E0 /* OrganizationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationType.swift; sourceTree = "<group>"; };
 		99AA129929D22BC7002219E0 /* AuthorizationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationWrapper.swift; sourceTree = "<group>"; };
 		99AA12A029D5713F002219E0 /* MainSignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSignUpViewModel.swift; sourceTree = "<group>"; };
 		99AA12A229D57391002219E0 /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
@@ -173,13 +181,13 @@
 		99C14C8029D9DC1700B8D3E2 /* OrganizationCreationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationCreationModel.swift; sourceTree = "<group>"; };
 		99C14C8229D9DD2B00B8D3E2 /* ContactPersonModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPersonModel.swift; sourceTree = "<group>"; };
 		99C14C8429D9DD7800B8D3E2 /* Address.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Address.swift; sourceTree = "<group>"; };
-		99C14C8629DA0AE000B8D3E2 /* KeyboardModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardModifier.swift; sourceTree = "<group>"; };
 		99C14C8829DAA34A00B8D3E2 /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
 		99C14C8A29DAA48700B8D3E2 /* LocationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationViewModel.swift; sourceTree = "<group>"; };
 		99C14C8C29DAB1EB00B8D3E2 /* TargetTypeExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TargetTypeExtension.swift; sourceTree = "<group>"; };
 		99C14C8F29DAB40800B8D3E2 /* MoyaProviderExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaProviderExtension.swift; sourceTree = "<group>"; };
 		99C14C9129DAF10A00B8D3E2 /* AuthorizationDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationDto.swift; sourceTree = "<group>"; };
 		99C14C9329DAF21400B8D3E2 /* OrganizationDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationDto.swift; sourceTree = "<group>"; };
+		99C14C9529DAF85300B8D3E2 /* DropDownList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DropDownList.swift; sourceTree = "<group>"; };
 		99D4541729AC7E7700462A8F /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
 		99D4541A29AC7ECD00462A8F /* BottomNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BottomNavigation.swift; sourceTree = "<group>"; };
 		99D4541C29AC7EDD00462A8F /* Counter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Counter.swift; sourceTree = "<group>"; };
@@ -201,7 +209,7 @@
 		99D4544729AFC87A00462A8F /* BarChart.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BarChart.swift; sourceTree = "<group>"; };
 		99D4546C29B3592500462A8F /* DynamicProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicProductCard.swift; sourceTree = "<group>"; };
 		99D4546E29B35ABF00462A8F /* StaticProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticProductCard.swift; sourceTree = "<group>"; };
-		99D4547029B35CBB00462A8F /* PlaceCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCard.swift; sourceTree = "<group>"; };
+		99D4547029B35CBB00462A8F /* OrganizationCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationCard.swift; sourceTree = "<group>"; };
 		99D4547829B3644E00462A8F /* NavigationTabs.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationTabs.swift; sourceTree = "<group>"; };
 		99D4548229B36DFA00462A8F /* MainScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainScreen.swift; sourceTree = "<group>"; };
 		99D4548429B36E0A00462A8F /* OrdersListScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrdersListScreen.swift; sourceTree = "<group>"; };
@@ -223,6 +231,14 @@
 		99D454AB29B4E48700462A8F /* MapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		99D454AD29B50C4600462A8F /* SuppliersListFilterScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuppliersListFilterScreen.swift; sourceTree = "<group>"; };
 		99D454B029B519A700462A8F /* ViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtensions.swift; sourceTree = "<group>"; };
+		99F1789329DC6C54001903F2 /* DatePickerField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatePickerField.swift; sourceTree = "<group>"; };
+		99F1789729DD42B5001903F2 /* OrganizationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationModel.swift; sourceTree = "<group>"; };
+		99F1789A29DD5622001903F2 /* PhotoPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoPicker.swift; sourceTree = "<group>"; };
+		99F1789C29DD58F5001903F2 /* SupplierOrdersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplierOrdersView.swift; sourceTree = "<group>"; };
+		99F1789D29DD58F5001903F2 /* SupplierOrdersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplierOrdersViewModel.swift; sourceTree = "<group>"; };
+		99F178A029DD5907001903F2 /* SupplierStatisticsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplierStatisticsView.swift; sourceTree = "<group>"; };
+		99F178A129DD5907001903F2 /* SupplierStatisticsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplierStatisticsViewModel.swift; sourceTree = "<group>"; };
+		99F178A429DD7065001903F2 /* KeyboardModifier.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KeyboardModifier.swift; sourceTree = "<group>"; };
 		EA15C5ED5EB5F0EA9CB9DE51 /* Pods-Diploma.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diploma.debug.xcconfig"; path = "Target Support Files/Pods-Diploma/Pods-Diploma.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -277,6 +293,8 @@
 		99A0954629BA6DA600C0286D /* Orders */ = {
 			isa = PBXGroup;
 			children = (
+				99F1789C29DD58F5001903F2 /* SupplierOrdersView.swift */,
+				99F1789D29DD58F5001903F2 /* SupplierOrdersViewModel.swift */,
 			);
 			path = Orders;
 			sourceTree = "<group>";
@@ -284,6 +302,8 @@
 		99A0954729BA6DAD00C0286D /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
+				99F178A029DD5907001903F2 /* SupplierStatisticsView.swift */,
+				99F178A129DD5907001903F2 /* SupplierStatisticsViewModel.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -299,9 +319,9 @@
 		99A0956329BC94F800C0286D /* Modifiers */ = {
 			isa = PBXGroup;
 			children = (
+				99F178A429DD7065001903F2 /* KeyboardModifier.swift */,
 				99A0956429BC950400C0286D /* ViewModifier.swift */,
 				99A0956629BC981800C0286D /* ImageModifier.swift */,
-				99C14C8629DA0AE000B8D3E2 /* KeyboardModifier.swift */,
 			);
 			path = Modifiers;
 			sourceTree = "<group>";
@@ -344,6 +364,7 @@
 		99A561DF29A0FCFD00F9932A /* Diploma */ = {
 			isa = PBXGroup;
 			children = (
+				99D4543229AE4E2300462A8F /* Resources */,
 				99C14C5029D6FA0B00B8D3E2 /* Network */,
 				99AA12A229D57391002219E0 /* TemplateInfo.plist */,
 				99A561EE29A0FDB900F9932A /* Info.plist */,
@@ -527,7 +548,7 @@
 		99D4541629AC7E5200462A8F /* Components */ = {
 			isa = PBXGroup;
 			children = (
-				99C14C6D29D955EE00B8D3E2 /* OverflowScroll.swift */,
+				99F1789929DD45B9001903F2 /* InputFields */,
 				99C14C7429D985A800B8D3E2 /* Loading */,
 				99A0956B29BCD1A900C0286D /* Alerts */,
 				99A0951A29B62D8500C0286D /* Calendar */,
@@ -538,11 +559,12 @@
 				99D4542D29AE024D00462A8F /* Buttons */,
 				99D4542029AC7EF900462A8F /* Cards */,
 				99D4541C29AC7EDD00462A8F /* Counter.swift */,
-				99D4543029AE117200462A8F /* CustomTextField.swift */,
+				99C14C6D29D955EE00B8D3E2 /* OverflowScroll.swift */,
 				99D4548E29B3C9F200462A8F /* Header.swift */,
 				99D454A029B4959200462A8F /* BottomSheet.swift */,
 				99D454AB29B4E48700462A8F /* MapView.swift */,
 				99AA128729CCB411002219E0 /* ActivityViewController.swift */,
+				99F1789A29DD5622001903F2 /* PhotoPicker.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -552,7 +574,7 @@
 			children = (
 				99D4546C29B3592500462A8F /* DynamicProductCard.swift */,
 				99D4546E29B35ABF00462A8F /* StaticProductCard.swift */,
-				99D4547029B35CBB00462A8F /* PlaceCard.swift */,
+				99D4547029B35CBB00462A8F /* OrganizationCard.swift */,
 				99D4549729B45BA300462A8F /* OrderCard.swift */,
 				99A0954B29BAFF0100C0286D /* SupplierProductCard.swift */,
 			);
@@ -562,13 +584,13 @@
 		99D4542129AC7F1600462A8F /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				99F1789629DD429A001903F2 /* Models */,
+				99F1789529DD428C001903F2 /* Errors */,
 				99C14C6329D8930800B8D3E2 /* Managers */,
 				99AA128429CCB0A3002219E0 /* Utils */,
 				99A0956329BC94F800C0286D /* Modifiers */,
 				99A561E029A0FCFD00F9932A /* DiplomaApp.swift */,
-				99D4543229AE4E2300462A8F /* Resources */,
 				99D4542229AC7F2200462A8F /* Extensions */,
-				99C14C7829D9B25B00B8D3E2 /* FormError.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -665,7 +687,7 @@
 				99D4548129B36DEB00462A8F /* Profile */,
 				99A561E229A0FCFD00F9932A /* ContentView.swift */,
 				99D4549029B3CB8800462A8F /* ProductScreen.swift */,
-				99AA129729D229C7002219E0 /* UserRole.swift */,
+				99AA129729D229C7002219E0 /* OrganizationType.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -766,6 +788,32 @@
 				99D4549E29B4863100462A8F /* SupplierAdditionalInfoRow.swift */,
 			);
 			path = Components;
+			sourceTree = "<group>";
+		};
+		99F1789529DD428C001903F2 /* Errors */ = {
+			isa = PBXGroup;
+			children = (
+				99C14C7829D9B25B00B8D3E2 /* FormError.swift */,
+			);
+			path = Errors;
+			sourceTree = "<group>";
+		};
+		99F1789629DD429A001903F2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				99F1789729DD42B5001903F2 /* OrganizationModel.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		99F1789929DD45B9001903F2 /* InputFields */ = {
+			isa = PBXGroup;
+			children = (
+				99C14C9529DAF85300B8D3E2 /* DropDownList.swift */,
+				99F1789329DC6C54001903F2 /* DatePickerField.swift */,
+				99D4543029AE117200462A8F /* CustomTextField.swift */,
+			);
+			path = InputFields;
 			sourceTree = "<group>";
 		};
 		B15AE332FCC1211E0F9B1938 /* Pods */ = {
@@ -904,10 +952,12 @@
 				99D4549F29B4863100462A8F /* SupplierAdditionalInfoRow.swift in Sources */,
 				99A561E329A0FCFD00F9932A /* ContentView.swift in Sources */,
 				99D4546D29B3592500462A8F /* DynamicProductCard.swift in Sources */,
+				99F1789829DD42B5001903F2 /* OrganizationModel.swift in Sources */,
 				99A0954C29BAFF0100C0286D /* SupplierProductCard.swift in Sources */,
 				99A0956529BC950400C0286D /* ViewModifier.swift in Sources */,
 				99D4546F29B35ABF00462A8F /* StaticProductCard.swift in Sources */,
 				99D4543129AE117200462A8F /* CustomTextField.swift in Sources */,
+				99F1789429DC6C54001903F2 /* DatePickerField.swift in Sources */,
 				99D4548B29B39C7500462A8F /* SuppliersListScreen.swift in Sources */,
 				99A0955029BB1A0100C0286D /* AddProductButton.swift in Sources */,
 				99C14C7B29D9B6F300B8D3E2 /* ResultVoidExtension.swift in Sources */,
@@ -916,6 +966,7 @@
 				99C14C9029DAB40800B8D3E2 /* MoyaProviderExtension.swift in Sources */,
 				99D4541F29AC7EEA00462A8F /* CustomCalendar.swift in Sources */,
 				99D454AE29B50C4600462A8F /* SuppliersListFilterScreen.swift in Sources */,
+				99F178A329DD5907001903F2 /* SupplierStatisticsViewModel.swift in Sources */,
 				99AA129129CDE6B7002219E0 /* LoadingScreenViewModel.swift in Sources */,
 				99D4542829AD242A00462A8F /* FontsExtension.swift in Sources */,
 				99C14C6E29D955EE00B8D3E2 /* OverflowScroll.swift in Sources */,
@@ -924,11 +975,13 @@
 				99AA128629CCB0B2002219E0 /* Debugger.swift in Sources */,
 				99D4548F29B3C9F200462A8F /* Header.swift in Sources */,
 				99AA12A129D5713F002219E0 /* MainSignUpViewModel.swift in Sources */,
+				99C14C9629DAF85300B8D3E2 /* DropDownList.swift in Sources */,
+				99F1789E29DD58F5001903F2 /* SupplierOrdersView.swift in Sources */,
 				99AA128C29CD935A002219E0 /* EncodableExtension.swift in Sources */,
 				99D4542629AC807800462A8F /* ColorExtension.swift in Sources */,
 				99A0954A29BAFCB600C0286D /* SupplierMainScreen.swift in Sources */,
 				99C14C5229D6FA3300B8D3E2 /* AuthorizationProvider.swift in Sources */,
-				99D4547129B35CBB00462A8F /* PlaceCard.swift in Sources */,
+				99D4547129B35CBB00462A8F /* OrganizationCard.swift in Sources */,
 				99D4549529B3D6BD00462A8F /* ViewManager.swift in Sources */,
 				99D454A829B4E11500462A8F /* SmallTag.swift in Sources */,
 				99C14C9229DAF10A00B8D3E2 /* AuthorizationDto.swift in Sources */,
@@ -948,18 +1001,21 @@
 				99C14C8529D9DD7800B8D3E2 /* Address.swift in Sources */,
 				99D4544629AFC84E00462A8F /* PieChart.swift in Sources */,
 				99D4542F29AE027400462A8F /* CustomButtonStyles.swift in Sources */,
-				99AA129829D229C7002219E0 /* UserRole.swift in Sources */,
+				99AA129829D229C7002219E0 /* OrganizationType.swift in Sources */,
 				99C14C8329D9DD2B00B8D3E2 /* ContactPersonModel.swift in Sources */,
 				99A0952429B70B7400C0286D /* ContactView.swift in Sources */,
 				99AA126029C82273002219E0 /* DateRangeSegment.swift in Sources */,
 				99D4544829AFC87A00462A8F /* BarChart.swift in Sources */,
 				99C14C6729D8937400B8D3E2 /* AlertManager.swift in Sources */,
+				99F1789F29DD58F5001903F2 /* SupplierOrdersViewModel.swift in Sources */,
 				99C14C8D29DAB1EB00B8D3E2 /* TargetTypeExtension.swift in Sources */,
 				99C14C6C29D8B11200B8D3E2 /* SignInViewModel.swift in Sources */,
 				99D4543B29AE6FF500462A8F /* BottomNavigationTab.swift in Sources */,
 				99C14C5629D6FA9E00B8D3E2 /* SuppliesProvider.swift in Sources */,
 				99D4548929B39C5F00462A8F /* StatisticsScreen.swift in Sources */,
 				99A0955529BB333500C0286D /* EditProductScreen.swift in Sources */,
+				99F178A529DD7065001903F2 /* KeyboardModifier.swift in Sources */,
+				99F178A229DD5907001903F2 /* SupplierStatisticsView.swift in Sources */,
 				99D4548729B39C4C00462A8F /* ProfileScreen.swift in Sources */,
 				99A0951E29B6305B00C0286D /* OrderStateView.swift in Sources */,
 				99A0957F29BFA39100C0286D /* SupplierTabBarWrapper.swift in Sources */,
@@ -983,12 +1039,12 @@
 				99A0951C29B62D9F00C0286D /* CustomCalendarCell.swift in Sources */,
 				99D4541829AC7E7700462A8F /* CustomButton.swift in Sources */,
 				99C14C9429DAF21400B8D3E2 /* OrganizationDto.swift in Sources */,
-				99C14C8729DA0AE000B8D3E2 /* KeyboardModifier.swift in Sources */,
 				99A0952629B70B8C00C0286D /* LocationView.swift in Sources */,
 				99A0956D29BCD1BB00C0286D /* AlertModel.swift in Sources */,
 				99D4543D29AE883300462A8F /* CornersViewExtension.swift in Sources */,
 				99A0956F29BD0AFD00C0286D /* CustomerTabBarWrapper.swift in Sources */,
 				99AA125D29C821E5002219E0 /* DateRangeSegmentsView.swift in Sources */,
+				99F1789B29DD5622001903F2 /* PhotoPicker.swift in Sources */,
 				99D4549A29B45CC900462A8F /* ExtendableSection.swift in Sources */,
 				99C14C6029D7150A00B8D3E2 /* LoadingIndicator.swift in Sources */,
 				99C14C8129D9DC1700B8D3E2 /* OrganizationCreationModel.swift in Sources */,
@@ -1126,6 +1182,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diploma/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Supply App";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -1157,6 +1214,7 @@
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Diploma/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "Supply App";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";

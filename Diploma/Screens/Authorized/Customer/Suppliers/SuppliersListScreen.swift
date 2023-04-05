@@ -43,7 +43,7 @@ struct SuppliersListScreen: View {
                         VStack {
                             ForEach((0...8), id: \.self) { _ in
                                 NavigationLink(destination: SupplierScreen(), tag: SupplierScreen.tag, selection: $tagSelection) {
-                                    PlaceCard(name: "Название", distance: 24, openingTime: "")
+                                    OrganizationCard(organizationModel: .empty)
                                         .onTapGesture {
                                             tagSelection = SupplierScreen.tag
                                         }

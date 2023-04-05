@@ -14,10 +14,8 @@ struct OverflowScroll<Content: View>: View {
             content()
                 .background(
                     GeometryReader { contentGeo in
-                        ZStack(alignment: .top) {
-                            Color.clear.onAppear {
-                                contentOverflow = contentGeo.size.height > mainGeo.size.height
-                            }
+                        Color.clear.onAppear {
+                            contentOverflow = contentGeo.size.height > mainGeo.size.height
                         }
                     }
                 )

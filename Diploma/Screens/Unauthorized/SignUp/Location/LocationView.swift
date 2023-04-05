@@ -19,6 +19,8 @@ struct LocationView: View {
     @State var selectedLandmark: Landmark? = nil
     @State private var counter = 0 // TODO: remove counter
     
+    @Environment(\.presentationMode) private var presentation
+
     var body: some View {
         OverflowScroll {
             VStack(spacing: 0) {

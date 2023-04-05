@@ -8,7 +8,7 @@ struct LoaderView: View {
             LoadingIndicator(isLoading: $isLoading, loaderStyle: .medium)
         }
         .padding(16)
-        .background(Color.customDarkGray.opacity(0.6))
+        .background(Color.customLightOrange)
         .cornerRadius(8)
         .opacity(isLoading ? 1 : 0)
     }

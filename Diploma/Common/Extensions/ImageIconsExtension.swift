@@ -19,7 +19,12 @@ extension Image {
     public static let customRoute: Image = Image("route").resizable()
     public static let customSearch: Image = Image("search").resizable()
     public static let customUser: Image = Image("user").resizable()
-    
+    public static let customEye: Image = Image("eye").resizable()
+    public static let customClosedEye: Image = Image("eye closed").resizable()
+    public static let customPencil: Image = Image("pencil").resizable()
+    public static let customBin: Image = Image("bin").resizable()
+    public static let customImage: Image = Image("image").resizable()
+
     public static let customErrorAlert: Image = Image("error alert").resizable()
     public static let customSuccessAlert: Image = Image("success alert").resizable()
     public static let customInfoAlert: Image = Image("info alert").resizable()

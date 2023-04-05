@@ -12,6 +12,10 @@ struct SupplierTabBarWrapper: View {
                 SupplierMainScreen()
             case SupplierClientsScreen.tag:
                 SupplierClientsScreen()
+            case SupplierOrdersView.tag:
+                SupplierOrdersView()
+            case SupplierStatisticsView.tag:
+                SupplierStatisticsView()
             case ProfileScreen.tag:
                 ProfileScreen()
             default:

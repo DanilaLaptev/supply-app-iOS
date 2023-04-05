@@ -2,10 +2,11 @@ import SwiftUI
 
 struct OrderingScreen: View {
     public static let tag = "OrderingScreen"
-
     
     @StateObject private var tools = ViewManager.shared
 
+    @State var date = Date()
+    
     var body: some View {
         VStack(spacing: 0) {
             Header(title: "Title")
@@ -33,8 +34,7 @@ struct OrderingScreen: View {
                     VStack(alignment: .leading ,spacing: 16) {
                         Text("Выберите дату и время получения заказа").font(.customStandard)
                         VStack(spacing: 8) {
-                            CustomTextField(textFieldValue: .constant(""), icon: .customDate, placeholder: "Дата")
-                            CustomTextField(textFieldValue: .constant(""), icon: .customClock, placeholder: "Время")
+                            DatePickerField(date: $date, icon: .customDate)
                         }
                     }
                     
