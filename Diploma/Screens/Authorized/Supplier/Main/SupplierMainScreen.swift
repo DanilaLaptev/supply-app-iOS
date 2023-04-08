@@ -11,7 +11,7 @@ struct SupplierMainScreen: View {
     var body: some View {
         VStack {
             NavigationLink("", destination: EditProductScreen(), tag: EditProductScreen.tag, selection: $tagSelection)
-            NavigationLink("", destination: ProductScreen(), tag: ProductScreen.tag, selection: $tagSelection)
+            NavigationLink("", destination: ProductScreen(model: .empty), tag: ProductScreen.tag, selection: $tagSelection)
             
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {

@@ -1,17 +1,18 @@
 import SwiftUI
 
-struct MainScreen: View {
-    public static let tag = "MainScreen"
-    
+struct WorkerMainView: View {
+    public static let tag = "WorkerMainView"
     
     @StateObject private var tools = ViewManager.shared
-    
+    @StateObject private var viewModel = WorkerMainViewModel()
+
     var body: some View {
         VStack {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
-                    ForEach((0...16), id: \.self) { _ in
-                        SmallTag(icon: .customClock, name: "tag")
+                    SmallTag(icon: .customBox, name: "Все")
+                    ForEach(viewModel.tags, id: \.self) { tag in
+                        SmallTag(icon: .customClock, name: tag.rawValue)
                     }
                 }
                 .padding(.horizontal, 16)
@@ -20,11 +21,14 @@ struct MainScreen: View {
             .padding(.bottom, 16)
             ScrollView(.vertical, showsIndicators: false) {
                 VStack {
-                    ForEach((0...32), id: \.self) { _ in
+                    ForEach(viewModel.storageItems) { storageItem in
                         NavigationLink {
-                            ProductScreen()
+                            ProductScreen(model: .empty)
                         } label: {
-                            DynamicProductCard()
+                            DynamicProductCard(model: storageItem, extraOptions: [
+                                ExtraOption(icon: .customPencil, action: {}),
+                                ExtraOption(icon: .customEye, action: {})
+                            ])
                         }
                     }
                 }
@@ -43,7 +47,7 @@ struct MainScreen: View {
 struct MainScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            MainScreen()
+            WorkerMainView()
         }
     }
 }

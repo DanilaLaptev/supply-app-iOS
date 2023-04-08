@@ -38,10 +38,11 @@ struct LocationView: View {
                         CustomTextField(textFieldValue: .constant(""), placeholder: "Адрес организации")
                             .padding(.bottom, 24)
                         
-                        NavigationLink(destination: MainScreen(), tag: MainScreen.tag, selection: $tagSelection) {
+                        NavigationLink(destination: WorkerMainView(), tag: WorkerMainView.tag, selection: $tagSelection) {
                             CustomButton(label: Text("Завершить регистрацию")) {
                                 counter += 1
                                 alertManager.showAlert(AlertModel(type: .error, description: "description \(counter)"))
+                                tagSelection = SignInView.tag
                             }
                         }
                     }

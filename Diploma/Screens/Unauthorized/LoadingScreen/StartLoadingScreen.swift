@@ -4,9 +4,20 @@ struct StartLoadingScreen: View {
     @StateObject var viewModel = LoadingScreenViewModel()
     
     var body: some View {
-        ZStack(alignment: .center) {
+        VStack(alignment: .center) {
             NavigationLink("", destination: AuthorizationWrapper(), tag: AuthorizationWrapper.tag, selection: $viewModel.nextScreenTag)
+            
+            Spacer()
+
+            Image("packed box")
+                .resizable()
+                .aspectRatio(1 / 1, contentMode: .fit)
+                .frame(width: UIScreen.main.bounds.width * 0.4)
+            
+            Spacer()
         }
+        .frame(maxWidth: .infinity)
+        .background(Color.customLightOrange)
         .defaultScreenSettings()
         .onAppear {
             viewModel.checkUserAuth()

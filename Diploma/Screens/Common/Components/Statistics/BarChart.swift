@@ -13,16 +13,28 @@ struct Bar: View {
     var model: BarCharItem
     
     var body: some View {
-        HStack {
-            VStack(alignment: .leading, spacing: 4) {
-                Text(model.name).font(.customHint).foregroundColor(.customOrange)
-                Text(model.value).font(.customStandard).foregroundColor(.customOrange)
-            }
-            Spacer()
+        VStack(alignment: .leading, spacing: 8) {
+            Text(model.name).font(.customHint).foregroundColor(.customOrange)
+            
+            Color.clear
+            .frame(height: 16)
+            .background(
+                GeometryReader { geo in
+                    HStack {
+                        RoundedRectangle(cornerRadius: 8)
+                            .foregroundColor(.customLightOrange)
+                            .frame(width: (geo.size.width - 56) * model.percent)
+                    
+                        Text("\(Int(model.percent * 100))%")
+                            .font(.customStandard)
+                            .frame(width: 56)
+                        
+                        Spacer()
+                    }
+                })
         }
-        .padding(8)
-        .background(Color.customLightOrange)
-        .cornerRadius(4)
+        .frame(maxWidth: .infinity)
+        .padding(.vertical, 8)
     }
 }
 
@@ -30,23 +42,19 @@ struct BarChart: View {
     let bars = [
         BarCharItem(value: "$100", name: "product 1", percent: 0.5),
         BarCharItem(value: "$250", name: "product 2", percent: 0.9),
-        BarCharItem(value: "$200", name: "product 3", percent: 0.8),
-        BarCharItem(value: "$120", name: "product 4", percent: 0.1),
-        BarCharItem(value: "$120", name: "product 5", percent: 0.2),
-        BarCharItem(value: "$120", name: "product 6", percent: 0.23),
-        BarCharItem(value: "$120", name: "product 7", percent: 0.98)
+        BarCharItem(value: "$250", name: "product 2", percent: 1),
+        BarCharItem(value: "$200", name: "product 3", percent: 0.8)
     ]
     
     var body: some View {
-        GeometryReader { geo in
-            VStack(alignment: .leading, spacing: 8) {
-                ForEach(bars) { bar in
-                    Bar(model: bar).frame(width: geo.size.width * bar.percent)
+        VStack(alignment: .leading) {
+            ForEach(bars) { bar in
+                HStack {
+                    Bar(model: bar)
+                    Spacer()
                 }
-                
             }
         }
-        .scaledToFit()
     }
 }
 

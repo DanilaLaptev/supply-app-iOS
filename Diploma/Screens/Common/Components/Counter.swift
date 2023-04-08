@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct Counter: View {
-    @State var counterValue = 0
+    @Binding var counterValue: Int
     
     private let minimum = 0
     private let maximum = 100
@@ -32,7 +32,8 @@ struct Counter: View {
 }
 
 struct Counter_Previews: PreviewProvider {
+    @State static var counter = 0
     static var previews: some View {
-        Counter()
+        Counter(counterValue: $counter)
     }
 }

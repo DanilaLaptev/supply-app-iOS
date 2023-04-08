@@ -57,6 +57,15 @@ struct StatisticsScreen: View {
                     }
                 }
                 
+                ExtendableSection(isCollapsed: false) {
+                    BarChart()
+                } headerContent: {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Доступная продукция").font(.customSubtitle)
+                        Text("Напитки, выпечка").font(.customHint)
+                    }
+                }
+                
             }
             .padding(.vertical, 8)
             .padding(.top, safeAreaEdgeInsets.top)

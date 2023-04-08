@@ -1,9 +1,10 @@
 import SwiftUI
 
-struct OrderingScreen: View {
-    public static let tag = "OrderingScreen"
+struct OrderingView: View {
+    public static let tag = "OrderingView"
     
     @StateObject private var tools = ViewManager.shared
+    @StateObject var viewModel = OrderingViewModel()
 
     @State var date = Date()
     
@@ -21,7 +22,7 @@ struct OrderingScreen: View {
 
                     VStack {
                         ForEach((0...8), id: \.self) { _ in
-                            DynamicProductCard()
+                            DynamicProductCard(model: .empty, extraOptions: [])
                         }
                     }
                     .padding(.horizontal, 16)
@@ -54,6 +55,6 @@ struct OrderingScreen: View {
 
 struct OrderingScreen_Previews: PreviewProvider {
     static var previews: some View {
-        OrderingScreen()
+        OrderingView()
     }
 }

@@ -1,9 +1,9 @@
 import SwiftUI
 
-struct SupplierScreen: View {
-    public static let tag = "SupplierScreen"
+struct SupplierView: View {
+    public static let tag = "SupplierView"
 
-    
+    @StateObject var viewModel = SupplierViewModel()
     @StateObject private var tools = ViewManager.shared
     @State private var tagSelection: String? = nil
 
@@ -44,9 +44,9 @@ struct SupplierScreen: View {
                     VStack {
                         ForEach((0...8), id: \.self) { _ in
                             NavigationLink {
-                                ProductScreen()
+                                ProductScreen(model: .empty)
                             } label: {
-                                DynamicProductCard()
+                                DynamicProductCard(model: .empty, extraOptions: [])
                             }
                         }
                     }
@@ -58,16 +58,16 @@ struct SupplierScreen: View {
             BottomSheet {
                 VStack(spacing: 8) {
                     HStack {
-                        VStack {
-                            Text("sdf").font(.customHint)
-                            Text("sdf").font(.customSubtitle)
+                        VStack(alignment: .leading, spacing: 4) {
+                            Text("продуктов").font(.customHint)
+                            Text("100 ₽").font(.customSubtitle)
                         }
                         Spacer()
                         
                         NavigationLink(destination: OrderScreen()) {
-                            NavigationLink(destination: OrderingScreen(), tag: OrderingScreen.tag, selection: $tagSelection) {
+                            NavigationLink(destination: OrderingView(), tag: OrderingView.tag, selection: $tagSelection) {
                                 CustomButton(icon: .customBox) {
-                                    tagSelection = OrderingScreen.tag
+                                    tagSelection = OrderingView.tag
                                 }
                                 .frame(width: 48)
                             }
@@ -92,7 +92,7 @@ struct SupplierScreen: View {
 struct SupplierScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SupplierScreen()
+            SupplierView()
         }
     }
 }

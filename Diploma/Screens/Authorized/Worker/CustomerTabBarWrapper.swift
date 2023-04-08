@@ -10,10 +10,10 @@ struct CustomerTabBarWrapper: View {
     var body: some View {
         VStack(spacing: 0) {
             switch selectedTab.screenTag {
-            case MainScreen.tag:
-                MainScreen()
-            case SuppliersListScreen.tag:
-                SuppliersListScreen()
+            case WorkerMainView.tag:
+                WorkerMainView()
+            case SuppliersListView.tag:
+                SuppliersListView()
             case OrdersListScreen.tag:
                 OrdersListScreen()
             case StatisticsScreen.tag:

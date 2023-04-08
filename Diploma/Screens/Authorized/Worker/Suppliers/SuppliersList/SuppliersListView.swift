@@ -1,13 +1,14 @@
 import SwiftUI
 
 // TODO: Map elements rewrite
-struct SuppliersListScreen: View {
-    public static let tag = "SuppliersListScreen"
+struct SuppliersListView: View {
+    public static let tag = "SuppliersListView"
     
     
     @StateObject private var tools = ViewManager.shared
     
     @State private var tagSelection: String? = nil
+    @StateObject var viewModel = SuppliersListViewModel()
 
     
     @State var landmarks: [Landmark] = [
@@ -42,10 +43,10 @@ struct SuppliersListScreen: View {
                         
                         VStack {
                             ForEach((0...8), id: \.self) { _ in
-                                NavigationLink(destination: SupplierScreen(), tag: SupplierScreen.tag, selection: $tagSelection) {
+                                NavigationLink(destination: SupplierView(), tag: SupplierView.tag, selection: $tagSelection) {
                                     OrganizationCard(organizationModel: .empty)
                                         .onTapGesture {
-                                            tagSelection = SupplierScreen.tag
+                                            tagSelection = SupplierView.tag
                                         }
                                 }
                             }
@@ -68,7 +69,7 @@ struct SuppliersListScreen: View {
 struct SuppliersScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SuppliersListScreen()
+            SuppliersListView()
         }
     }
 }

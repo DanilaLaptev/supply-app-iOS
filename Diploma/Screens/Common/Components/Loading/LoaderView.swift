@@ -5,11 +5,16 @@ struct LoaderView: View {
     
     var body: some View {
         ZStack(alignment: .center) {
-            LoadingIndicator(isLoading: $isLoading, loaderStyle: .medium)
+            ZStack(alignment: .center) {
+                LoadingIndicator(isLoading: $isLoading, loaderStyle: .medium)
+            }
+            .padding(16)
+            .background(Color.customLightOrange)
+            .cornerRadius(8)
         }
-        .padding(16)
-        .background(Color.customLightOrange)
-        .cornerRadius(8)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(Color.customDarkGray.opacity(0.2))
+        .edgesIgnoringSafeArea(.all)
         .opacity(isLoading ? 1 : 0)
     }
 }

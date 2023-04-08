@@ -17,10 +17,10 @@ class LoadingScreenViewModel: ObservableObject {
     }
     
     init() {
-        isLoadingPublisher
-            .receive(on: RunLoop.main)
-            .assign(to: \.viewManager.isLoading, on: self)
-            .store(in: &cancellableSet)
+//        isLoadingPublisher
+//            .receive(on: RunLoop.main)
+//            .assign(to: \.viewManager.isLoading, on: self)
+//            .store(in: &cancellableSet)
     }
     
     func checkUserAuth() {

@@ -5,6 +5,8 @@ struct ProductScreen: View {
     
     @StateObject private var tools = ViewManager.shared
     
+    let model: StorageItemModel
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 8) {
@@ -12,13 +14,14 @@ struct ProductScreen: View {
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                 
-                Rectangle()
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 200)
-                    .foregroundColor(.customDarkGray)
-                    .cornerRadius(8)
-                    .padding(.horizontal, 16)
-                    .padding(.bottom, 16)
+                AsyncImage(imageUrl: URL(string: model.imageUrl)) {
+                    Color.customDarkGray
+                }
+                .frame(maxWidth: .infinity)
+                .frame(height: 200)
+                .cornerRadius(8)
+                .padding(.horizontal, 16)
+                .padding(.bottom, 16)
                 
                 ExtendableSection {
                     Text("TODO")
@@ -55,7 +58,7 @@ struct ProductScreen: View {
 struct ProductScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            ProductScreen()
+            ProductScreen(model: .empty)
         }
     }
 }
