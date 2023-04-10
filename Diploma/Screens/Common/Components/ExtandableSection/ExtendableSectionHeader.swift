@@ -16,14 +16,16 @@ struct ExtendableSectionHeader<Content: View>: View {
         HStack(alignment: .center) {
             content
             Spacer()
-            CustomButton(icon: .customBackShort, background: .clear, foreground: .customOrange) {
-                withAnimation {
-                    isCollapsed.toggle()
-                }
-            }
-            .frame(width: 32, height: 32)
+            Image.customBackShort
+                .foregroundColor(.customOrange)
+            .frame(width: 22, height: 22)
             .rotationEffect(.degrees(isCollapsed ? 180 : 270))
             .animation(.easeInOut, value: isCollapsed)
+        }
+        .onTapGesture {
+            withAnimation {
+                isCollapsed.toggle()
+            }
         }
     }
 }

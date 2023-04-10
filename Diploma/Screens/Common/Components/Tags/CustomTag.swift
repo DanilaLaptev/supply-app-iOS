@@ -1,11 +1,11 @@
 import SwiftUI
 
 struct CustomTag<TagBody: View>: View {
-    @Binding var isSelected: Bool
+    var isSelected: Bool
     let content: TagBody
     
-    init(isSelected: Binding<Bool>, @ViewBuilder content: () -> TagBody) {
-        self._isSelected = isSelected
+    init(isSelected: Bool, @ViewBuilder content: () -> TagBody) {
+        self.isSelected = isSelected
         self.content = content()
     }
     
@@ -19,15 +19,12 @@ struct CustomTag<TagBody: View>: View {
                 RoundedRectangle(cornerRadius: 8)
                     .stroke(Color.customDarkGray, lineWidth: isSelected ? 0 : 1)
             )
-            .onTapGesture {
-                isSelected.toggle()
-            }
     }
 }
 
 struct CustomTag_Previews: PreviewProvider {
     static var previews: some View {
-        CustomTag(isSelected: .constant(false)) {
+        CustomTag(isSelected: false) {
             
         }
     }

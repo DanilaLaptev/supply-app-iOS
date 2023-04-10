@@ -25,7 +25,7 @@ struct SupplierTabBarWrapper: View {
             
             BottomNavigation(navTabs: NavigationTabs.supplierTabs, selectedTab: $selectedTab)
                 .frame(height: tools.bottomBarIsVisible ? nil : 0)
-                .clipped()
+                .zIndex(21)
         }
         .defaultScreenSettings()
         .onAppear {

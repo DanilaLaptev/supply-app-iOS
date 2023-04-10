@@ -4,9 +4,9 @@ import Combine
 
 class LoadingScreenViewModel: ObservableObject {
     @Published var authManager = AuthManager.shared
-    @Published var viewManager = ViewManager.shared
     
     @Published var nextScreenTag: String? = nil
+    @Published var isLoading = false
     
     private var cancellableSet = Set<AnyCancellable>()
     
@@ -17,10 +17,10 @@ class LoadingScreenViewModel: ObservableObject {
     }
     
     init() {
-//        isLoadingPublisher
-//            .receive(on: RunLoop.main)
-//            .assign(to: \.viewManager.isLoading, on: self)
-//            .store(in: &cancellableSet)
+        isLoadingPublisher
+            .receive(on: RunLoop.main)
+            .assign(to: \.isLoading, on: self)
+            .store(in: &cancellableSet)
     }
     
     func checkUserAuth() {

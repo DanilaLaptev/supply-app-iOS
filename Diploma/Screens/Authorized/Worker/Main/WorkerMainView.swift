@@ -6,34 +6,43 @@ struct WorkerMainView: View {
     @StateObject private var tools = ViewManager.shared
     @StateObject private var viewModel = WorkerMainViewModel()
 
+    
     var body: some View {
-        VStack {
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    SmallTag(icon: .customBox, name: "Все")
-                    ForEach(viewModel.tags, id: \.self) { tag in
-                        SmallTag(icon: .customClock, name: tag.rawValue)
-                    }
-                }
-                .padding(.horizontal, 16)
-            }
-            .padding(.top, 8)
-            .padding(.bottom, 16)
-            ScrollView(.vertical, showsIndicators: false) {
-                VStack {
-                    ForEach(viewModel.storageItems) { storageItem in
-                        NavigationLink {
-                            ProductScreen(model: .empty)
-                        } label: {
-                            DynamicProductCard(model: storageItem, extraOptions: [
-                                ExtraOption(icon: .customPencil, action: {}),
-                                ExtraOption(icon: .customEye, action: {})
-                            ])
+        ZStack(alignment: .bottom) {
+            NavigationLink("",
+                           destination: EditProductScreen(initialStorageItem: viewModel.editedStorageItem),
+                           isActive: $viewModel.editStorageItemActive)
+            
+            VStack {
+                TagsGroup()
+                .padding(.top, 8)
+                .padding(.bottom, 16)
+                
+                ScrollView(.vertical, showsIndicators: false) {
+                    VStack {
+                        ForEach(viewModel.storageItems) { storageItem in
+                            NavigationLink {
+                                ProductScreen(model: storageItem)
+                            } label:  {
+                                DynamicProductCard(model: storageItem,
+                                                   maximumQuantity: storageItem.quantity,
+                                                   extraOptions: [
+                                    ExtraOption(icon: .customPencil, action: {
+                                        viewModel.editProduct(storageItem)
+                                    })
+                                ])
+                            }
                         }
                     }
+                    .padding(.horizontal, 16)
+                    .padding(.bottom, 64)
                 }
-                .padding(.horizontal, 16)
             }
+            
+            CustomButton(label: Text("Сохранить покупку"))
+                .disabled(true)
+                .padding(.horizontal, 24)
+                .padding(.bottom, 8)
         }
         .padding(.top, safeAreaEdgeInsets.top)
         .background(Color.customLightGray)

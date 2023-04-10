@@ -2,14 +2,16 @@ import SwiftUI
 
 struct EditProductScreen: View {
     public static let tag = "EditProductScreen"
-    @State var isSharePresented = false
     
+    var initialStorageItem: StorageItemModel? = nil
+    
+    @State private var isSharePresented = false
     @State private var selectedImage: UIImage?
     
     var body: some View {
         VStack {
             VStack(spacing: 16) {
-                Header(title: "Title")
+                Header(title: initialStorageItem?.product.name ?? "Title")
                 
                 // TODO: async image
                 SelectedImage()

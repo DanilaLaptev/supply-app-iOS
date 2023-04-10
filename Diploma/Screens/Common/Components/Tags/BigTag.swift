@@ -6,7 +6,7 @@ struct BigTag: View {
     @State var isSelected = false
     
     var body: some View {
-        CustomTag(isSelected: $isSelected) {
+        CustomTag(isSelected: isSelected) {
             VStack(alignment: .center ,spacing: 4) {
                 icon
                     .resizable()

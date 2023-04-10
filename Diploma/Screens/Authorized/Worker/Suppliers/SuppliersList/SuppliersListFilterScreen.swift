@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct SuppliersListFilterScreen: View {
+    @EnvironmentObject private var viewModel: SuppliersListViewModel
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 8) {
@@ -45,7 +47,9 @@ struct SuppliersListFilterScreen: View {
 }
 
 struct SuppliersListFilterScreen_Previews: PreviewProvider {
+    @State static var vm = SupplierViewModel()
     static var previews: some View {
         SuppliersListFilterScreen()
+            .environmentObject(vm)
     }
 }

@@ -2,6 +2,9 @@ import SwiftUI
 
 struct DynamicProductCard: View {
     var model: StorageItemModel
+    var minimumQuantity = 0
+    var maximumQuantity = 100
+    
     var extraOptions: [ExtraOption]
     
     @State var selectedNumber = 0
@@ -23,11 +26,13 @@ struct DynamicProductCard: View {
                 .font(.customSubtitle)
                 .foregroundColor(.customBlack)
             HStack {
-                Text("\(model.price) ₽")
+                Text("\(Int(model.price)) ₽")
                     .font(.customHint)
                     .foregroundColor(.customDarkGray)
                 Spacer()
-                Counter(counterValue: $selectedNumber)
+                Counter(counterValue: $selectedNumber,
+                        minimum: minimumQuantity,
+                        maximum: maximumQuantity)
             }
         }
         .padding(16)

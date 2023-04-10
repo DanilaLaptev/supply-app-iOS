@@ -3,8 +3,8 @@ import SwiftUI
 struct Counter: View {
     @Binding var counterValue: Int
     
-    private let minimum = 0
-    private let maximum = 100
+    var minimum = 0
+    var maximum = 100
 
     var body: some View {
         HStack(alignment: .center, spacing: 8) {

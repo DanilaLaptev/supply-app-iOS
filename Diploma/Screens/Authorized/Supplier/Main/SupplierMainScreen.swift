@@ -16,7 +16,7 @@ struct SupplierMainScreen: View {
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack {
                     ForEach((0...16), id: \.self) { _ in
-                        SmallTag(icon: .customClock, name: "tag")
+                        SmallTag(icon: .customBox, name: "Box", isSelected: false)
                     }
                 }
                 .padding(.horizontal, 16)

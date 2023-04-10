@@ -2,15 +2,15 @@ import SwiftUI
 import MapKit
 import CoreLocation
 
-// TODO: rewrite this file
-struct Landmark: Equatable {
-    static func ==(lhs: Landmark, rhs: Landmark) -> Bool {
-        lhs.id == rhs.id
-    }
-    
+
+struct MapMarker: Equatable {
     let id = UUID().uuidString
     let name: String
     let location: CLLocationCoordinate2D
+    
+    static func ==(lhs: MapMarker, rhs: MapMarker) -> Bool {
+        lhs.id == rhs.id
+    }
 }
 
 final class LandmarkAnnotation: NSObject, MKAnnotation {
@@ -18,7 +18,7 @@ final class LandmarkAnnotation: NSObject, MKAnnotation {
     let title: String?
     let coordinate: CLLocationCoordinate2D
 
-    init(landmark: Landmark) {
+    init(landmark: MapMarker) {
         self.id = landmark.id
         self.title = landmark.name
         self.coordinate = landmark.location
@@ -26,8 +26,8 @@ final class LandmarkAnnotation: NSObject, MKAnnotation {
 }
 
 struct MapView: UIViewRepresentable {
-    @Binding var landmarks: [Landmark]
-    @Binding var selectedLandmark: Landmark?
+    @Binding var markers: [MapMarker]
+    @Binding var selectedMarker: MapMarker?
     
     func makeUIView(context: Context) -> MKMapView {
         let map = MKMapView()
@@ -74,9 +74,9 @@ struct MapView: UIViewRepresentable {
     
     private func updateAnnotations(from mapView: MKMapView) {
         mapView.removeAnnotations(mapView.annotations)
-        let newAnnotations = landmarks.map { LandmarkAnnotation(landmark: $0) }
+        let newAnnotations = markers.map { LandmarkAnnotation(landmark: $0) }
         mapView.addAnnotations(newAnnotations)
-        if let selectedAnnotation = newAnnotations.filter({ $0.id == selectedLandmark?.id }).first {
+        if let selectedAnnotation = newAnnotations.filter({ $0.id == selectedMarker?.id }).first {
             mapView.selectAnnotation(selectedAnnotation, animated: true)
         }
     }

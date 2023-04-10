@@ -26,6 +26,7 @@ struct ContentView: View {
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             
             LoaderView(isLoading: $viewManager.isLoading)
+                .zIndex(20)
         }
         .edgesIgnoringSafeArea(.all)
     }

@@ -130,6 +130,10 @@
 		99F178CA29DEF8FD001903F2 /* SuppliersListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178C829DEF8FD001903F2 /* SuppliersListViewModel.swift */; };
 		99F178CE29DEF93C001903F2 /* OrderingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178CC29DEF93C001903F2 /* OrderingViewModel.swift */; };
 		99F178D429DFEE1F001903F2 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178D329DFEE1F001903F2 /* AsyncImage.swift */; };
+		99F178DC29E1C90A001903F2 /* Weekdays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178DB29E1C90A001903F2 /* Weekdays.swift */; };
+		99F178DE29E21512001903F2 /* TagsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178DD29E21512001903F2 /* TagsGroup.swift */; };
+		99F178E329E21584001903F2 /* TagsGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178E129E21584001903F2 /* TagsGroupViewModel.swift */; };
+		99F178E529E2DE02001903F2 /* SupplyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178E429E2DE02001903F2 /* SupplyModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -259,6 +263,10 @@
 		99F178C829DEF8FD001903F2 /* SuppliersListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SuppliersListViewModel.swift; sourceTree = "<group>"; };
 		99F178CC29DEF93C001903F2 /* OrderingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderingViewModel.swift; sourceTree = "<group>"; };
 		99F178D329DFEE1F001903F2 /* AsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
+		99F178DB29E1C90A001903F2 /* Weekdays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekdays.swift; sourceTree = "<group>"; };
+		99F178DD29E21512001903F2 /* TagsGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsGroup.swift; sourceTree = "<group>"; };
+		99F178E129E21584001903F2 /* TagsGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsGroupViewModel.swift; sourceTree = "<group>"; };
+		99F178E429E2DE02001903F2 /* SupplyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplyModel.swift; sourceTree = "<group>"; };
 		EA15C5ED5EB5F0EA9CB9DE51 /* Pods-Diploma.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diploma.debug.xcconfig"; path = "Target Support Files/Pods-Diploma/Pods-Diploma.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -417,6 +425,7 @@
 			children = (
 				99D4541E29AC7EEA00462A8F /* CustomCalendar.swift */,
 				99A0951B29B62D9F00C0286D /* CustomCalendarCell.swift */,
+				99F178DB29E1C90A001903F2 /* Weekdays.swift */,
 			);
 			path = CalendarGrid;
 			sourceTree = "<group>";
@@ -587,6 +596,7 @@
 				99AA128729CCB411002219E0 /* ActivityViewController.swift */,
 				99F1789A29DD5622001903F2 /* PhotoPicker.swift */,
 				99F178C129DEE2E2001903F2 /* EmptyView.swift */,
+				99F178DF29E2155F001903F2 /* TagsGroup */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -828,6 +838,7 @@
 				99F1789729DD42B5001903F2 /* OrganizationModel.swift */,
 				99F178B229DE7E1D001903F2 /* StorageItemModel.swift */,
 				99F178B429DE7E56001903F2 /* ProductModel.swift */,
+				99F178E429E2DE02001903F2 /* SupplyModel.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -868,6 +879,15 @@
 				99F178BC29DEE169001903F2 /* SupplierViewModel.swift */,
 			);
 			path = Supplier;
+			sourceTree = "<group>";
+		};
+		99F178DF29E2155F001903F2 /* TagsGroup */ = {
+			isa = PBXGroup;
+			children = (
+				99F178DD29E21512001903F2 /* TagsGroup.swift */,
+				99F178E129E21584001903F2 /* TagsGroupViewModel.swift */,
+			);
+			path = TagsGroup;
 			sourceTree = "<group>";
 		};
 		B15AE332FCC1211E0F9B1938 /* Pods */ = {
@@ -1004,6 +1024,7 @@
 				99C14C8B29DAA48700B8D3E2 /* LocationViewModel.swift in Sources */,
 				99AA128A29CD8419002219E0 /* DateFormatManager.swift in Sources */,
 				99D4541D29AC7EDD00462A8F /* Counter.swift in Sources */,
+				99F178E529E2DE02001903F2 /* SupplyModel.swift in Sources */,
 				99D4542C29AE022C00462A8F /* CustomSmallButton.swift in Sources */,
 				99D4549F29B4863100462A8F /* SupplierAdditionalInfoRow.swift in Sources */,
 				99A561E329A0FCFD00F9932A /* ContentView.swift in Sources */,
@@ -1076,10 +1097,13 @@
 				99D4548929B39C5F00462A8F /* StatisticsScreen.swift in Sources */,
 				99A0955529BB333500C0286D /* EditProductScreen.swift in Sources */,
 				99F178A229DD5907001903F2 /* SupplierStatisticsView.swift in Sources */,
+				99F178E329E21584001903F2 /* TagsGroupViewModel.swift in Sources */,
+				99F178DE29E21512001903F2 /* TagsGroup.swift in Sources */,
 				99D4548729B39C4C00462A8F /* ProfileScreen.swift in Sources */,
 				99A0951E29B6305B00C0286D /* OrderStateView.swift in Sources */,
 				99A0957F29BFA39100C0286D /* SupplierTabBarWrapper.swift in Sources */,
 				99AA129A29D22BC7002219E0 /* AuthorizationWrapper.swift in Sources */,
+				99F178DC29E1C90A001903F2 /* Weekdays.swift in Sources */,
 				99AA126429C82BEB002219E0 /* CalendarView.swift in Sources */,
 				99C14C7929D9B25B00B8D3E2 /* FormError.swift in Sources */,
 				99D4544329AE923F00462A8F /* ShadowViewExtension.swift in Sources */,
@@ -1249,8 +1273,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Supply App";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1281,8 +1304,7 @@
 				INFOPLIST_KEY_CFBundleDisplayName = "Supply App";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -3,13 +3,15 @@ import SwiftUI
 struct SupplierView: View {
     public static let tag = "SupplierView"
 
-    @StateObject var viewModel = SupplierViewModel()
+    var organizationModel: OrganizationModel
+    
+    @StateObject private var viewModel = SupplierViewModel()
     @StateObject private var tools = ViewManager.shared
     @State private var tagSelection: String? = nil
 
     var body: some View {
         VStack(spacing: 0) {
-            Header(title: "Title")
+            Header(title: organizationModel.title)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
             
@@ -17,7 +19,7 @@ struct SupplierView: View {
                 VStack(alignment: .leading) {
                     ExtendableSection {
                         VStack {
-                            SupplierAdditionalInfoRow(icon: .customMarker, hintText: "адрес склада", value: "ïåð. 7-é Íîâûé, 79, Òàãàíðîã")
+                            SupplierAdditionalInfoRow(icon: .customMarker, hintText: "адрес склада", value: organizationModel.address.addressName ?? "-")
                             SupplierAdditionalInfoRow(icon: .customRoute, hintText: "расстояние до вас", value: "3 км")
                             SupplierAdditionalInfoRow(icon: .customCall, hintText: "контактный номер", value: "+7 (999) 999-99-99")
                         }
@@ -30,23 +32,16 @@ struct SupplierView: View {
                         .font(.customTitle)
                         .padding(.horizontal, 16)
                     
-                    ScrollView(.horizontal, showsIndicators: false) {
-                        HStack {
-                            ForEach((0...16), id: \.self) { _ in
-                                SmallTag(icon: .customClock, name: "tag")
-                            }
-                        }
-                        .padding(.horizontal, 16)
-                        .padding(.top, 8)
-                        .padding(.bottom, 16)
-                    }
+                    TagsGroup()
+                    .padding(.top, 8)
+                    .padding(.bottom, 16)
                     
                     VStack {
-                        ForEach((0...8), id: \.self) { _ in
+                        ForEach(organizationModel.storageItems) { storageItem in
                             NavigationLink {
-                                ProductScreen(model: .empty)
+                                ProductScreen(model: storageItem)
                             } label: {
-                                DynamicProductCard(model: .empty, extraOptions: [])
+                                DynamicProductCard(model: storageItem, extraOptions: [])
                             }
                         }
                     }
@@ -65,11 +60,12 @@ struct SupplierView: View {
                         Spacer()
                         
                         NavigationLink(destination: OrderScreen()) {
-                            NavigationLink(destination: OrderingView(), tag: OrderingView.tag, selection: $tagSelection) {
+                            NavigationLink(destination: OrderingView(organizationModel: organizationModel), tag: OrderingView.tag, selection: $tagSelection) {
                                 CustomButton(icon: .customBox) {
                                     tagSelection = OrderingView.tag
                                 }
                                 .frame(width: 48)
+                                .disabled(organizationModel.storageItems.isEmpty) // TODO: fix condition
                             }
                             
                         }
@@ -77,6 +73,7 @@ struct SupplierView: View {
                     Text("Выберите хотя бы один продукт, чтобы оформить заказ")
                         .foregroundColor(.customDarkGray)
                         .font(.customHint)
+                        .opacity(organizationModel.storageItems.isEmpty ? 1 : 0) // TODO: fix condition
                 }
             }
         }
@@ -92,7 +89,7 @@ struct SupplierView: View {
 struct SupplierScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SupplierView()
+            SupplierView(organizationModel: .empty)
         }
     }
 }

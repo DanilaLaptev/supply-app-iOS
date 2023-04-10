@@ -2,33 +2,42 @@ import SwiftUI
 
 struct OrderingView: View {
     public static let tag = "OrderingView"
-    
+        
     @StateObject private var tools = ViewManager.shared
-    @StateObject var viewModel = OrderingViewModel()
+    @ObservedObject private var viewModel: OrderingViewModel
 
     @State var date = Date()
     
+    init(organizationModel: OrganizationModel) {
+        self.viewModel = OrderingViewModel(organizationModel: organizationModel)
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
-            Header(title: "Title")
+            Header(title: "Оформление заказа")
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
             
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading) {
-                    Text("5 продуктов")
-                        .font(.customTitle)
-                        .padding(.horizontal, 16)
-
+                    HStack {
+                        Text("\(viewModel.organizationModel.storageItems.count) продуктов")
+                            .font(.customTitle)
+                            .padding(.horizontal, 16)
+                        Spacer()
+                    }
+                    
                     VStack {
-                        ForEach((0...8), id: \.self) { _ in
-                            DynamicProductCard(model: .empty, extraOptions: [])
+                        ForEach(viewModel.organizationModel.storageItems) { storageItem in
+                            StaticProductCard(storageItem: storageItem)
                         }
                     }
                     .padding(.horizontal, 16)
                 }
+                .frame(maxWidth: .infinity)
                 .padding(.top, 8)
             }
+            .frame(maxWidth: .infinity)
             
             BottomSheet {
                 VStack(spacing: 32) {
@@ -39,7 +48,7 @@ struct OrderingView: View {
                         }
                     }
                     
-                    CustomButton(label: Text("Оформить заказ на 500 ₽"))
+                    CustomButton(label: Text("Оформить заказ на \(Int(viewModel.totalPrice)) ₽"))
                 }
                 .padding(.vertical, 8)
             }
@@ -55,6 +64,7 @@ struct OrderingView: View {
 
 struct OrderingScreen_Previews: PreviewProvider {
     static var previews: some View {
-        OrderingView()
+        OrderingView(organizationModel: .empty)
+        OrderingView(organizationModel: .test)
     }
 }

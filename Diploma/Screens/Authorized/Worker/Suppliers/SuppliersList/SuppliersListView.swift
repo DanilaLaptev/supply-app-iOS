@@ -4,28 +4,18 @@ import SwiftUI
 struct SuppliersListView: View {
     public static let tag = "SuppliersListView"
     
-    
     @StateObject private var tools = ViewManager.shared
     
     @State private var tagSelection: String? = nil
     @StateObject var viewModel = SuppliersListViewModel()
-
     
-    @State var landmarks: [Landmark] = [
-        Landmark(name: "Sydney Harbour Bridge", location: .init(latitude: -33.852222, longitude: 151.210556)),
-        Landmark(name: "Brooklyn Bridge", location: .init(latitude: 40.706, longitude: -73.997)),
-        Landmark(name: "Golden Gate Bridge", location: .init(latitude: 37.819722, longitude: -122.478611))
-    ]
-    
-    @State private var selectedLandmark: Landmark? = nil
     @State private var showFilters = false
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 0) {
-                MapView(landmarks: $landmarks,
-                                    selectedLandmark: $selectedLandmark)
-
+                MapView(markers: $viewModel.markers,
+                        selectedMarker: $viewModel.selectedMarker)
                     .frame(maxWidth: .infinity)
                     .frame(height: 320)
                     .padding(.bottom, -8)
@@ -42,9 +32,9 @@ struct SuppliersListView: View {
                         .padding(.bottom, 16)
                         
                         VStack {
-                            ForEach((0...8), id: \.self) { _ in
-                                NavigationLink(destination: SupplierView(), tag: SupplierView.tag, selection: $tagSelection) {
-                                    OrganizationCard(organizationModel: .empty)
+                            ForEach(viewModel.organizations) { organization in
+                                NavigationLink(destination: SupplierView(organizationModel: organization), tag: SupplierView.tag, selection: $tagSelection) {
+                                    OrganizationCard(organizationModel: organization)
                                         .onTapGesture {
                                             tagSelection = SupplierView.tag
                                         }
@@ -54,8 +44,10 @@ struct SuppliersListView: View {
                     }
                 }
             }
+            .frame(maxHeight: .infinity)
             .sheet(isPresented: $showFilters) {
                 SuppliersListFilterScreen()
+                    .environmentObject(viewModel)
             }
         }
         .background(Color.customLightGray)

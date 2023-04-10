@@ -42,7 +42,7 @@ struct OrderScreen: View {
                         ScrollView(.vertical) {
                             VStack {
                                 ForEach((0...8), id: \.self) { _ in
-                                    StaticProductCard(name: "name", price: 100, itemsNumber: 12)
+                                    StaticProductCard(storageItem: .empty)
                                 }
                             }
                         }

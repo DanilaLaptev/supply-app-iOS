@@ -11,8 +11,9 @@ struct CustomCalendar: View {
     var disablePastDays = true
     
     private let calendar = Calendar(identifier: .gregorian)
-    private let currentDate = Date()
-    
+    @State private var currentDate = Date()
+    private let today = Date()
+
     private var currentMonth: String {
         return DateFormatManager.shared.getFormattedString(currentDate, dateFormat: "MMMM yyyy")
     }
@@ -21,33 +22,21 @@ struct CustomCalendar: View {
         rangeStartDate != nil && rangeEndDate != nil
     }
     
-    internal func actualDate(day: Int, month: Int) -> Date? {
-        let firstDayOfMonth = calendar.date(from: DateComponents(
-            calendar: calendar,
-            timeZone: .current,
-            year: calendar.component(.year, from: Date()),
-            month: calendar.component(.month, from: Date()) + month,
-            hour: 0,
-            minute: 0,
-            second: 0,
-            nanosecond: 0
-        ))
-        
-        let actualDay = day - calendar.component(.weekday, from: firstDayOfMonth ?? Date()) + 1
-        let lastDay = calendar.component(.day, from: firstDayOfMonth!.endOfMonth())
-        
-        guard actualDay > 0 && actualDay <= lastDay else {
-            return nil
-        }
-        
+    private func actualDate(dayOfWeek: Int, weekOfMonth: Int) -> Date? {
         let dateComponents = DateComponents(
             calendar: calendar,
-            timeZone: .current,
-            year: calendar.component(.year, from: Date()),
-            month: calendar.component(.month, from: Date()) + month,
-            day: actualDay
+            year: calendar.component(.year, from: currentDate),
+            month: calendar.component(.month, from: currentDate),
+            weekday: dayOfWeek,
+            weekOfMonth: weekOfMonth
         )
-        return calendar.date(from: dateComponents)
+        
+        if dateComponents.isValidDate(in: calendar) {
+            print(calendar.date(from: dateComponents))
+            return calendar.date(from: dateComponents)
+        }
+        
+        return nil
     }
     
     var body: some View {
@@ -55,9 +44,7 @@ struct CustomCalendar: View {
             VStack(alignment: .leading, spacing: 8) {
                 HStack(spacing: 16) {
                     CustomSmallButton(icon: .customBackShort) {
-                        if monthOffset > 0 {
-                            monthOffset -= 1
-                        }
+                        currentDate = calendar.date(byAdding: .month, value: -1, to: currentDate)!
                     }
                     
                     Text(currentMonth)
@@ -65,14 +52,14 @@ struct CustomCalendar: View {
                         .foregroundColor(.customOrange)
                     
                     CustomSmallButton(icon: .customBackShort) {
-                        monthOffset += 1
+                        currentDate = calendar.date(byAdding: .month, value: 1, to: currentDate)!
                     }
                     .rotationEffect(Angle(degrees: 180))
                 }
                 
                 HStack(spacing: 0) {
-                    ForEach((calendar.shortWeekdaySymbols), id: \.self) { day in
-                        Text("\(day)")
+                    ForEach(Weekdays.allCases, id: \.self) { day in
+                        Text(day.rawValue)
                             .lineLimit(1)
                             .foregroundColor(.customOrange)
                             .font(.customStandard)
@@ -84,16 +71,14 @@ struct CustomCalendar: View {
                     .frame(height: 1)
                     .foregroundColor(.customOrange)
                 
-                ScrollView(.horizontal) {
                     HStack(alignment: .top) {
-                        ForEach(0...16, id: \.self) { month in
                             VStack(spacing: 0) {
-                                ForEach(getNumberOfWeeksInMonth(calendar.date(byAdding: .month, value: month, to: currentDate)!), id: \.self) { week in
+                                ForEach(getNumberOfWeeksInMonth(currentDate), id: \.self) { week in
                                     Spacer()
                                     HStack {
                                         ForEach(1...7, id: \.self) { day in
                                             Spacer()
-                                            if let date = actualDate(day: (day + (week-1) * 7), month: month) {
+                                            if let date = actualDate(dayOfWeek: day, weekOfMonth: week) {
                                                 let cellState = getCellState(date)
                                                 CustomCalendarCell(rangeSelected: isRangeSelected, cellState: cellState, date: date) {
                                                     selectCell(date)
@@ -107,13 +92,10 @@ struct CustomCalendar: View {
                                         }
                                     }
                                     Spacer()
-                                }
                             }
                             .clipped()
                             .frame(width: geo.size.width)
-                        }
                     }
-                    .offset(x: -(geo.size.width * CGFloat(monthOffset)) - CGFloat(monthOffset * 8))
                 }
             }
             .padding(.vertical , 16)
@@ -141,12 +123,12 @@ struct CustomCalendar: View {
             return .inRange
         }
         
-        if calendar.isDate(date, equalTo: currentDate, toGranularity: .day) {
+        if calendar.isDate(date, equalTo: today, toGranularity: .day) {
             return .today
         }
         
         if disablePastDays,
-           date < currentDate {
+           date < today {
             return .disabled
         }
 

@@ -5,11 +5,11 @@ struct OrganizationCard: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
-            Image("")
-                .resizable()
+            AsyncImage(imageUrl: URL(string: organizationModel.organiztionImageUrl)) {
+                Color.customDarkGray
+            }
                 .aspectRatio(1 / 1, contentMode: .fill)
                 .frame(width: 80, height: 80)
-                .background(Color.customDarkGray)
                 .cornerRadius(8)
 
             VStack(alignment: .leading, spacing: 4) {

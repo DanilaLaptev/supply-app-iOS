@@ -1,22 +1,19 @@
 import SwiftUI
 
 struct StaticProductCard: View {
-    let name: String
-    let price: Int
-    let itemsNumber: Int
-
+    let storageItem: StorageItemModel
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(name)
+            Text(storageItem.product.name)
                 .font(.customSubtitle)
                 .foregroundColor(.customBlack)
             HStack {
-                Text("\(price) ₽")
+                Text("\(Int(storageItem.price)) ₽")
                     .font(.customStandard)
                     .foregroundColor(.customBlack)
                 Spacer()
-                Text("× \(itemsNumber)")
+                Text("× \(storageItem.quantity)")
                     .font(.customStandard)
                     .foregroundColor(.customDarkGray)
             }
@@ -33,6 +30,6 @@ struct StaticProductCard: View {
 
 struct StaticProductCard_Previews: PreviewProvider {
     static var previews: some View {
-        StaticProductCard(name: "Название продукта", price: 220, itemsNumber: 15)
+        StaticProductCard(storageItem: .empty)
     }
 }

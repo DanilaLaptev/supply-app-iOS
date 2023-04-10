@@ -10,7 +10,7 @@ struct ProductScreen: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading, spacing: 8) {
-                Header(title: "Title")
+                Header(title: model.product.name)
                     .padding(.horizontal, 16)
                     .padding(.vertical, 8)
                 

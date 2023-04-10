@@ -4,7 +4,7 @@ struct StartLoadingScreen: View {
     @StateObject var viewModel = LoadingScreenViewModel()
     
     var body: some View {
-        VStack(alignment: .center) {
+        ZStack(alignment: .center) {
             NavigationLink("", destination: AuthorizationWrapper(), tag: AuthorizationWrapper.tag, selection: $viewModel.nextScreenTag)
             
             Spacer()
@@ -12,11 +12,15 @@ struct StartLoadingScreen: View {
             Image("packed box")
                 .resizable()
                 .aspectRatio(1 / 1, contentMode: .fit)
-                .frame(width: UIScreen.main.bounds.width * 0.4)
+                .frame(width: UIScreen.main.bounds.width * 0.5)
             
+            LoadingIndicator(isLoading: $viewModel.isLoading)
+                .padding(.top, UIScreen.main.bounds.width * 0.5)
+                .padding(.top, 16)
+
             Spacer()
         }
-        .frame(maxWidth: .infinity)
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.customLightOrange)
         .defaultScreenSettings()
         .onAppear {
