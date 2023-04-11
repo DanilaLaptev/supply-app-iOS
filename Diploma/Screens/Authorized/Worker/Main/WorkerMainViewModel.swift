@@ -2,24 +2,40 @@ import Foundation
 import SwiftUI
 import Combine
 
+
 class WorkerMainViewModel: ObservableObject {
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published private var viewManager = ViewManager.shared
     @Published private var authManager = AuthManager.shared
     
-    @Published var storageItems: [StorageItemModel] = []
+    @Published var storageItems: [StorageItemWrapper] = []
     @Published var selectedStorageItems: [StorageItemModel] = []
     
-    @Published var enableSupplyButton = false
+    @Published var disableSupplyButton = false
     
     @Published var editStorageItemActive = false
     @Published var editedStorageItem: StorageItemModel? = nil
 
     @Published var supply: SupplyModel? = nil
     
+    @Published var enableSaveSupplyButton = false
+    
+    private var selectedProductsPublisher: AnyPublisher<[StorageItemWrapper], Never> {
+        $storageItems
+            .map { wrappedItems in
+                wrappedItems.filter { $0.selectedAmmount > 0 }
+            }.eraseToAnyPublisher()
+    }
+    
     init() {
         fetchStorageItems()
+        
+        selectedProductsPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] selectedProducts in
+                self?.disableSupplyButton = selectedProducts.isEmpty
+            }.store(in: &cancellableSet)
     }
     
     func fetchStorageItems() {
@@ -70,6 +86,7 @@ class WorkerMainViewModel: ObservableObject {
                                  description: "Выпечка"),
                 
             ]
+                .map { StorageItemWrapper(item: $0, selectedAmmount: 0) }
         }
     }
     

@@ -2,15 +2,21 @@ import SwiftUI
 
 struct SupplierView: View {
     public static let tag = "SupplierView"
-
-    var organizationModel: OrganizationModel
     
     @StateObject private var viewModel = SupplierViewModel()
     @StateObject private var tools = ViewManager.shared
     @State private var tagSelection: String? = nil
-
+    
+    let organizationModel: OrganizationModel
+    
+    init(organizationModel: OrganizationModel) {
+        self.organizationModel = organizationModel
+    }
+    
     var body: some View {
         VStack(spacing: 0) {
+            NavigationLink("", destination: OrderingView(organizationModel: organizationModel, selectedItems: viewModel.selectedStorageItems), tag: OrderingView.tag, selection: $tagSelection)
+            
             Header(title: organizationModel.title)
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
@@ -33,15 +39,15 @@ struct SupplierView: View {
                         .padding(.horizontal, 16)
                     
                     TagsGroup()
-                    .padding(.top, 8)
-                    .padding(.bottom, 16)
+                        .padding(.top, 8)
+                        .padding(.bottom, 16)
                     
                     VStack {
-                        ForEach(organizationModel.storageItems) { storageItem in
+                        ForEach(viewModel.storageItems) { wrappedItem in
                             NavigationLink {
-                                ProductScreen(model: storageItem)
+                                ProductScreen(model: wrappedItem.item)
                             } label: {
-                                DynamicProductCard(model: storageItem, extraOptions: [])
+                                DynamicProductCard(model: wrappedItem.item, extraOptions: [], selectedNumber: $viewModel.storageItems[viewModel.storageItems.firstIndex(of: wrappedItem)!].selectedAmmount)
                             }
                         }
                     }
@@ -54,26 +60,20 @@ struct SupplierView: View {
                 VStack(spacing: 8) {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
-                            Text("продуктов").font(.customHint)
-                            Text("100 ₽").font(.customSubtitle)
+                            Text("\(viewModel.selectedItemsNumber) продуктов").font(.customHint)
+                            Text("\(Int(viewModel.supplyTotalPrice)) ₽").font(.customSubtitle)
                         }
                         Spacer()
-                        
-                        NavigationLink(destination: OrderScreen()) {
-                            NavigationLink(destination: OrderingView(organizationModel: organizationModel), tag: OrderingView.tag, selection: $tagSelection) {
-                                CustomButton(icon: .customBox) {
-                                    tagSelection = OrderingView.tag
-                                }
-                                .frame(width: 48)
-                                .disabled(organizationModel.storageItems.isEmpty) // TODO: fix condition
-                            }
-                            
+                        CustomButton(icon: .customBox) {
+                            tagSelection = OrderingView.tag
                         }
+                        .frame(width: 48)
+                        .disabled(viewModel.disableSupplyButton)
                     }
                     Text("Выберите хотя бы один продукт, чтобы оформить заказ")
                         .foregroundColor(.customDarkGray)
                         .font(.customHint)
-                        .opacity(organizationModel.storageItems.isEmpty ? 1 : 0) // TODO: fix condition
+                        .opacity(viewModel.disableSupplyButton ? 1 : 0)
                 }
             }
         }
@@ -82,6 +82,7 @@ struct SupplierView: View {
         .defaultScreenSettings()
         .onAppear {
             self.tools.bottomBarIsVisible = false
+            viewModel.setup(organizationModel: self.organizationModel)
         }
     }
 }
@@ -89,7 +90,7 @@ struct SupplierView: View {
 struct SupplierScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SupplierView(organizationModel: .empty)
+            SupplierView(organizationModel: .test)
         }
     }
 }

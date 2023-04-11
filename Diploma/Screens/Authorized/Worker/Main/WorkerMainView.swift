@@ -20,17 +20,18 @@ struct WorkerMainView: View {
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
-                        ForEach(viewModel.storageItems) { storageItem in
+                        ForEach(viewModel.storageItems) { wrappedItem in
                             NavigationLink {
-                                ProductScreen(model: storageItem)
+                                ProductScreen(model: wrappedItem.item)
                             } label:  {
-                                DynamicProductCard(model: storageItem,
-                                                   maximumQuantity: storageItem.quantity,
+                                DynamicProductCard(model: wrappedItem.item,
+                                                   maximumQuantity: wrappedItem.item.quantity,
                                                    extraOptions: [
                                     ExtraOption(icon: .customPencil, action: {
-                                        viewModel.editProduct(storageItem)
+                                        viewModel.editProduct(wrappedItem.item)
                                     })
-                                ])
+                                                   ],
+                                                   selectedNumber: $viewModel.storageItems[viewModel.storageItems.firstIndex(of: wrappedItem)!].selectedAmmount)
                             }
                         }
                     }
@@ -40,7 +41,7 @@ struct WorkerMainView: View {
             }
             
             CustomButton(label: Text("Сохранить покупку"))
-                .disabled(true)
+                .disabled(viewModel.disableSupplyButton)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 8)
         }

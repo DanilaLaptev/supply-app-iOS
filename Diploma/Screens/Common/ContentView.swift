@@ -10,8 +10,8 @@ struct ContentView: View {
                 NavigationView {
                     StartLoadingScreen()
                 }
-                .statusBar(hidden: true)
                 .navigationViewStyle(.stack)
+                .statusBar(hidden: true)
             }
             
             VStack(spacing: 8) {

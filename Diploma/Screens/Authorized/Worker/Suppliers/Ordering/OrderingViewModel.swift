@@ -5,16 +5,24 @@ import Combine
 class OrderingViewModel: ObservableObject {
     private var cancellableSet = Set<AnyCancellable>()
     
-    var organizationModel: OrganizationModel
+    var organizationModel: OrganizationModel?
+    var selectedItems: [StorageItemWrapper]?
+    @Published var date = Date()
     
     var totalPrice: Double {
-        organizationModel.storageItems
-            .map { $0.price * Double($0.quantity) }
-            .reduce(0, +)
+        selectedItems?
+            .map { $0.item.price * Double($0.selectedAmmount) }
+            .reduce(0, +) ?? 0
     }
     
-    init(organizationModel: OrganizationModel) {
+    var selectedProductsNumber: Int {
+        selectedItems?
+            .map { $0.selectedAmmount }
+            .reduce(0, +) ?? 0
+    }
+    
+    func setup(organizationModel: OrganizationModel, selectedItems: [StorageItemWrapper]) {
         self.organizationModel = organizationModel
+        self.selectedItems = selectedItems
     }
-    
 }

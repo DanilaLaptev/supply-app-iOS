@@ -134,6 +134,7 @@
 		99F178DE29E21512001903F2 /* TagsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178DD29E21512001903F2 /* TagsGroup.swift */; };
 		99F178E329E21584001903F2 /* TagsGroupViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178E129E21584001903F2 /* TagsGroupViewModel.swift */; };
 		99F178E529E2DE02001903F2 /* SupplyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178E429E2DE02001903F2 /* SupplyModel.swift */; };
+		99F178F329E4959D001903F2 /* StorageItemWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178F229E4959D001903F2 /* StorageItemWrapper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -267,6 +268,7 @@
 		99F178DD29E21512001903F2 /* TagsGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsGroup.swift; sourceTree = "<group>"; };
 		99F178E129E21584001903F2 /* TagsGroupViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsGroupViewModel.swift; sourceTree = "<group>"; };
 		99F178E429E2DE02001903F2 /* SupplyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplyModel.swift; sourceTree = "<group>"; };
+		99F178F229E4959D001903F2 /* StorageItemWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageItemWrapper.swift; sourceTree = "<group>"; };
 		EA15C5ED5EB5F0EA9CB9DE51 /* Pods-Diploma.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diploma.debug.xcconfig"; path = "Target Support Files/Pods-Diploma/Pods-Diploma.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -839,6 +841,7 @@
 				99F178B229DE7E1D001903F2 /* StorageItemModel.swift */,
 				99F178B429DE7E56001903F2 /* ProductModel.swift */,
 				99F178E429E2DE02001903F2 /* SupplyModel.swift */,
+				99F178F229E4959D001903F2 /* StorageItemWrapper.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1122,6 +1125,7 @@
 				99D4543F29AE88E000462A8F /* CustomTag.swift in Sources */,
 				99D454A129B4959200462A8F /* BottomSheet.swift in Sources */,
 				99D4547929B3644E00462A8F /* NavigationTabs.swift in Sources */,
+				99F178F329E4959D001903F2 /* StorageItemWrapper.swift in Sources */,
 				99A0951C29B62D9F00C0286D /* CustomCalendarCell.swift in Sources */,
 				99F178C229DEE2E2001903F2 /* EmptyView.swift in Sources */,
 				99D4541829AC7E7700462A8F /* CustomButton.swift in Sources */,

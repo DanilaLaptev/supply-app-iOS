@@ -17,6 +17,8 @@ class SuppliersListViewModel: ObservableObject {
     @Published var selectedMarker: MapMarker? = nil
     @Published var markers: [MapMarker] = []
     
+    @Published var selectedOrganization: OrganizationModel? = nil
+    
     private var markersPublisher: AnyPublisher<[MapMarker], Never> {
         $organizations
             .map { organizationModels -> [MapMarker] in
@@ -38,6 +40,10 @@ class SuppliersListViewModel: ObservableObject {
             .sink { [weak self] markers in
                 self?.markers = markers
             }.store(in: &cancellableSet)
+    }
+    
+    func setSelectedOrganization(_ organization: OrganizationModel) {
+        selectedOrganization = organization
     }
     
     func fetchOrganizations() {
@@ -65,8 +71,6 @@ class SuppliersListViewModel: ObservableObject {
                                                    latitude: 37),
                                   storageItems: []
                                  ),
-                .empty,
-                .empty,
                 .empty
             ]
         }

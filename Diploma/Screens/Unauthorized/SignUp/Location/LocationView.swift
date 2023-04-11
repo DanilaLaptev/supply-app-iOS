@@ -23,6 +23,8 @@ struct LocationView: View {
 
     var body: some View {
         OverflowScroll {
+            NavigationLink("", destination: SignInView(), tag: SignInView.tag, selection: $tagSelection)
+            
             VStack(spacing: 0) {
                 MapView(markers: $landmarks,
                         selectedMarker: $selectedLandmark)
@@ -38,12 +40,10 @@ struct LocationView: View {
                         CustomTextField(textFieldValue: .constant(""), placeholder: "Адрес организации")
                             .padding(.bottom, 24)
                         
-                        NavigationLink(destination: WorkerMainView(), tag: WorkerMainView.tag, selection: $tagSelection) {
-                            CustomButton(label: Text("Завершить регистрацию")) {
-                                counter += 1
-                                alertManager.showAlert(AlertModel(type: .error, description: "description \(counter)"))
-                                tagSelection = SignInView.tag
-                            }
+                        CustomButton(label: Text("Завершить регистрацию")) {
+                            counter += 1
+                            alertManager.showAlert(AlertModel(type: .error, description: "description \(counter)"))
+                            tagSelection = SignInView.tag
                         }
                     }
                 }

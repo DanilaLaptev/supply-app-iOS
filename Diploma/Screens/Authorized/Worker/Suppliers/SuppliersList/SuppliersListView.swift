@@ -13,12 +13,15 @@ struct SuppliersListView: View {
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
+            NavigationLink("", destination: SupplierView(organizationModel: viewModel.selectedOrganization ?? .empty), tag: SupplierView.tag, selection: $tagSelection)
+
+            
             VStack(alignment: .leading, spacing: 0) {
                 MapView(markers: $viewModel.markers,
                         selectedMarker: $viewModel.selectedMarker)
-                    .frame(maxWidth: .infinity)
-                    .frame(height: 320)
-                    .padding(.bottom, -8)
+                .frame(maxWidth: .infinity)
+                .frame(height: 320)
+                .padding(.bottom, -8)
                 
                 BottomSheet(background: .customLightGray) {
                     VStack {
@@ -33,12 +36,11 @@ struct SuppliersListView: View {
                         
                         VStack {
                             ForEach(viewModel.organizations) { organization in
-                                NavigationLink(destination: SupplierView(organizationModel: organization), tag: SupplierView.tag, selection: $tagSelection) {
-                                    OrganizationCard(organizationModel: organization)
-                                        .onTapGesture {
-                                            tagSelection = SupplierView.tag
-                                        }
-                                }
+                                OrganizationCard(organizationModel: organization)
+                                    .onTapGesture {
+                                        viewModel.selectedOrganization = organization
+                                        tagSelection = SupplierView.tag
+                                    }
                             }
                         }
                     }

@@ -7,7 +7,7 @@ struct DynamicProductCard: View {
     
     var extraOptions: [ExtraOption]
     
-    @State var selectedNumber = 0
+    @Binding var selectedNumber: Int
     
     var body: some View {
         if extraOptions.isEmpty {
@@ -42,9 +42,9 @@ struct DynamicProductCard: View {
 
 struct DynamicProductCard_Previews: PreviewProvider {
     static var previews: some View {
-        DynamicProductCard(model: .empty, extraOptions: []).padding()
+        DynamicProductCard(model: .empty, extraOptions: [], selectedNumber: .constant(0)).padding()
         DynamicProductCard(model: .empty, extraOptions: [
             ExtraOption(icon: .customBox)
-        ]).padding()
+        ], selectedNumber: .constant(0)).padding()
     }
 }

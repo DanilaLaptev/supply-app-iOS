@@ -1,7 +1,7 @@
 import Foundation
 
 struct OrganizationModel: Identifiable {
-    let id = UUID().hashValue
+    var id = UUID().hashValue
     let title: String
     let organiztionImageUrl: String
     let address: Address
@@ -9,6 +9,7 @@ struct OrganizationModel: Identifiable {
     let storageItems: [StorageItemModel]
     
     static var empty = OrganizationModel(
+        id: UUID().hashValue,
         title: "none",
         organiztionImageUrl: "none",
         address: Address(addressName: "none", longitude: 0, latitude: 0),
@@ -56,9 +57,6 @@ struct OrganizationModel: Identifiable {
                              price: 25,
                              quantity: 20,
                              description: "Выпечка"),
-            .empty,
-            .empty,
-            .empty,
             .empty
         ]
     )

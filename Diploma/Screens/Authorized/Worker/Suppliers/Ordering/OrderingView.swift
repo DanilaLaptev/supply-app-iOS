@@ -4,12 +4,14 @@ struct OrderingView: View {
     public static let tag = "OrderingView"
         
     @StateObject private var tools = ViewManager.shared
-    @ObservedObject private var viewModel: OrderingViewModel
-
-    @State var date = Date()
+    @StateObject private var viewModel = OrderingViewModel()
     
-    init(organizationModel: OrganizationModel) {
-        self.viewModel = OrderingViewModel(organizationModel: organizationModel)
+    var organizationModel: OrganizationModel
+    var selectedItems: [StorageItemWrapper]
+
+    init(organizationModel: OrganizationModel, selectedItems: [StorageItemWrapper]) {
+        self.organizationModel = organizationModel
+        self.selectedItems = selectedItems
     }
     
     var body: some View {
@@ -21,15 +23,15 @@ struct OrderingView: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading) {
                     HStack {
-                        Text("\(viewModel.organizationModel.storageItems.count) продуктов")
+                        Text("\(viewModel.selectedProductsNumber) продуктов")
                             .font(.customTitle)
                             .padding(.horizontal, 16)
                         Spacer()
                     }
                     
                     VStack {
-                        ForEach(viewModel.organizationModel.storageItems) { storageItem in
-                            StaticProductCard(storageItem: storageItem)
+                        ForEach(viewModel.selectedItems ?? []) { wrappedItem in
+                            StaticProductCard(storageItem: StorageItemModel(product: wrappedItem.item.product, imageUrl: "", price: wrappedItem.item.price, quantity: wrappedItem.selectedAmmount, description: ""))
                         }
                     }
                     .padding(.horizontal, 16)
@@ -44,7 +46,7 @@ struct OrderingView: View {
                     VStack(alignment: .leading ,spacing: 16) {
                         Text("Выберите дату и время получения заказа").font(.customStandard)
                         VStack(spacing: 8) {
-                            DatePickerField(date: $date, icon: .customDate)
+                            DatePickerField(date: $viewModel.date, icon: .customDate)
                         }
                     }
                     
@@ -58,13 +60,14 @@ struct OrderingView: View {
         .defaultScreenSettings()
         .onAppear {
             self.tools.bottomBarIsVisible = false
+            self.viewModel.setup(organizationModel: self.organizationModel, selectedItems: self.selectedItems)
         }
     }
 }
 
 struct OrderingScreen_Previews: PreviewProvider {
     static var previews: some View {
-        OrderingView(organizationModel: .empty)
-        OrderingView(organizationModel: .test)
+        OrderingView(organizationModel: .empty, selectedItems: [])
+        OrderingView(organizationModel: .test, selectedItems: [])
     }
 }
