@@ -4,6 +4,7 @@ struct SignInView: View {
     public static let tag = "SignInScreen"
     
     @StateObject private var viewModel = SignInViewModel()
+    @StateObject private var viewManager = ViewManager.shared
     
     var body: some View {
         OverflowScroll {
@@ -45,6 +46,7 @@ struct SignInView: View {
         }
         .background(Color.customLightGray)
         .defaultScreenSettings()
+        .loadingWrapper($viewManager.isLoading)
     }
 }
 

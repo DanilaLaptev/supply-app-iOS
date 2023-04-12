@@ -3,35 +3,37 @@ import SwiftUI
 struct CustomerTabBarWrapper: View {
     public static let tag = "CustomerTabBarWrapper"
     
-    @StateObject private var tools = ViewManager.shared
+    @StateObject private var viewManager = ViewManager.shared
     
     @State private var selectedTab: CustomTab = NavigationTabs.customerTabs[0]
     
     var body: some View {
         VStack(spacing: 0) {
-            switch selectedTab.screenTag {
-            case WorkerMainView.tag:
-                WorkerMainView()
-            case SuppliersListView.tag:
-                SuppliersListView()
-            case OrdersListScreen.tag:
-                OrdersListScreen()
-            case StatisticsScreen.tag:
-                StatisticsScreen()
-            case ProfileScreen.tag:
-                ProfileScreen()
-            default:
-                Text("View doesnt exist")
-                    .frame(maxHeight: .infinity)
+            ZStack {
+                switch selectedTab.screenTag {
+                case WorkerMainView.tag:
+                    WorkerMainView()
+                case SuppliersListView.tag:
+                    SuppliersListView()
+                case OrdersListScreen.tag:
+                    OrdersListScreen()
+                case StatisticsScreen.tag:
+                    StatisticsScreen()
+                case ProfileScreen.tag:
+                    ProfileScreen()
+                default:
+                    Text("View doesnt exist")
+                        .frame(maxHeight: .infinity)
+                }
             }
-            
+            .loadingWrapper($viewManager.isLoading)
+
             BottomNavigation(navTabs: NavigationTabs.customerTabs, selectedTab: $selectedTab)
-                .frame(height: tools.bottomBarIsVisible ? nil : 0)
-                .zIndex(21)
+                .frame(height: viewManager.bottomBarIsVisible ? nil : 0)
         }
         .defaultScreenSettings()
         .onAppear {
-            tools.bottomBarIsVisible = true
+            viewManager.bottomBarIsVisible = true
         }
     }
 }

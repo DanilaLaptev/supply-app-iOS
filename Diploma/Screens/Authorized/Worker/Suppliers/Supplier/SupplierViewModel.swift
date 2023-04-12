@@ -44,8 +44,6 @@ class SupplierViewModel: ObservableObject {
     }
     
     init() {
-        self.storageItems = organizationModel?.storageItems.map { StorageItemWrapper(item: $0, selectedAmmount: 0) } ?? []
-        
         selectedItemsNumberPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] productsNumber in
@@ -73,5 +71,6 @@ class SupplierViewModel: ObservableObject {
  
     func setup(organizationModel: OrganizationModel?) {
         self.organizationModel = organizationModel
+        self.storageItems = organizationModel?.storageItems.map { StorageItemWrapper(item: $0, selectedAmmount: 0) } ?? []
     }
 }

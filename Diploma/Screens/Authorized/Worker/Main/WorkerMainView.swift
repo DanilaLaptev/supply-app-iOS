@@ -14,7 +14,7 @@ struct WorkerMainView: View {
                            isActive: $viewModel.editStorageItemActive)
             
             VStack {
-                TagsGroup()
+                TagsGroup<ProductType>()
                 .padding(.top, 8)
                 .padding(.bottom, 16)
                 
@@ -40,7 +40,7 @@ struct WorkerMainView: View {
                 }
             }
             
-            CustomButton(label: Text("Сохранить покупку"))
+            CustomButton(label: Text("Покупка на \(Int(viewModel.totalPrice))₽"))
                 .disabled(viewModel.disableSupplyButton)
                 .padding(.horizontal, 24)
                 .padding(.bottom, 8)

@@ -38,7 +38,7 @@ struct SupplierView: View {
                         .font(.customTitle)
                         .padding(.horizontal, 16)
                     
-                    TagsGroup()
+                    TagsGroup<ProductType>()
                         .padding(.top, 8)
                         .padding(.bottom, 16)
                     

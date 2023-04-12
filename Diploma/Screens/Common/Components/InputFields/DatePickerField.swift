@@ -18,6 +18,7 @@ struct DatePickerField: View {
                     .frame(width: 24, height: 24)
                     .foregroundColor(.customOrange)
             }
+            .environment(\.locale, Locale.init(identifier: "ru"))
             .accentColor(.customOrange)
             .background(Color.clear)
         }

@@ -10,6 +10,9 @@ struct SupplierStatisticsView: View {
     
     @State private var isSharePresented: Bool = false
     
+    @State var startDate: Date? = Date()
+    @State var endDate: Date? = Calendar(identifier: .gregorian).date(byAdding: .day, value: 7, to: Date())
+
     var statistic: URL? {
         let csvBulderResult = FileManager.shared.exportCSV(dataArray: [
             StatisticModel(product: "apple", price: 50, ammount: 34),
@@ -26,7 +29,7 @@ struct SupplierStatisticsView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
-                CalendarView()
+                CalendarView(startDate: $startDate, endDate: $endDate)
                     .padding(.bottom, 8)
                 
                 HStack {

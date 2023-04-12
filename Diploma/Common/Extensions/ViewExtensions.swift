@@ -9,4 +9,14 @@ extension View {
                    bottom: safeArea.bottom,
                    trailing: safeArea.right)
     }
+    
+}
+
+extension View {
+    func loadingWrapper(_ loading: Binding<Bool>) -> some View {
+        ZStack {
+            self
+            LoaderView(isLoading: loading)
+        }
+    }
 }

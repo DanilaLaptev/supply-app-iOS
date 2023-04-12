@@ -1,20 +1,25 @@
 import SwiftUI
 
-struct TagsGroup: View {
-    @ObservedObject private var viewModel = TagsGroupViewModel()
+struct TagsGroup<TagEnum: TagsGroupProtocol>: View {
+    var selectAllOption: Bool = true
+    
+    @ObservedObject private var viewModel = TagsGroupViewModel<TagEnum>()
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack {
-                SmallTag(icon: .customBox,
-                         name: "Все",
-                         isSelected: viewModel.noTagsSelected)
-                .onTapGesture {
-                    viewModel.clearFilters()
+                if selectAllOption {
+                    SmallTag(icon: .customBox,
+                             name: "Все",
+                             isSelected: viewModel.noTagsSelected)
+                    .onTapGesture {
+                        viewModel.clearFilters()
+                    }
                 }
+
                 ForEach(viewModel.tags) { tag in
-                    SmallTag(icon: tag.type.typeIcon(),
-                             name: tag.type.rawValue,
+                    SmallTag(icon: tag.type.icon,
+                             name: tag.type.name,
                              isSelected: tag.isSelected )
                         .onTapGesture {
                             viewModel.toggleTag(tag.type)
@@ -28,6 +33,7 @@ struct TagsGroup: View {
 
 struct TagsGroup_Previews: PreviewProvider {
     static var previews: some View {
-        TagsGroup()
+        TagsGroup<ProductType>()
+        TagsGroup<ProductType>()
     }
 }

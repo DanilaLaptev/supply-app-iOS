@@ -13,14 +13,7 @@ struct SupplierMainScreen: View {
             NavigationLink("", destination: EditProductScreen(), tag: EditProductScreen.tag, selection: $tagSelection)
             NavigationLink("", destination: ProductScreen(model: .empty), tag: ProductScreen.tag, selection: $tagSelection)
             
-            ScrollView(.horizontal, showsIndicators: false) {
-                HStack {
-                    ForEach((0...16), id: \.self) { _ in
-                        SmallTag(icon: .customBox, name: "Box", isSelected: false)
-                    }
-                }
-                .padding(.horizontal, 16)
-            }
+            TagsGroup<ProductType>()
             .padding(.top, 8)
             .padding(.bottom, 16)
             ScrollView(.vertical, showsIndicators: false) {

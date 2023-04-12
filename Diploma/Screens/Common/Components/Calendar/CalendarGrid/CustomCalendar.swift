@@ -27,13 +27,16 @@ struct CustomCalendar: View {
             calendar: calendar,
             year: calendar.component(.year, from: currentDate),
             month: calendar.component(.month, from: currentDate),
+            hour: 0,
+            minute: 0,
+            second: 0,
             weekday: dayOfWeek,
             weekOfMonth: weekOfMonth
         )
         
         if dateComponents.isValidDate(in: calendar) {
-            print(calendar.date(from: dateComponents))
-            return calendar.date(from: dateComponents)
+            guard let date = calendar.date(from: dateComponents) else { return nil }
+            return calendar.date(byAdding: .day, value: 1, to: date)
         }
         
         return nil
@@ -122,8 +125,8 @@ struct CustomCalendar: View {
            date > rangeStartDate {
             return .inRange
         }
-        
-        if calendar.isDate(date, equalTo: today, toGranularity: .day) {
+
+        if calendar.isDateInTomorrow(date) {
             return .today
         }
         
@@ -131,7 +134,7 @@ struct CustomCalendar: View {
            date < today {
             return .disabled
         }
-
+        
         return .enabled
     }
     
@@ -141,6 +144,7 @@ struct CustomCalendar: View {
     }
     
     func selectCell(_ date: Date) {
+        print(date)
         if isRangeStartSelected, let endRange = rangeEndDate {
             rangeStartDate = date
             if endRange < date {

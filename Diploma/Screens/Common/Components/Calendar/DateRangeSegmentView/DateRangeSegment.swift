@@ -22,7 +22,7 @@ struct DateRangeSegment: View {
     
     private var selectedDateLabel: String? {
         guard let date = selectedDate else { return nil }
-        return DateFormatManager.shared.getFormattedString(date, dateFormat: "MMM d, yyyy")
+        return DateFormatManager.shared.getFormattedString(date, dateFormat: "dd.MM.yy")
     }
     
     var body: some View {

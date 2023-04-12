@@ -23,10 +23,7 @@ struct ContentView: View {
             }
             .padding(.top, safeAreaEdgeInsets.top)
             .clipped()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
-            
-            LoaderView(isLoading: $viewManager.isLoading)
-                .zIndex(20)
+            .frame(maxWidth: .infinity, maxHeight: .infinity)            
         }
         .edgesIgnoringSafeArea(.all)
     }

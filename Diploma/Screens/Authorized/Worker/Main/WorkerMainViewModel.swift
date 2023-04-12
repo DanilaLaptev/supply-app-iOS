@@ -13,7 +13,8 @@ class WorkerMainViewModel: ObservableObject {
     @Published var selectedStorageItems: [StorageItemModel] = []
     
     @Published var disableSupplyButton = false
-    
+    @Published var totalPrice: Double = 0
+
     @Published var editStorageItemActive = false
     @Published var editedStorageItem: StorageItemModel? = nil
 
@@ -28,6 +29,15 @@ class WorkerMainViewModel: ObservableObject {
             }.eraseToAnyPublisher()
     }
     
+    private var totalPricePublisher: AnyPublisher<Double, Never> {
+        selectedProductsPublisher
+            .map { selectedItems in
+                selectedItems
+                    .map { Double($0.selectedAmmount) * $0.item.price }
+                    .reduce(0, +)
+            }.eraseToAnyPublisher()
+    }
+    
     init() {
         fetchStorageItems()
         
@@ -35,6 +45,12 @@ class WorkerMainViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .sink { [weak self] selectedProducts in
                 self?.disableSupplyButton = selectedProducts.isEmpty
+            }.store(in: &cancellableSet)
+        
+        totalPricePublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] totalPrice in
+                self?.totalPrice = totalPrice
             }.store(in: &cancellableSet)
     }
     

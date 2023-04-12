@@ -2,16 +2,16 @@ import Foundation
 import SwiftUI
 import Combine
 
-struct ProductTag: Identifiable {
+struct ProductTag<TagEnum: TagsGroupProtocol>: Identifiable {
     let id = UUID()
-    let type: ProductType
+    let type: TagEnum
     var isSelected: Bool
 }
 
-class TagsGroupViewModel: ObservableObject {
+class TagsGroupViewModel<TagEnum: TagsGroupProtocol>: ObservableObject {
     private var cancellableSet = Set<AnyCancellable>()
     
-    @Published private(set) var tags: [ProductTag] = []
+    @Published private(set) var tags: [ProductTag<TagEnum>] = []
     @Published var noTagsSelected = true
 
     private var noTagsSelectedPublisher: AnyPublisher<Bool, Never> {
@@ -22,7 +22,7 @@ class TagsGroupViewModel: ObservableObject {
     }
     
     init() {
-        tags = ProductType.allCases.map { ProductTag(type: $0, isSelected: false) }
+        tags = TagEnum.allCases.map { ProductTag(type: $0, isSelected: false) }
         
         noTagsSelectedPublisher
             .receive(on: RunLoop.main)
@@ -32,7 +32,7 @@ class TagsGroupViewModel: ObservableObject {
             .store(in: &cancellableSet)
     }
     
-    func toggleTag(_ type: ProductType) {
+    func toggleTag(_ type: TagEnum) {
         guard let index = tags.firstIndex(where: { $0.type == type }) else { return }
         
         var tempTags = tags

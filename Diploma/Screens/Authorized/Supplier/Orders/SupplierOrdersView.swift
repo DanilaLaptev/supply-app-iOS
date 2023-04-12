@@ -6,11 +6,14 @@ struct SupplierOrdersView: View {
     
     @StateObject var viewModel = SupplierOrdersViewModel()
     @StateObject private var tools = ViewManager.shared
+    
+    @State var startDate: Date? = Date()
+    @State var endDate: Date? = Calendar(identifier: .gregorian).date(byAdding: .day, value: 7, to: Date())
 
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
-                CalendarView()
+                CalendarView(startDate: $startDate, endDate: $endDate)
                     .padding([.horizontal, .bottom], 16)
                 
                 Text("Заказы на 25 февраля")

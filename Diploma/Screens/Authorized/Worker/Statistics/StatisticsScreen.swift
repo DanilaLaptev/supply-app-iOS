@@ -8,6 +8,11 @@ struct StatisticsScreen: View {
     
     @State private var isSharePresented: Bool = false
     
+    @State var startDate: Date? = Date()
+    @State var endDate: Date? = Calendar(identifier: .gregorian).date(byAdding: .day, value: 7, to: Date())
+
+    @StateObject private var viewModel = WorkerStatisticsViewModel()
+    
     var statistic: URL? {
         let csvBulderResult = FileManager.shared.exportCSV(dataArray: [
             StatisticModel(product: "apple", price: 50, ammount: 34),
@@ -24,11 +29,11 @@ struct StatisticsScreen: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
-                CalendarView()
+                CalendarView(startDate: $viewModel.startDate, endDate: $viewModel.endDate)
                     .padding(.bottom, 8)
                 
                 HStack {
-                    Text("Статистика за 25 фев - 29 фев").font(.customSubtitle)
+                    Text(viewModel.dateRangeTitle).font(.customSubtitle)
                     Spacer()
                     CustomButton(icon: .customFile) {
                         isSharePresented = true

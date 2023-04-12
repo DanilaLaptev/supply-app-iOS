@@ -15,8 +15,8 @@ struct CustomCalendarCell: View {
     var date: Date
     var onTap: (() -> ())?
     
-    private var dateOfMonth: Int {
-        return Calendar(identifier: .gregorian).component(.day, from: date)
+    private var dateOfMonth: String {
+        DateFormatManager.shared.getFormattedString(date, dateFormat: "d") ?? ""
     }
     
     private var cellForeground: Color {
@@ -97,7 +97,7 @@ struct CustomCalendarCell: View {
                 .background(Circle().foregroundColor(cellBackground))
                 .frame(height: 32)
             
-            Text("\(dateOfMonth)")
+            Text(dateOfMonth)
                 .foregroundColor(cellForeground)
                 .font(.customStandard)
         }

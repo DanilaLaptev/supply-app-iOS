@@ -2,8 +2,8 @@ import SwiftUI
 
 struct CalendarView: View {
     @State var isStartRangeSelected: Bool = true
-    @State var startDate: Date? = nil
-    @State var endDate: Date? = nil
+    @Binding var startDate: Date?
+    @Binding var endDate: Date?
 
     var body: some View {
         VStack(alignment: .center, spacing: 8) {
@@ -18,7 +18,10 @@ struct CalendarView: View {
 }
 
 struct CalendarView_Previews: PreviewProvider {
+    @State static var start: Date? = nil
+    @State static var end: Date? = nil
+    
     static var previews: some View {
-        CalendarView()
+        CalendarView(startDate: $start, endDate: $end)
     }
 }
