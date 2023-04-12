@@ -34,7 +34,7 @@ struct SupplierOrdersView: View {
                 VStack {
                     ForEach((0...8), id: \.self) { _ in
                         NavigationLink {
-                            OrderScreen()
+                            SupplyScreen(supplyModel: .empty)
                         } label: {
                             StaticProductCard(storageItem: .empty)
                         }

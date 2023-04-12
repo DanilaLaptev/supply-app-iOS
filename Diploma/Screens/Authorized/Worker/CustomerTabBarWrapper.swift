@@ -15,8 +15,8 @@ struct CustomerTabBarWrapper: View {
                     WorkerMainView()
                 case SuppliersListView.tag:
                     SuppliersListView()
-                case OrdersListScreen.tag:
-                    OrdersListScreen()
+                case WorkerSupplyListScreen.tag:
+                    WorkerSupplyListScreen()
                 case StatisticsScreen.tag:
                     StatisticsScreen()
                 case ProfileScreen.tag:

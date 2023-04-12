@@ -11,20 +11,24 @@ struct DateRangeSegmentsView: View {
             DateRangeSegment(selectedDate: $startRangeDate, isSelected: $isRangeStartSelected, title: "Start") {
                 isRangeStartSelected = true
             } onDismiss: {
-                startRangeDate = nil
-                endRangeDate = nil
+                clearRange()
             }
             
             DateRangeSegment(selectedDate: $endRangeDate, isSelected: .constant(!isRangeStartSelected), title: "End") {
                 isRangeStartSelected = false
             } onDismiss: {
-                isRangeStartSelected = true
-                endRangeDate = nil
+                clearRange()
             }
         }
         .padding(2)
         .background(Color.customGray)
         .cornerRadius(10)
+    }
+    
+    func clearRange() {
+        isRangeStartSelected = true
+        startRangeDate = nil
+        endRangeDate = nil
     }
 }
 

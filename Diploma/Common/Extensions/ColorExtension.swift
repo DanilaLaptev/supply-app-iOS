@@ -16,3 +16,14 @@ extension Color {
     public static let customGray: Color = .init("gray")
     public static let customDarkGray: Color = .init("dark gray")
 }
+
+extension Color {
+    static var random: Color {
+        
+        return Color(
+            hue: .random(in: 0...1),
+            saturation: 0.25,
+            brightness: 0.85
+        )
+    }
+}

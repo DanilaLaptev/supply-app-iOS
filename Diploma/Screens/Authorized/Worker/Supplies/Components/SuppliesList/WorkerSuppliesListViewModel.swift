@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class WorkerOrdersViewModel: ObservableObject {
+class WorkerSuppliesListViewModel: ObservableObject {
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published var startDate: Date? = nil

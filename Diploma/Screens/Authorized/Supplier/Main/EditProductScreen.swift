@@ -33,7 +33,7 @@ struct EditProductScreen: View {
             Spacer()
             
             BottomSheet {
-                NavigationLink(destination: OrderScreen()) {
+                NavigationLink(destination: SupplyScreen(supplyModel: .empty)) {
                     CustomButton(label: Text("Сохранить").font(.customStandard))
                 }
             }

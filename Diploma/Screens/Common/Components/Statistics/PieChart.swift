@@ -1,71 +1,91 @@
 import SwiftUI
 
-struct ChartData {
+struct ChartDataWrapper {
     var id = UUID()
-    var color : Color
-    var percent : CGFloat
-    var value : CGFloat
+    var name: String
+    var value: Double
+    var percent: CGFloat
+    var color: Color
+    var offset: Double
 }
 
-class ChartDataContainer : ObservableObject {
-    @Published var chartData =
-    [ChartData(color: Color(#colorLiteral(red: 1, green: 0.4932718873, blue: 0.4739984274, alpha: 1)), percent: 8, value: 0),
-     ChartData(color: Color(#colorLiteral(red: 1, green: 0.8323456645, blue: 0.4732058644, alpha: 1)), percent: 15, value: 0),
-     ChartData(color: Color(#colorLiteral(red: 0.4508578777, green: 0.9882974029, blue: 0.8376303315, alpha: 1)), percent: 32, value: 0),
-     ChartData(color: Color(#colorLiteral(red: 0.476841867, green: 0.5048075914, blue: 1, alpha: 1)), percent: 45, value: 0)]
+struct ChartData {
+    var name: String
+    var value: Double
+}
 
-    func calcOffset(){
-        var value : CGFloat = 0
+
+
+class ChartDataContainer: ObservableObject {
+    let chartData: [ChartDataWrapper]
+    
+    init(_ data: [ChartData]) {
+        chartData = ChartDataContainer.convertData(data)
+    }
+    
+    private static func convertData(_ data: [ChartData], colors: [Color] = []) -> [ChartDataWrapper] {
+        var percentOffset: CGFloat = 0
         
-        for i in 0..<chartData.count {
-            value += chartData[i].percent
-            chartData[i].value = value
+        let totalValue = data.map { $0.value }.reduce(0, +)
+        
+        return data.map { originalData in
+            let percentOfTotal = originalData.value / totalValue
+            percentOffset += percentOfTotal
+            return ChartDataWrapper(name: originalData.name,
+                                    value: originalData.value,
+                                    percent: percentOfTotal,
+                                    color: .random,
+                                    offset: percentOffset)
         }
     }
 }
 
 struct PieChart: View {
-    @ObservedObject var charDataObj = ChartDataContainer()
-    @State var indexOfTappedSlice = -1
+    @ObservedObject var charDataObj: ChartDataContainer
+    
+    @State private var indexOfTappedSlice: Int?
     var body: some View {
-        HStack {
+        HStack() {
             ZStack {
                 ForEach(0..<charDataObj.chartData.count) { index in
                     Circle()
-                        .trim(from: index == 0 ? 0.0 : charDataObj.chartData[index-1].value/100,
-                              to: charDataObj.chartData[index].value/100)
+                        .trim(from: index == 0 ? 0.0: charDataObj.chartData[index-1].offset,
+                              to: charDataObj.chartData[index].offset)
                         .stroke(charDataObj.chartData[index].color, lineWidth: 24)
                         .onTapGesture {
-                            indexOfTappedSlice = indexOfTappedSlice == index ? -1 : index
+                            indexOfTappedSlice = indexOfTappedSlice == index ? nil: index
                         }
-                        .scaleEffect(index == indexOfTappedSlice ? 1.1 : 1)
+                        .scaleEffect(index == indexOfTappedSlice ? 1.1: 1)
                         .animation(.spring())
                 }
-                if indexOfTappedSlice != -1 {
-                    Text(String(format: "%.2f", Double(charDataObj.chartData[indexOfTappedSlice].percent))+"%")
+                if let indexOfTappedSlice {
+                    Text("\(Int(charDataObj.chartData[indexOfTappedSlice].percent * 100))%")
                         .font(.customSubtitle)
                 }
             }
             .frame(width: 96, height: 96)
-            .padding()
-            .onAppear() {
-                self.charDataObj.calcOffset()
-            }
+            
             Spacer()
-            VStack(alignment: .trailing) {
+            
+            VStack(alignment: .leading) {
                 ForEach(0..<charDataObj.chartData.count) { index in
-                    HStack {
-                        Text(String(format: "%.2f", Double(charDataObj.chartData[index].percent))+"%")
-                            .onTapGesture {
-                                indexOfTappedSlice = indexOfTappedSlice == index ? -1 : index
-                            }
-                            .font(indexOfTappedSlice == index ? .headline : .subheadline)
-                        RoundedRectangle(cornerRadius: 3)
-                            .fill(charDataObj.chartData[index].color)
-                            .frame(width: 15, height: 15)
+                    HStack(spacing: 8) {
+                        VStack(alignment: .leading) {
+                            RoundedRectangle(cornerRadius: 3)
+                                .fill(charDataObj.chartData[index].color)
+                                .frame(width: 24, height: 8)
+                            
+                            Text(charDataObj.chartData[index].name)
+                                .font(indexOfTappedSlice == index ? .customSubtitle: .customStandard)
+                        }
+                        Text("\(Int(charDataObj.chartData[index].percent * 100))%")
+                            .font(indexOfTappedSlice == index ? .customSubtitle: .customHint)
+                    }
+                    .onTapGesture {
+                        indexOfTappedSlice = indexOfTappedSlice == index ? nil: index
                     }
                 }
-                .padding(8)
+                .padding(.vertical, 8)
             }
         }
         .padding()
@@ -74,6 +94,9 @@ struct PieChart: View {
 
 struct PieChart_Previews: PreviewProvider {
     static var previews: some View {
-        PieChart()
+        PieChart(charDataObj: ChartDataContainer([ChartData(name: "product 1", value: 100),
+                                                  ChartData(name: "product 2", value: 55),
+                                                  ChartData(name: "product 3", value: 32),
+                                                  ChartData(name: "product 4", value: 67)]))
     }
 }

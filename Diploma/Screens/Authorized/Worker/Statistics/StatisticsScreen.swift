@@ -45,7 +45,10 @@ struct StatisticsScreen: View {
                 }
                                 
                 ExtendableSection(isCollapsed: false) {
-                    PieChart()
+                    PieChart(charDataObj: ChartDataContainer([ChartData(name: "product 1", value: 100),
+                                                              ChartData(name: "product 2", value: 55),
+                                                              ChartData(name: "product 3", value: 32),
+                                                              ChartData(name: "product 4", value: 67)]))
                 } headerContent: {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Доступная продукция").font(.customSubtitle)

@@ -1,12 +1,11 @@
 import SwiftUI
 
-struct OrdersListScreen: View {
+struct WorkerSupplyListScreen: View {
     public static let tag = "OrdersListScreen"
-    
     
     @StateObject private var tools = ViewManager.shared
     
-    @StateObject private var viewModel = WorkerOrdersViewModel()
+    @StateObject private var viewModel = WorkerSuppliesListViewModel()
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -28,9 +27,9 @@ struct OrdersListScreen: View {
                 VStack {
                     ForEach((0...8), id: \.self) { _ in
                         NavigationLink {
-                            OrderScreen()
+                            SupplyScreen(supplyModel: .empty)
                         } label: {
-                            SupplyCard()
+                            SupplyCard(supplyModel: .empty)
                         }
                     }
                 }
@@ -50,7 +49,7 @@ struct OrdersListScreen: View {
 struct OrdersScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            OrdersListScreen()
+            WorkerSupplyListScreen()
         }
     }
 }
