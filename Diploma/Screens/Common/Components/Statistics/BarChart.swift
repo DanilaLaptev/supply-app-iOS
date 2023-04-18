@@ -10,11 +10,11 @@ struct BarCharItem: Identifiable {
 }
 
 struct Bar: View {
-    var model: BarCharItem
+    var data: ChartDataWrapper
     
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(model.name).font(.customHint).foregroundColor(.customOrange)
+            Text(data.name).font(.customHint).foregroundColor(.customOrange)
             
             Color.clear
             .frame(height: 16)
@@ -23,9 +23,9 @@ struct Bar: View {
                     HStack {
                         RoundedRectangle(cornerRadius: 8)
                             .foregroundColor(.customLightOrange)
-                            .frame(width: (geo.size.width - 56) * model.percent)
+                            .frame(width: (geo.size.width - 56) * data.percent)
                     
-                        Text("\(Int(model.percent * 100))%")
+                        Text("\(Int(data.percent * 100))%")
                             .font(.customStandard)
                             .frame(width: 56)
                         
@@ -39,18 +39,13 @@ struct Bar: View {
 }
 
 struct BarChart: View {
-    let bars = [
-        BarCharItem(value: "$100", name: "product 1", percent: 0.5),
-        BarCharItem(value: "$250", name: "product 2", percent: 0.9),
-        BarCharItem(value: "$250", name: "product 2", percent: 1),
-        BarCharItem(value: "$200", name: "product 3", percent: 0.8)
-    ]
+    @ObservedObject var chartDataObj: ChartDataContainer
     
     var body: some View {
         VStack(alignment: .leading) {
-            ForEach(bars) { bar in
+            ForEach(chartDataObj.chartData) { data in
                 HStack {
-                    Bar(model: bar)
+                    Bar(data: data)
                     Spacer()
                 }
             }
@@ -60,6 +55,9 @@ struct BarChart: View {
 
 struct BarChart_Previews: PreviewProvider {
     static var previews: some View {
-        BarChart()
+        BarChart(chartDataObj: ChartDataContainer([ChartData(name: "product 1", value: 100),
+                                                   ChartData(name: "product 2", value: 55),
+                                                   ChartData(name: "product 3", value: 32),
+                                                   ChartData(name: "product 4", value: 67)]))
     }
 }

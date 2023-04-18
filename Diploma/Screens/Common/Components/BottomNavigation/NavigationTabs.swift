@@ -11,7 +11,7 @@ class NavigationTabs {
 
     public static let supplierTabs = [
         CustomTab(icon: .customHome, name: "Главная", screenTag: SupplierMainScreen.tag),
-        CustomTab(icon: .customBox, name: "Поставки", screenTag: SupplierClientsScreen.tag),
+        CustomTab(icon: .customBox, name: "Поставки", screenTag: ClientsListView.tag),
         CustomTab(icon: .customRoute, name: "Заказы", screenTag: SupplierOrdersView.tag),
         CustomTab(icon: .customChart, name: "Учёт", screenTag: SupplierStatisticsView.tag),
         CustomTab(icon: .customUser, name: "Профиль", screenTag: ProfileScreen.tag)

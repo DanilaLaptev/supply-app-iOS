@@ -1,45 +1,5 @@
 import SwiftUI
 
-struct ChartDataWrapper {
-    var id = UUID()
-    var name: String
-    var value: Double
-    var percent: CGFloat
-    var color: Color
-    var offset: Double
-}
-
-struct ChartData {
-    var name: String
-    var value: Double
-}
-
-
-
-class ChartDataContainer: ObservableObject {
-    let chartData: [ChartDataWrapper]
-    
-    init(_ data: [ChartData]) {
-        chartData = ChartDataContainer.convertData(data)
-    }
-    
-    private static func convertData(_ data: [ChartData], colors: [Color] = []) -> [ChartDataWrapper] {
-        var percentOffset: CGFloat = 0
-        
-        let totalValue = data.map { $0.value }.reduce(0, +)
-        
-        return data.map { originalData in
-            let percentOfTotal = originalData.value / totalValue
-            percentOffset += percentOfTotal
-            return ChartDataWrapper(name: originalData.name,
-                                    value: originalData.value,
-                                    percent: percentOfTotal,
-                                    color: .random,
-                                    offset: percentOffset)
-        }
-    }
-}
-
 struct PieChart: View {
     @ObservedObject var charDataObj: ChartDataContainer
     

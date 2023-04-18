@@ -4,21 +4,35 @@ import Combine
 struct SupplierStatisticsView: View {
     public static let tag = "SupplierStatisticsView"
     
-    @StateObject var viewModel = SupplierStatisticsViewModel()
+    let statisticDataContainer = ChartDataContainer(
+        [
+            ChartData(name: "product 1", value: 100),
+            ChartData(name: "product 2", value: 1155),
+            ChartData(name: "product 3", value: 32),
+            ChartData(name: "product 4", value: 55),
+            ChartData(name: "product 5", value: 352),
+            ChartData(name: "product 6", value: 167)
+        ],
+        maxSegments: 4
+    )
     
     @StateObject private var tools = ViewManager.shared
     
     @State private var isSharePresented: Bool = false
     
-    @State var startDate: Date? = Date()
-    @State var endDate: Date? = Calendar(identifier: .gregorian).date(byAdding: .day, value: 7, to: Date())
-
+    @State var startDate: Date? = nil
+    @State var endDate: Date? = nil
+    
+    @StateObject private var viewModel = WorkerStatisticsViewModel()
+    
     var statistic: URL? {
-        let csvBulderResult = FileManager.shared.exportCSV(dataArray: [
-            StatisticModel(product: "apple", price: 50, ammount: 34),
-            StatisticModel(product: "banana", price: 70, ammount: 41),
-            StatisticModel(product: "potato", price: 40, ammount: 300)
-        ])
+        let csvBulderResult = FileManager.shared.exportCSV(
+            fileName: viewModel.dateRangeTitle,
+            dataArray: [
+                StatisticModel(product: "apple", price: 50, ammount: 34),
+                StatisticModel(product: "banana", price: 70, ammount: 41),
+                StatisticModel(product: "potato", price: 40, ammount: 300)
+            ])
         
         if case .success(let filePath) = csvBulderResult {
             return filePath
@@ -29,11 +43,11 @@ struct SupplierStatisticsView: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
-                CalendarView(startDate: $startDate, endDate: $endDate)
+                CalendarView(startDate: $viewModel.startDate, endDate: $viewModel.endDate)
                     .padding(.bottom, 8)
                 
                 HStack {
-                    Text("Статистика за 25 фев - 29 фев").font(.customSubtitle)
+                    Text(viewModel.dateRangeTitle).font(.customSubtitle)
                     Spacer()
                     CustomButton(icon: .customFile) {
                         isSharePresented = true
@@ -45,10 +59,7 @@ struct SupplierStatisticsView: View {
                 }
                 
                 ExtendableSection(isCollapsed: false) {
-                    PieChart(charDataObj: ChartDataContainer([ChartData(name: "product 1", value: 100),
-                                                              ChartData(name: "product 2", value: 55),
-                                                              ChartData(name: "product 3", value: 32),
-                                                              ChartData(name: "product 4", value: 67)]))
+                    PieChart(charDataObj: statisticDataContainer)
                 } headerContent: {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Доступная продукция").font(.customSubtitle)
@@ -57,7 +68,16 @@ struct SupplierStatisticsView: View {
                 }
                 
                 ExtendableSection(isCollapsed: false) {
-                    BarChart()
+                    BarChart(chartDataObj: statisticDataContainer)
+                } headerContent: {
+                    VStack(alignment: .leading, spacing: 4) {
+                        Text("Доступная продукция").font(.customSubtitle)
+                        Text("Напитки, выпечка").font(.customHint)
+                    }
+                }
+                
+                ExtendableSection(isCollapsed: false) {
+                    BarChart(chartDataObj: statisticDataContainer)
                 } headerContent: {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Доступная продукция").font(.customSubtitle)
@@ -74,6 +94,7 @@ struct SupplierStatisticsView: View {
         .background(Color.customLightGray)
         .defaultScreenSettings()
     }
+
 }
 
 

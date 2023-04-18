@@ -14,7 +14,7 @@ struct WorkerSupplyListScreen: View {
                     .padding([.horizontal, .bottom], 16)
                 
                 Text(viewModel.dateRangeTitle)
-                    .font(.customTitle)
+                    .font(.customSubtitle)
                     .padding(.horizontal, 16)
                 
                 ScrollView(.horizontal, showsIndicators: false) {

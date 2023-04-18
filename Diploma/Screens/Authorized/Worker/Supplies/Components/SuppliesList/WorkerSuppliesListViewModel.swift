@@ -14,7 +14,7 @@ class WorkerSuppliesListViewModel: ObservableObject {
         Publishers.CombineLatest($startDate,
                                  $endDate)
         .map { startDate, endDate -> String in
-            guard let startDate, let endDate else { return "Все ваши заказы" }
+            guard let startDate, let endDate else { return "Все заказы" }
             
             let startStr = DateFormatManager.shared.getFormattedString(startDate, dateFormat: "d MMM")
             let endStr = DateFormatManager.shared.getFormattedString(endDate, dateFormat: "d MMM")

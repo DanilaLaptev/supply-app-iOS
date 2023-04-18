@@ -4,7 +4,8 @@ struct SupplyScreen: View {
     let supplyModel: SupplyModel
     
     @StateObject var viewModel = SupplyViewModel()
-    
+    @State private var showAlert = false
+
     private var totalPrice: Double {
         viewModel.supplyModel?.totalPrice ?? 0
     }
@@ -14,8 +15,8 @@ struct SupplyScreen: View {
             ScrollView(.vertical, showsIndicators: false) {
                 VStack(alignment: .leading) {
                     Header(title: "№ \(viewModel.supplyModel?.publicId ?? 0)") { }
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
+                        .padding(.horizontal, 16)
+                        .padding(.vertical, 8)
                     
                     if let commentary = viewModel.supplyModel?.fromOrganizationCommentary {
                         ExtendableSection {
@@ -75,9 +76,21 @@ struct SupplyScreen: View {
             
             BottomSheet {
                 VStack {
-                    CustomButton(label: Text("Приём заказа").font(.customStandard))
-                        .disabled(viewModel.disableAcceptButton)
-
+                    CustomButton(label: Text("Приём заказа").font(.customStandard)) {
+                        self.showAlert = true
+                    }
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("Прием заказа"),
+                            message: Text("Вы проверили доставленные продукты и готовы принять заказ?"),
+                            primaryButton: .default(Text("Принять")) {
+                                // TODO: action
+                            },
+                            secondaryButton: .cancel(Text("Отмена"))
+                        )
+                    }
+                    .disabled(viewModel.disableAcceptButton)
+                    
                     Text("Принять можно только доставленный товар!")
                         .font(.customHint)
                         .foregroundColor(.customBlack)

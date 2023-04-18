@@ -11,8 +11,8 @@ struct SupplierTabBarWrapper: View {
                 switch selectedTab.screenTag {
                 case SupplierMainScreen.tag:
                     SupplierMainScreen()
-                case SupplierClientsScreen.tag:
-                    SupplierClientsScreen()
+                case ClientsListView.tag:
+                    ClientsListView()
                 case SupplierOrdersView.tag:
                     SupplierOrdersView()
                 case SupplierStatisticsView.tag:

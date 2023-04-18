@@ -5,7 +5,8 @@ struct WorkerMainView: View {
     
     @StateObject private var tools = ViewManager.shared
     @StateObject private var viewModel = WorkerMainViewModel()
-
+    
+    @State private var showAlert = false
     
     var body: some View {
         ZStack(alignment: .bottom) {
@@ -15,8 +16,8 @@ struct WorkerMainView: View {
             
             VStack {
                 TagsGroup<ProductType>()
-                .padding(.top, 8)
-                .padding(.bottom, 16)
+                    .padding(.top, 8)
+                    .padding(.bottom, 16)
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
@@ -27,9 +28,9 @@ struct WorkerMainView: View {
                                 DynamicProductCard(model: wrappedItem.item,
                                                    maximumQuantity: wrappedItem.item.quantity,
                                                    extraOptions: [
-                                    ExtraOption(icon: .customPencil, action: {
-                                        viewModel.editProduct(wrappedItem.item)
-                                    })
+                                                    ExtraOption(icon: .customPencil, action: {
+                                                        viewModel.editProduct(wrappedItem.item)
+                                                    })
                                                    ],
                                                    selectedNumber: $viewModel.storageItems[viewModel.storageItems.firstIndex(of: wrappedItem)!].selectedAmmount)
                             }
@@ -40,10 +41,22 @@ struct WorkerMainView: View {
                 }
             }
             
-            CustomButton(label: Text("Покупка на \(Int(viewModel.totalPrice))₽"))
-                .disabled(viewModel.disableSupplyButton)
-                .padding(.horizontal, 24)
-                .padding(.bottom, 8)
+            CustomButton(label: Text("Покупка на \(Int(viewModel.totalPrice)) ₽")) {
+                self.showAlert = true
+            }
+            .disabled(viewModel.disableSupplyButton)
+            .padding(.horizontal, 24)
+            .padding(.bottom, 8)
+            .alert(isPresented: $showAlert) {
+                Alert(
+                    title: Text("Сохранить закупку"),
+                    message: Text("Сохнаить покупку на \(Int(viewModel.totalPrice)) ₽?"),
+                    primaryButton: .default(Text("Сохранить")) {
+                        // TODO: action
+                    },
+                    secondaryButton: .cancel(Text("Отмена"))
+                )
+            }
         }
         .padding(.top, safeAreaEdgeInsets.top)
         .background(Color.customLightGray)

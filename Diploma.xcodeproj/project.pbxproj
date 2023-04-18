@@ -20,7 +20,6 @@
 		99A0954C29BAFF0100C0286D /* SupplierProductCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0954B29BAFF0100C0286D /* SupplierProductCard.swift */; };
 		99A0955029BB1A0100C0286D /* AddProductButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0954F29BB1A0100C0286D /* AddProductButton.swift */; };
 		99A0955529BB333500C0286D /* EditProductScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0955429BB333500C0286D /* EditProductScreen.swift */; };
-		99A0955729BB4AD300C0286D /* SupplierClientsScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0955629BB4AD300C0286D /* SupplierClientsScreen.swift */; };
 		99A0956529BC950400C0286D /* ViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0956429BC950400C0286D /* ViewModifier.swift */; };
 		99A0956729BC981800C0286D /* ImageModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0956629BC981800C0286D /* ImageModifier.swift */; };
 		99A0956D29BCD1BB00C0286D /* AlertModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0956C29BCD1BB00C0286D /* AlertModel.swift */; };
@@ -141,6 +140,9 @@
 		99F1791729E69FBC001903F2 /* SupplyProcessingStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1791629E69FBC001903F2 /* SupplyProcessingStatus.swift */; };
 		99F1791A29E6DF22001903F2 /* SupplyStatus.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1791929E6DF22001903F2 /* SupplyStatus.swift */; };
 		99F1792029E6EB2C001903F2 /* SupplyViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1791E29E6EB2C001903F2 /* SupplyViewModel.swift */; };
+		99F1792229E7310A001903F2 /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1792129E7310A001903F2 /* ChartData.swift */; };
+		99F1793029EECF07001903F2 /* ClientsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1792E29EECF07001903F2 /* ClientsListView.swift */; };
+		99F1793129EECF07001903F2 /* ClientsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1792F29EECF07001903F2 /* ClientsListViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -158,7 +160,6 @@
 		99A0954B29BAFF0100C0286D /* SupplierProductCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplierProductCard.swift; sourceTree = "<group>"; };
 		99A0954F29BB1A0100C0286D /* AddProductButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddProductButton.swift; sourceTree = "<group>"; };
 		99A0955429BB333500C0286D /* EditProductScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditProductScreen.swift; sourceTree = "<group>"; };
-		99A0955629BB4AD300C0286D /* SupplierClientsScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplierClientsScreen.swift; sourceTree = "<group>"; };
 		99A0956429BC950400C0286D /* ViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModifier.swift; sourceTree = "<group>"; };
 		99A0956629BC981800C0286D /* ImageModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageModifier.swift; sourceTree = "<group>"; };
 		99A0956C29BCD1BB00C0286D /* AlertModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlertModel.swift; sourceTree = "<group>"; };
@@ -281,6 +282,9 @@
 		99F1791629E69FBC001903F2 /* SupplyProcessingStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplyProcessingStatus.swift; sourceTree = "<group>"; };
 		99F1791929E6DF22001903F2 /* SupplyStatus.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplyStatus.swift; sourceTree = "<group>"; };
 		99F1791E29E6EB2C001903F2 /* SupplyViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplyViewModel.swift; sourceTree = "<group>"; };
+		99F1792129E7310A001903F2 /* ChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartData.swift; sourceTree = "<group>"; };
+		99F1792E29EECF07001903F2 /* ClientsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientsListView.swift; sourceTree = "<group>"; };
+		99F1792F29EECF07001903F2 /* ClientsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientsListViewModel.swift; sourceTree = "<group>"; };
 		EA15C5ED5EB5F0EA9CB9DE51 /* Pods-Diploma.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Diploma.debug.xcconfig"; path = "Target Support Files/Pods-Diploma/Pods-Diploma.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -327,25 +331,25 @@
 		99A0954529BA6D9B00C0286D /* Clients */ = {
 			isa = PBXGroup;
 			children = (
-				99A0955629BB4AD300C0286D /* SupplierClientsScreen.swift */,
+				99F1792E29EECF07001903F2 /* ClientsListView.swift */,
+				99F1792F29EECF07001903F2 /* ClientsListViewModel.swift */,
 			);
 			path = Clients;
 			sourceTree = "<group>";
 		};
-		99A0954629BA6DA600C0286D /* Orders */ = {
+		99A0954629BA6DA600C0286D /* Supplies */ = {
 			isa = PBXGroup;
 			children = (
 				99F1789C29DD58F5001903F2 /* SupplierOrdersView.swift */,
 				99F1789D29DD58F5001903F2 /* SupplierOrdersViewModel.swift */,
 			);
-			path = Orders;
+			path = Supplies;
 			sourceTree = "<group>";
 		};
 		99A0954729BA6DAD00C0286D /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
 				99F178A029DD5907001903F2 /* SupplierStatisticsView.swift */,
-				99F178A129DD5907001903F2 /* SupplierStatisticsViewModel.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -695,6 +699,7 @@
 			children = (
 				99D4544529AFC84E00462A8F /* PieChart.swift */,
 				99D4544729AFC87A00462A8F /* BarChart.swift */,
+				99F1792129E7310A001903F2 /* ChartData.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -711,6 +716,7 @@
 		99D4547529B3628E00462A8F /* Unauthorized */ = {
 			isa = PBXGroup;
 			children = (
+				99F178A129DD5907001903F2 /* SupplierStatisticsViewModel.swift */,
 				99AA128F29CDE69E002219E0 /* LoadingScreen */,
 				99C14C6F29D97A7C00B8D3E2 /* AuthWrapper */,
 				99C14C6829D8B0F200B8D3E2 /* SignIn */,
@@ -722,6 +728,7 @@
 		99D4547629B362A400462A8F /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				99A561E229A0FCFD00F9932A /* ContentView.swift */,
 				99D4547729B362B300462A8F /* Common */,
 				99D4547529B3628E00462A8F /* Unauthorized */,
 				99D4547429B3626D00462A8F /* Authorized */,
@@ -734,7 +741,6 @@
 			children = (
 				99D4541629AC7E5200462A8F /* Components */,
 				99D4548129B36DEB00462A8F /* Profile */,
-				99A561E229A0FCFD00F9932A /* ContentView.swift */,
 				99D4549029B3CB8800462A8F /* ProductScreen.swift */,
 				99AA129729D229C7002219E0 /* OrganizationType.swift */,
 			);
@@ -744,10 +750,10 @@
 		99D4547B29B36DC000462A8F /* Supplier */ = {
 			isa = PBXGroup;
 			children = (
-				99A0954729BA6DAD00C0286D /* Statistics */,
-				99A0954629BA6DA600C0286D /* Orders */,
-				99A0954529BA6D9B00C0286D /* Clients */,
 				99A0954429BA6D8B00C0286D /* Main */,
+				99A0954529BA6D9B00C0286D /* Clients */,
+				99A0954629BA6DA600C0286D /* Supplies */,
+				99A0954729BA6DAD00C0286D /* Statistics */,
 				99A0957E29BFA39100C0286D /* SupplierTabBarWrapper.swift */,
 			);
 			path = Supplier;
@@ -796,8 +802,8 @@
 		99D4548029B36DE300462A8F /* Statistics */ = {
 			isa = PBXGroup;
 			children = (
-				99F178AB29DE1619001903F2 /* WorkerStatisticsViewModel.swift */,
 				99D4548829B39C5F00462A8F /* StatisticsScreen.swift */,
+				99F178AB29DE1619001903F2 /* WorkerStatisticsViewModel.swift */,
 			);
 			path = Statistics;
 			sourceTree = "<group>";
@@ -1082,6 +1088,7 @@
 				99F178E529E2DE02001903F2 /* SupplyModel.swift in Sources */,
 				99D4542C29AE022C00462A8F /* CustomSmallButton.swift in Sources */,
 				99D4549F29B4863100462A8F /* SupplierAdditionalInfoRow.swift in Sources */,
+				99F1792229E7310A001903F2 /* ChartData.swift in Sources */,
 				99A561E329A0FCFD00F9932A /* ContentView.swift in Sources */,
 				99D4546D29B3592500462A8F /* DynamicProductCard.swift in Sources */,
 				99F1789829DD42B5001903F2 /* OrganizationModel.swift in Sources */,
@@ -1092,10 +1099,10 @@
 				99F1789429DC6C54001903F2 /* DatePickerField.swift in Sources */,
 				99D4548B29B39C7500462A8F /* SuppliersListView.swift in Sources */,
 				99F178A729DD9AC1001903F2 /* ExtraOptionsModifier.swift in Sources */,
+				99F1793129EECF07001903F2 /* ClientsListViewModel.swift in Sources */,
 				99A0955029BB1A0100C0286D /* AddProductButton.swift in Sources */,
 				99C14C7B29D9B6F300B8D3E2 /* ResultVoidExtension.swift in Sources */,
 				99D4549329B3CC8600462A8F /* SupplyScreen.swift in Sources */,
-				99A0955729BB4AD300C0286D /* SupplierClientsScreen.swift in Sources */,
 				99C14C9029DAB40800B8D3E2 /* MoyaProviderExtension.swift in Sources */,
 				99D4541F29AC7EEA00462A8F /* CustomCalendar.swift in Sources */,
 				99D454AE29B50C4600462A8F /* SuppliersListFilterScreen.swift in Sources */,
@@ -1179,6 +1186,7 @@
 				99D4543F29AE88E000462A8F /* CustomTag.swift in Sources */,
 				99D454A129B4959200462A8F /* BottomSheet.swift in Sources */,
 				99D4547929B3644E00462A8F /* NavigationTabs.swift in Sources */,
+				99F1793029EECF07001903F2 /* ClientsListView.swift in Sources */,
 				99F178F329E4959D001903F2 /* StorageItemWrapper.swift in Sources */,
 				99A0951C29B62D9F00C0286D /* CustomCalendarCell.swift in Sources */,
 				99F178C229DEE2E2001903F2 /* EmptyView.swift in Sources */,

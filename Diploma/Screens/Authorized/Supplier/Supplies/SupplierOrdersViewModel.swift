@@ -2,7 +2,7 @@ import Foundation
 import SwiftUI
 import Combine
 
-class WorkerStatisticsViewModel: ObservableObject {
+class SupplierOrdersViewModel: ObservableObject {
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published var startDate: Date? = nil
@@ -14,12 +14,12 @@ class WorkerStatisticsViewModel: ObservableObject {
         Publishers.CombineLatest($startDate,
                                  $endDate)
         .map { startDate, endDate -> String in
-            guard let startDate, let endDate else { return "Вся статистика" }
+            guard let startDate, let endDate else { return "Все заказы" }
             
             let startStr = DateFormatManager.shared.getFormattedString(startDate, dateFormat: "d MMM")
             let endStr = DateFormatManager.shared.getFormattedString(endDate, dateFormat: "d MMM")
             
-            return "Статистика за \(startStr) - \(endStr)"
+            return "Заказы за \(startStr) - \(endStr)"
         }.eraseToAnyPublisher()
     }
     
@@ -30,5 +30,5 @@ class WorkerStatisticsViewModel: ObservableObject {
                 self?.dateRangeTitle = title
             }.store(in: &cancellableSet)
         
-    }    
+    }
 }

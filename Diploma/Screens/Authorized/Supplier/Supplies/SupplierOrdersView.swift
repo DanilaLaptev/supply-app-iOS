@@ -4,28 +4,22 @@ import Combine
 struct SupplierOrdersView: View {
     public static let tag = "SupplierOrdersView"
     
-    @StateObject var viewModel = SupplierOrdersViewModel()
     @StateObject private var tools = ViewManager.shared
     
-    @State var startDate: Date? = Date()
-    @State var endDate: Date? = Calendar(identifier: .gregorian).date(byAdding: .day, value: 7, to: Date())
-
+    @StateObject private var viewModel = WorkerSuppliesListViewModel()
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
-                CalendarView(startDate: $startDate, endDate: $endDate)
+                CalendarView(startDate: $viewModel.startDate, endDate: $viewModel.endDate)
                     .padding([.horizontal, .bottom], 16)
                 
-                Text("Заказы на 25 февраля")
-                    .font(.customTitle)
+                Text(viewModel.dateRangeTitle)
+                    .font(.customSubtitle)
                     .padding(.horizontal, 16)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    HStack {
-                        ForEach((0...16), id: \.self) { _ in
-                            SmallTag(icon: .customBox, name: "Box", isSelected: false)
-                        }
-                    }
+                    TagsGroup<SupplyProcessingStatus>()
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
                     .padding(.bottom, 16)
@@ -36,13 +30,13 @@ struct SupplierOrdersView: View {
                         NavigationLink {
                             SupplyScreen(supplyModel: .empty)
                         } label: {
-                            StaticProductCard(storageItem: .empty)
+                            SupplyCard(supplyModel: .empty)
                         }
                     }
                 }
                 .padding(.horizontal, 16)
             }
-            .padding(.top, 8)
+            .padding(.vertical, 8)
         }
         .padding(.top, safeAreaEdgeInsets.top)
         .background(Color.customLightGray)

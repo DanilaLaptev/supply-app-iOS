@@ -7,7 +7,9 @@ struct SupplierMainScreen: View {
     @StateObject private var tools = ViewManager.shared
     
     @State private var tagSelection: String? = nil
-    
+    @State private var showDeleteProductAlert = false
+    @State private var showHideProductAlert = false
+
     var body: some View {
         VStack {
             NavigationLink("", destination: EditProductScreen(), tag: EditProductScreen.tag, selection: $tagSelection)
@@ -22,18 +24,40 @@ struct SupplierMainScreen: View {
                     
                 }
                 .padding(.horizontal, 16)
+                .alert(isPresented: $showHideProductAlert) {
+                    Alert(
+                        title: Text("Скрыть продукт"),
+                        message: Text("Вы точно хотите скрыть выбранный продукт?"),
+                        primaryButton: .default(Text("Скрыть")) {
+                            // TODO: action
+                        },
+                        secondaryButton: .cancel(Text("Отмена"))
+                    )
+                }
                 
                 VStack {
-                    ForEach((0...32), id: \.self) { _ in
-                        SupplierProductCard {
+                    ForEach(["Кефир, 1 литр", "Гречка", "Рис", "Яблоки, 1 кг", "Картофель", "Творог", "Сыр", "Томатная паста", "Котлеты"], id: \.self) { name in
+                        SupplierProductCard(name: name) {
                             tagSelection = EditProductScreen.tag
+                        } tapVisibilityButton : {
+                            self.showHideProductAlert.toggle()
                         } tapDeletingButton: {
-                            // TODO:
+                            self.showDeleteProductAlert.toggle()
                         }
                         .onTapGesture { tagSelection = ProductScreen.tag }
                     }
                 }
                 .padding(.horizontal, 16)
+                .alert(isPresented: $showDeleteProductAlert) {
+                    Alert(
+                        title: Text("Удалить продукт"),
+                        message: Text("Вы точно хотите удалить выбранный продукт?"),
+                        primaryButton: .destructive(Text("Удалить")) {
+                            // TODO: action
+                        },
+                        secondaryButton: .cancel(Text("Отмена"))
+                    )
+                }
             }
         }
         .padding(.top, safeAreaEdgeInsets.top)

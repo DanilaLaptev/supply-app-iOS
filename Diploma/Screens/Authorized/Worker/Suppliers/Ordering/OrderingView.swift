@@ -2,13 +2,14 @@ import SwiftUI
 
 struct OrderingView: View {
     public static let tag = "OrderingView"
-        
+    
     @StateObject private var tools = ViewManager.shared
     @StateObject private var viewModel = OrderingViewModel()
+    @State private var showAlert = false
     
     var organizationModel: OrganizationModel
     var selectedItems: [StorageItemWrapper]
-
+    
     init(organizationModel: OrganizationModel, selectedItems: [StorageItemWrapper]) {
         self.organizationModel = organizationModel
         self.selectedItems = selectedItems
@@ -50,7 +51,19 @@ struct OrderingView: View {
                         }
                     }
                     
-                    CustomButton(label: Text("Оформить заказ на \(Int(viewModel.totalPrice)) ₽"))
+                    CustomButton(label: Text("Оформить заказ на \(Int(viewModel.totalPrice)) ₽")) {
+                        self.showAlert = true
+                    }
+                    .alert(isPresented: $showAlert) {
+                        Alert(
+                            title: Text("Оформление заказа"),
+                            message: Text("Вы точно хотите оформить заказ на \(Int(viewModel.totalPrice)) ₽?"),
+                            primaryButton: .default(Text("Оформить")) {
+                                // TODO: action
+                            },
+                            secondaryButton: .cancel(Text("Отмена"))
+                        )
+                    }
                 }
                 .padding(.vertical, 8)
             }

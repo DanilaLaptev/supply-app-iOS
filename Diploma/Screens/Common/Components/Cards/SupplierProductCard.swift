@@ -2,6 +2,9 @@ import SwiftUI
 
 struct SupplierProductCard: View {
     @State private var showExtraOptions = false
+    
+    var name: String
+    
     var tapCard: (()->())? = nil
     var tapEditingButton: (()->())? = nil
     var tapVisibilityButton: (()->())? = nil
@@ -10,10 +13,10 @@ struct SupplierProductCard: View {
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 8) {
-                Text("Название продукта")
+                Text(name)
                     .font(.customSubtitle)
                     .foregroundColor(.customBlack)
-                Text("0 ₽")
+                Text("\(Int.random(in: 20...200)) ₽")
                     .font(.customHint)
                     .foregroundColor(.customDarkGray)
             }
@@ -37,7 +40,7 @@ struct SupplierProductCard: View {
 
 struct SupplierProductCard_Previews: PreviewProvider {
     static var previews: some View {
-        SupplierProductCard()
+        SupplierProductCard(name: "")
             .padding()
     }
 }
