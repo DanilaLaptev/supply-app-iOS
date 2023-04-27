@@ -5,7 +5,11 @@ struct StartLoadingScreen: View {
     
     var body: some View {
         ZStack(alignment: .center) {
-            NavigationLink("", destination: AuthorizationWrapper(), tag: AuthorizationWrapper.tag, selection: $viewModel.nextScreenTag)
+            NavigationLink(
+                destination: AuthorizationWrapper(),
+                isActive: $viewModel.navigateToAuthWrapper,
+                label: { }
+            )
             
             Image("box loading")
                 .resizable()

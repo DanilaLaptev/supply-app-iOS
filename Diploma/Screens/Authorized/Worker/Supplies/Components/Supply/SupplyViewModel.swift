@@ -12,7 +12,7 @@ class SupplyViewModel: ObservableObject {
     private var disableAcceptButtonPublisher: AnyPublisher<Bool, Never> {
         $supplyModel
             .map { supply in
-                if case .orderAccepted = supply?.statusHistory.first?.status {
+                if case .inProgress = supply?.statusHistory.first?.status {
                     return false
                 }
                 return true

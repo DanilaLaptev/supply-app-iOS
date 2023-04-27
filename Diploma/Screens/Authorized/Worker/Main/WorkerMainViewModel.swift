@@ -55,7 +55,7 @@ class WorkerMainViewModel: ObservableObject {
     }
     
     func fetchStorageItems() {
-        viewManager.isLoading = true
+        ViewManager.shared.isLoading = true
         
         // TODO: request to fetch items
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in

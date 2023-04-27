@@ -9,10 +9,24 @@ struct SignInView: View {
     var body: some View {
         OverflowScroll {
             VStack {
-                NavigationLink("", destination: SupplierTabBarWrapper(), tag: SupplierTabBarWrapper.tag, selection: $viewModel.nextScreenTag)
-                NavigationLink("", destination: CustomerTabBarWrapper(), tag: CustomerTabBarWrapper.tag, selection: $viewModel.nextScreenTag)
-                NavigationLink("", destination: MainSignUpView(), tag: MainSignUpView.tag, selection: $viewModel.nextScreenTag)
+                NavigationLink(
+                    destination: SupplierMainScreen(),
+                    isActive: $viewModel.navigateToSupplierMain,
+                    label: { }
+                )
                 
+                NavigationLink(
+                    destination: WorkerMainView(),
+                    isActive: $viewModel.navigateToWorkerMain,
+                    label: { }
+                )
+                
+                NavigationLink(
+                    destination: MainSignUpView(),
+                    isActive: $viewModel.navigateToSignUp,
+                    label: { }
+                )
+
                 Spacer()
                 BottomSheet {
                     VStack(alignment: .leading, spacing: 8) {
@@ -30,13 +44,13 @@ struct SignInView: View {
                         
                         VStack(alignment: .center, spacing: 8) {
                             CustomButton(label: Text("Войти")) {
-                                self.viewModel.tapSignInButton.toggle()
+                                self.viewModel.signInOrganization()
                             }
                             
                             Text("Создать аккаунт").font(.customStandard)
                                 .foregroundColor(.customOrange)
                                 .onTapGesture {
-                                    viewModel.nextScreenTag = MainSignUpView.tag
+                                    viewModel.navigateToSignUp.toggle()
                                 }
                         }
                     }

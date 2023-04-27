@@ -2,7 +2,6 @@ import SwiftUI
 
 struct MainSignUpView: View {
     public static let tag = "SignUpScreen"
-    @State private var tagSelection: String? = nil
     
     @StateObject private var newOrganizationData = OrganizationCreationModel()
     @StateObject private var viewModel = MainSignUpViewModel()
@@ -10,8 +9,12 @@ struct MainSignUpView: View {
     var body: some View {
         OverflowScroll {
             VStack {
-                NavigationLink("", destination: ContactView(), tag: ContactView.tag, selection: $tagSelection)
-                
+                NavigationLink(
+                    destination: ContactView(),
+                    isActive: $viewModel.navigateToContactView,
+                    label: { }
+                )
+
                 Spacer()
                 BottomSheet {
                     VStack(alignment: .leading, spacing: 8) {
@@ -28,7 +31,7 @@ struct MainSignUpView: View {
                         CustomTextField(textFieldValue: $viewModel.repeatedPassword, placeholder: "Подтверхдение пароля", isSecure: true)
                             .padding(.bottom, 24)
                         
-                        CustomButton(label: Text("Продолжить")) { tagSelection = ContactView.tag }
+                        CustomButton(label: Text("Продолжить")) { viewModel.signUpOrganization() }
                     }
                 }
             }

@@ -1,6 +1,6 @@
 import SwiftUI
 
-struct EmptyView: View {
+struct ListEmptyView: View {
     var text: String = "Box is empty"
     
     var body: some View {

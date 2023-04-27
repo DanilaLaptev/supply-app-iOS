@@ -6,6 +6,7 @@ target 'Diploma' do
   use_frameworks!
 
   # Pods for Diploma
-  pod 'Moya/Combine', '~> 15.0'
-
+  pod 'Moya', '~> 15.0'
+  pod "Keychain"
+  
 end

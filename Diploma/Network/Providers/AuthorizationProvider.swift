@@ -1,54 +1,40 @@
 import Foundation
 import Moya
 
+
 enum AuthorizationProvider {
-    case login
-    case logout
-    case register
-    case checkAuth
-    case checkEmail
+    case login(_ authDto: AuthorizationDto)
+    case register(_ authDto: AuthorizationDto)
 }
 
 extension AuthorizationProvider: TargetType {
-    var baseURL: URL { RequestDefaults.baseUrl("/authorization") }
+    var baseURL: URL { RequestDefaults.baseUrl("/auth") }
     
     var path: String {
         switch self {
         case .login:
             return "/login"
-        case .logout:
-            return "/logout"
         case .register:
             return "/register"
-        case .checkAuth:
-            return "/check-auth"
-        case .checkEmail:
-            return "/check-email"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .login, .register, .logout:
+        case .login, .register:
             return .post
-        case .checkAuth, .checkEmail:
-            return .get
         }
     }
         
     // TODO: data for requests
     var task: Task {
         switch self {
-        case .login:
-            return .requestPlain
-        case .logout:
-            return .requestPlain
-        case .register:
-            return .requestPlain
-        case .checkAuth:
-            return .requestPlain
-        case .checkEmail:
-            return .requestPlain
+        case .login(let authDto), .register(let authDto):
+            guard let body = CoderManager.encode(authDto) else {
+                return .requestPlain
+            }
+            
+            return .requestData(body)
         }
     }
     
@@ -57,13 +43,7 @@ extension AuthorizationProvider: TargetType {
         switch self {
         case .login:
             return .init()
-        case .logout:
-            return .init()
         case .register:
-            return .init()
-        case .checkAuth:
-            return .init()
-        case .checkEmail:
             return .init()
         }
     }

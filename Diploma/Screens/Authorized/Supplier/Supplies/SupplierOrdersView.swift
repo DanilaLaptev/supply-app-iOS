@@ -28,7 +28,7 @@ struct SupplierOrdersView: View {
                 VStack {
                     ForEach((0...8), id: \.self) { _ in
                         NavigationLink {
-                            SupplyScreen(supplyModel: .empty)
+                            SupplierOrderView(supplyModel: .empty)
                         } label: {
                             SupplyCard(supplyModel: .empty)
                         }
