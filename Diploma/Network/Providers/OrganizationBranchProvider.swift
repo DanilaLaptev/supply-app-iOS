@@ -15,26 +15,26 @@ extension OrganizationBranchProvider: TargetType {
     var path: String {
         switch self {
         case .createOrganizationBranch:
-            <#code#>
+            return ""
         case .addContactPerson:
-            <#code#>
+            return ""
         case .getStorageItems:
-            <#code#>
+            return ""
         case .addStorageItems:
-            <#code#>
+            return ""
         }
     }
     
     var method: Moya.Method {
         switch self {
         case .createOrganizationBranch:
-            <#code#>
+            return .get
         case .addContactPerson:
-            <#code#>
+            return .get
         case .getStorageItems:
-            <#code#>
+            return .get
         case .addStorageItems:
-            <#code#>
+            return .get
         }
     }
         
@@ -42,13 +42,13 @@ extension OrganizationBranchProvider: TargetType {
     var task: Task {
         switch self {
         case .createOrganizationBranch:
-            <#code#>
+            return .requestPlain
         case .addContactPerson:
-            <#code#>
+            return .requestPlain
         case .getStorageItems:
-            <#code#>
+            return .requestPlain
         case .addStorageItems:
-            <#code#>
+            return .requestPlain
         }
     }
     
@@ -56,13 +56,13 @@ extension OrganizationBranchProvider: TargetType {
     var sampleData: Data {
         switch self {
         case .createOrganizationBranch:
-            <#code#>
+            return .init()
         case .addContactPerson:
-            <#code#>
+            return .init()
         case .getStorageItems:
-            <#code#>
+            return .init()
         case .addStorageItems:
-            <#code#>
+            return .init()
         }
     }
     var headers: [String: String]? {
