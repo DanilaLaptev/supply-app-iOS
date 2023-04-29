@@ -14,22 +14,22 @@ extension OrganizationProvider: TargetType {
     var path: String {
         switch self {
         case .updateOrganization:
-            <#code#>
+            return ""
         case .getOrganizations:
-            <#code#>
+            return ""
         case .getOrganization(let id):
-            <#code#>
+            return ""
         }
     }
     
     var method: Moya.Method {
         switch self {
         case .updateOrganization:
-            <#code#>
+            return .get
         case .getOrganizations:
-            <#code#>
+            return .get
         case .getOrganization(let id):
-            <#code#>
+            return .get
         }
     }
         
@@ -37,11 +37,11 @@ extension OrganizationProvider: TargetType {
     var task: Task {
         switch self {
         case .updateOrganization:
-            <#code#>
+            return .requestPlain
         case .getOrganizations:
-            <#code#>
+            return .requestPlain
         case .getOrganization(let id):
-            <#code#>
+            return .requestPlain
         }
     }
     
@@ -49,11 +49,11 @@ extension OrganizationProvider: TargetType {
     var sampleData: Data {
         switch self {
         case .updateOrganization:
-            <#code#>
+            return .init()
         case .getOrganizations:
-            <#code#>
+            return .init()
         case .getOrganization(let id):
-            <#code#>
+            return .init()
         }
     }
     var headers: [String: String]? {

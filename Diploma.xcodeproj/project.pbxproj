@@ -20,8 +20,6 @@
 		99000EC429FAC74C00E51182 /* OrganizationBranchDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99000EC329FAC74C00E51182 /* OrganizationBranchDto.swift */; };
 		99000EC629FAC7B700E51182 /* ContactPersonDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99000EC529FAC7B700E51182 /* ContactPersonDto.swift */; };
 		99000EC829FAC83500E51182 /* FilterDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99000EC729FAC83500E51182 /* FilterDto.swift */; };
-		99000ECB29FAC8EA00E51182 /* OrganizationRole.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99000ECA29FAC8EA00E51182 /* OrganizationRole.swift */; };
-		99000ECD29FAC90E00E51182 /* ProductType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99000ECC29FAC90E00E51182 /* ProductType.swift */; };
 		99A0951329B5B51700C0286D /* OrderingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951229B5B51700C0286D /* OrderingView.swift */; };
 		99A0951C29B62D9F00C0286D /* CustomCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951B29B62D9F00C0286D /* CustomCalendarCell.swift */; };
 		99A0951E29B6305B00C0286D /* OrderStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951D29B6305B00C0286D /* OrderStateView.swift */; };
@@ -172,8 +170,6 @@
 		99000EC329FAC74C00E51182 /* OrganizationBranchDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationBranchDto.swift; sourceTree = "<group>"; };
 		99000EC529FAC7B700E51182 /* ContactPersonDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPersonDto.swift; sourceTree = "<group>"; };
 		99000EC729FAC83500E51182 /* FilterDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDto.swift; sourceTree = "<group>"; };
-		99000ECA29FAC8EA00E51182 /* OrganizationRole.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationRole.swift; sourceTree = "<group>"; };
-		99000ECC29FAC90E00E51182 /* ProductType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductType.swift; sourceTree = "<group>"; };
 		99A0951229B5B51700C0286D /* OrderingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderingView.swift; sourceTree = "<group>"; };
 		99A0951B29B62D9F00C0286D /* CustomCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendarCell.swift; sourceTree = "<group>"; };
 		99A0951D29B6305B00C0286D /* OrderStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStateView.swift; sourceTree = "<group>"; };
@@ -350,15 +346,6 @@
 				99000EB829F7FE3700E51182 /* OrderReviewViewModel.swift */,
 			);
 			path = OrderReviewBottomSheet;
-			sourceTree = "<group>";
-		};
-		99000EC929FAC8BA00E51182 /* Enums */ = {
-			isa = PBXGroup;
-			children = (
-				99000ECA29FAC8EA00E51182 /* OrganizationRole.swift */,
-				99000ECC29FAC90E00E51182 /* ProductType.swift */,
-			);
-			path = Enums;
 			sourceTree = "<group>";
 		};
 		99A0951A29B62D8500C0286D /* Calendar */ = {
@@ -554,7 +541,6 @@
 		99C14C5E29D6FC2500B8D3E2 /* Dtos */ = {
 			isa = PBXGroup;
 			children = (
-				99000EC929FAC8BA00E51182 /* Enums */,
 				99C14C9129DAF10A00B8D3E2 /* AuthorizationDto.swift */,
 				99C14C9329DAF21400B8D3E2 /* OrganizationDto.swift */,
 				99000EAB29F6CD9300E51182 /* ErrorDto.swift */,
@@ -1175,7 +1161,6 @@
 				99C14C9629DAF85300B8D3E2 /* DropDownList.swift in Sources */,
 				99F178D429DFEE1F001903F2 /* AsyncImage.swift in Sources */,
 				99F1789E29DD58F5001903F2 /* SupplierOrdersView.swift in Sources */,
-				99000ECD29FAC90E00E51182 /* ProductType.swift in Sources */,
 				99AA128C29CD935A002219E0 /* EncodableExtension.swift in Sources */,
 				99000EC629FAC7B700E51182 /* ContactPersonDto.swift in Sources */,
 				99D4542629AC807800462A8F /* ColorExtension.swift in Sources */,
@@ -1217,7 +1202,6 @@
 				99C14C8D29DAB1EB00B8D3E2 /* TargetTypeExtension.swift in Sources */,
 				99C14C6C29D8B11200B8D3E2 /* SignInViewModel.swift in Sources */,
 				99D4543B29AE6FF500462A8F /* BottomNavigationTab.swift in Sources */,
-				99000ECB29FAC8EA00E51182 /* OrganizationRole.swift in Sources */,
 				99C14C5629D6FA9E00B8D3E2 /* OrganizationBranchProvider.swift in Sources */,
 				99D4548929B39C5F00462A8F /* StatisticsScreen.swift in Sources */,
 				99A0955529BB333500C0286D /* EditProductScreen.swift in Sources */,
