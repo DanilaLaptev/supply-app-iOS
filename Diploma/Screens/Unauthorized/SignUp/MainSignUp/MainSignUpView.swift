@@ -3,14 +3,14 @@ import SwiftUI
 struct MainSignUpView: View {
     public static let tag = "SignUpScreen"
     
-    @StateObject private var newOrganizationData = OrganizationCreationModel()
     @StateObject private var viewModel = MainSignUpViewModel()
     
     var body: some View {
         OverflowScroll {
             VStack {
                 NavigationLink(
-                    destination: ContactView(),
+                    destination: ContactView()
+                        .environmentObject(viewModel.organization),
                     isActive: $viewModel.navigateToContactView,
                     label: { }
                 )
@@ -38,7 +38,6 @@ struct MainSignUpView: View {
         }
         .background(Color.customLightGray)
         .defaultScreenSettings()
-        .environmentObject(newOrganizationData)
     }
 }
 

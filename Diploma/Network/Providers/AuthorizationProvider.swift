@@ -48,7 +48,10 @@ extension AuthorizationProvider: TargetType {
         }
     }
     var headers: [String: String]? {
-        return RequestHeader.standard
+        switch self {
+        default:
+            return RequestHeader.standard
+        }
     }
 }
 // MARK: - Helpers

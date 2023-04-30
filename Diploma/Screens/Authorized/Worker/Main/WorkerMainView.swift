@@ -67,7 +67,7 @@ struct WorkerMainView: View {
     }
 }
 
-struct MainScreen_Previews: PreviewProvider {
+struct MainView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
             WorkerMainView()

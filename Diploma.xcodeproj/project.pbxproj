@@ -20,6 +20,9 @@
 		99000EC429FAC74C00E51182 /* OrganizationBranchDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99000EC329FAC74C00E51182 /* OrganizationBranchDto.swift */; };
 		99000EC629FAC7B700E51182 /* ContactPersonDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99000EC529FAC7B700E51182 /* ContactPersonDto.swift */; };
 		99000EC829FAC83500E51182 /* FilterDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99000EC729FAC83500E51182 /* FilterDto.swift */; };
+		999E4B5D29FD4DA300F66ED8 /* OrganizationFilterDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E4B5C29FD4DA300F66ED8 /* OrganizationFilterDto.swift */; };
+		999E4B5F29FD7CFD00F66ED8 /* StorageItemDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E4B5E29FD7CFD00F66ED8 /* StorageItemDto.swift */; };
+		999E4B6129FE660500F66ED8 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E4B6029FE660500F66ED8 /* LocationManager.swift */; };
 		99A0951329B5B51700C0286D /* OrderingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951229B5B51700C0286D /* OrderingView.swift */; };
 		99A0951C29B62D9F00C0286D /* CustomCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951B29B62D9F00C0286D /* CustomCalendarCell.swift */; };
 		99A0951E29B6305B00C0286D /* OrderStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951D29B6305B00C0286D /* OrderStateView.swift */; };
@@ -170,6 +173,9 @@
 		99000EC329FAC74C00E51182 /* OrganizationBranchDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationBranchDto.swift; sourceTree = "<group>"; };
 		99000EC529FAC7B700E51182 /* ContactPersonDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactPersonDto.swift; sourceTree = "<group>"; };
 		99000EC729FAC83500E51182 /* FilterDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterDto.swift; sourceTree = "<group>"; };
+		999E4B5C29FD4DA300F66ED8 /* OrganizationFilterDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationFilterDto.swift; sourceTree = "<group>"; };
+		999E4B5E29FD7CFD00F66ED8 /* StorageItemDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageItemDto.swift; sourceTree = "<group>"; };
+		999E4B6029FE660500F66ED8 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		99A0951229B5B51700C0286D /* OrderingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderingView.swift; sourceTree = "<group>"; };
 		99A0951B29B62D9F00C0286D /* CustomCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendarCell.swift; sourceTree = "<group>"; };
 		99A0951D29B6305B00C0286D /* OrderStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStateView.swift; sourceTree = "<group>"; };
@@ -547,6 +553,8 @@
 				99000EC329FAC74C00E51182 /* OrganizationBranchDto.swift */,
 				99000EC529FAC7B700E51182 /* ContactPersonDto.swift */,
 				99000EC729FAC83500E51182 /* FilterDto.swift */,
+				999E4B5C29FD4DA300F66ED8 /* OrganizationFilterDto.swift */,
+				999E4B5E29FD7CFD00F66ED8 /* StorageItemDto.swift */,
 			);
 			path = Dtos;
 			sourceTree = "<group>";
@@ -558,6 +566,7 @@
 				99C14C6429D8932000B8D3E2 /* AuthManager.swift */,
 				99C14C6629D8937400B8D3E2 /* AlertManager.swift */,
 				99000EAD29F7CA1C00E51182 /* KeychainManager.swift */,
+				999E4B6029FE660500F66ED8 /* LocationManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -1131,6 +1140,7 @@
 				99A561E329A0FCFD00F9932A /* ContentView.swift in Sources */,
 				99000EB029F7CA4400E51182 /* KeychainUserModel.swift in Sources */,
 				99000EC429FAC74C00E51182 /* OrganizationBranchDto.swift in Sources */,
+				999E4B5D29FD4DA300F66ED8 /* OrganizationFilterDto.swift in Sources */,
 				99D4546D29B3592500462A8F /* DynamicProductCard.swift in Sources */,
 				99F1789829DD42B5001903F2 /* OrganizationModel.swift in Sources */,
 				99A0954C29BAFF0100C0286D /* SupplierProductCard.swift in Sources */,
@@ -1235,6 +1245,8 @@
 				99D4547929B3644E00462A8F /* NavigationTabs.swift in Sources */,
 				99F1793029EECF07001903F2 /* ClientsListView.swift in Sources */,
 				99F178F329E4959D001903F2 /* StorageItemWrapper.swift in Sources */,
+				999E4B6129FE660500F66ED8 /* LocationManager.swift in Sources */,
+				999E4B5F29FD7CFD00F66ED8 /* StorageItemDto.swift in Sources */,
 				99A0951C29B62D9F00C0286D /* CustomCalendarCell.swift in Sources */,
 				99F178C229DEE2E2001903F2 /* EmptyView.swift in Sources */,
 				99D4541829AC7E7700462A8F /* CustomButton.swift in Sources */,

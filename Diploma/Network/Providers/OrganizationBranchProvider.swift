@@ -3,10 +3,11 @@ import Moya
 
 
 enum OrganizationBranchProvider {
-    case createOrganizationBranch
-    case addContactPerson
-    case getStorageItems
-    case addStorageItems
+    case createOrganizationBranch(branch: OrganizationBranchDto)
+    case updateOrganizationBranch(branchId: Int, branch: OrganizationBranchDto)
+    case addContactPerson(branchId: Int, contactPerson: ContactPersonDto)
+    case getStorageItems(branchId: Int, filter: FilterDto)
+    case addStorageItems(branchId: Int, items: [StorageItemDto])
 }
 
 extension OrganizationBranchProvider: TargetType {
@@ -15,36 +16,48 @@ extension OrganizationBranchProvider: TargetType {
     var path: String {
         switch self {
         case .createOrganizationBranch:
-            return ""
-        case .addContactPerson:
-            return ""
-        case .getStorageItems:
-            return ""
-        case .addStorageItems:
-            return ""
+            return "/"
+        case .addContactPerson(let branchId, _):
+            return "/\(branchId)/contactPerson/"
+        case .getStorageItems(let branchId, _):
+            return "/\(branchId)/products/"
+        case .addStorageItems(let branchId, _):
+            return "/\(branchId)/products/"
+        case .updateOrganizationBranch(let branchId, _):
+            return "/\(branchId)/"
         }
     }
     
     var method: Moya.Method {
         switch self {
-        case .createOrganizationBranch:
-            return .get
-        case .addContactPerson:
-            return .get
-        case .getStorageItems:
-            return .get
+        case .createOrganizationBranch, .updateOrganizationBranch, .addContactPerson, .getStorageItems:
+            return .post
         case .addStorageItems:
-            return .get
+            return .put
         }
     }
         
     // TODO: data for requests
     var task: Task {
         switch self {
-        case .createOrganizationBranch:
-            return .requestPlain
-        case .addContactPerson:
-            return .requestPlain
+        case .createOrganizationBranch(let branch):
+            guard let body = CoderManager.encode(branch) else {
+                return .requestPlain
+            }
+            
+            return .requestData(body)
+        case .updateOrganizationBranch(_, let branch):
+            guard let body = CoderManager.encode(branch) else {
+                return .requestPlain
+            }
+            
+            return .requestData(body)
+        case .addContactPerson(_, let contactPerson):
+            guard let body = CoderManager.encode(contactPerson) else {
+                return .requestPlain
+            }
+            
+            return .requestData(body)
         case .getStorageItems:
             return .requestPlain
         case .addStorageItems:
@@ -57,6 +70,8 @@ extension OrganizationBranchProvider: TargetType {
         switch self {
         case .createOrganizationBranch:
             return .init()
+        case .updateOrganizationBranch:
+            return .init()
         case .addContactPerson:
             return .init()
         case .getStorageItems:
@@ -66,6 +81,11 @@ extension OrganizationBranchProvider: TargetType {
         }
     }
     var headers: [String: String]? {
-        return RequestHeader.standard
+        switch self {
+        case .getStorageItems:
+            return RequestHeader.standard
+        default:
+            return RequestHeader.withAccessToken
+        }
     }
 }

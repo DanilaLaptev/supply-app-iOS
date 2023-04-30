@@ -15,9 +15,9 @@ class LoadingScreenViewModel: ObservableObject {
     }
     
     func checkUserAuth() {
-        let user = KeychainManager.getUser()
+        let user: KeychainUserModel? = KeychainManager.shared.get(.user)
         guard let email = user?.email,
-           let password = user?.password else {
+              let password = user?.password else {
             self.authManager.setData(nil)
             self.navigateToAuthWrapper = true
             return

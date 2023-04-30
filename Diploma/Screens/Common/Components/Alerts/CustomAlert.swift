@@ -36,7 +36,7 @@ struct CustomAlert: View {
                 .frame(width: 30, height: 30)
             
             Text(model.description)
-                .font(.customStandard)
+                .font(.customHint)
                 .frame(maxWidth: .infinity, alignment: .leading)
             
             Button {

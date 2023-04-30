@@ -28,9 +28,10 @@ final class LandmarkAnnotation: NSObject, MKAnnotation {
 struct MapView: UIViewRepresentable {
     @Binding var markers: [MapMarker]
     @Binding var selectedMarker: MapMarker?
-    
+    var showUserLocation = true
     func makeUIView(context: Context) -> MKMapView {
         let map = MKMapView()
+        map.showsUserLocation = showUserLocation
         map.delegate = context.coordinator
         return map
     }

@@ -2,31 +2,32 @@ import Foundation
 import SwiftUI
 import Keychain
 
-class KeychainConstants {
-    static let user = "user"
+enum KeychainConstants: String {
+    case user = "user"
+    case accessToken = "accessToken"
 }
 
 final class KeychainManager {
     static let shared = KeychainManager()
     private init() { }
     
-    static func saveUser(_ user: KeychainUserModel) -> Bool {
-        guard let jsonUser = try? JSONEncoder().encode(user),
-              let userJsonString = String(data: jsonUser, encoding: .utf8) else {
-            Debugger.shared.printLog("couldn't convert user to json")
+    func save<DataObject: Encodable>(_ data: DataObject, key: KeychainConstants) -> Bool {
+        guard let jsonData = try? JSONEncoder().encode(data),
+              let jsonDataString = String(data: jsonData, encoding: .utf8) else {
+            Debugger.shared.printLog("couldn't convert object of type \(DataObject.self) to json")
             return false
         }
         
-        return Keychain.save(userJsonString, forKey: KeychainConstants.user)
+        return Keychain.save(jsonDataString, forKey: key.rawValue)
     }
     
-    static func getUser() -> KeychainUserModel? {
-        guard let jsonUser = Keychain.load(KeychainConstants.user)?.data(using: .utf8),
-              let userModel = try? JSONDecoder().decode(KeychainUserModel.self, from: jsonUser) else {
-            Debugger.shared.printLog("couldn't decode user from json")
+    func get<DataObject: Decodable>(_ key: KeychainConstants) -> DataObject? {
+        guard let jsonData = Keychain.load(key.rawValue)?.data(using: .utf8),
+              let dataModel = try? JSONDecoder().decode(DataObject.self, from: jsonData) else {
+            Debugger.shared.printLog("couldn't decode object of type \(DataObject.self) from json")
             return nil
         }
         
-        return userModel
+        return dataModel
     }
 }

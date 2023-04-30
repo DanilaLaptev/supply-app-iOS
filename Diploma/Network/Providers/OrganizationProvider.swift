@@ -3,8 +3,8 @@ import Moya
 
 
 enum OrganizationProvider {
-    case updateOrganization
-    case getOrganizations
+    case updateOrganization(organization: OrganizationDto)
+    case getOrganizations(filter: OrganizationFilterDto)
     case getOrganization(id: Int)
 }
 
@@ -13,22 +13,20 @@ extension OrganizationProvider: TargetType {
     
     var path: String {
         switch self {
-        case .updateOrganization:
-            return ""
-        case .getOrganizations:
-            return ""
+        case .updateOrganization, .getOrganizations:
+            return "/"
         case .getOrganization(let id):
-            return ""
+            return "/\(id)"
         }
     }
     
     var method: Moya.Method {
         switch self {
         case .updateOrganization:
-            return .get
+            return .put
         case .getOrganizations:
-            return .get
-        case .getOrganization(let id):
+            return .post
+        case .getOrganization:
             return .get
         }
     }
@@ -36,11 +34,19 @@ extension OrganizationProvider: TargetType {
     // TODO: data for requests
     var task: Task {
         switch self {
-        case .updateOrganization:
-            return .requestPlain
-        case .getOrganizations:
-            return .requestPlain
-        case .getOrganization(let id):
+        case .updateOrganization(let organization):
+            guard let body = CoderManager.encode(organization) else {
+                return .requestPlain
+            }
+            
+            return .requestData(body)
+        case .getOrganizations(let filter):
+            guard let body = CoderManager.encode(filter) else {
+                return .requestPlain
+            }
+            
+            return .requestData(body)
+        case .getOrganization:
             return .requestPlain
         }
     }
@@ -52,11 +58,14 @@ extension OrganizationProvider: TargetType {
             return .init()
         case .getOrganizations:
             return .init()
-        case .getOrganization(let id):
+        case .getOrganization:
             return .init()
         }
     }
     var headers: [String: String]? {
-        return RequestHeader.standard
+        switch self {
+        default:
+            return RequestHeader.withAccessToken
+        }
     }
 }

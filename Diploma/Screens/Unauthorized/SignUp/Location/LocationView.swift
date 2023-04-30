@@ -8,16 +8,9 @@ struct LocationView: View {
     @StateObject private var tools = ViewManager.shared
     @StateObject private var alertManager = AlertManager.shared
     
-    @EnvironmentObject private var newOrganizationData: OrganizationCreationModel
+    @StateObject private var viewModel = LocationViewModel()
     
-    @State var landmarks: [MapMarker] = [
-        MapMarker(name: "Sydney Harbour Bridge", location: .init(latitude: -33.852222, longitude: 151.210556)),
-        MapMarker(name: "Brooklyn Bridge", location: .init(latitude: 40.706, longitude: -73.997)),
-        MapMarker(name: "Golden Gate Bridge", location: .init(latitude: 37.819722, longitude: -122.478611))
-    ]
-    
-    @State var selectedLandmark: MapMarker? = nil
-    @State private var counter = 0 // TODO: remove counter
+    @EnvironmentObject private var newOrganization: OrganizationCreationModel
     
     @Environment(\.presentationMode) private var presentation
 
@@ -26,8 +19,8 @@ struct LocationView: View {
             NavigationLink("", destination: SignInView(), tag: SignInView.tag, selection: $tagSelection)
             
             VStack(spacing: 0) {
-                MapView(markers: $landmarks,
-                        selectedMarker: $selectedLandmark)
+                MapView(markers: $viewModel.landmarks,
+                        selectedMarker: $viewModel.selectedLandmark)
                 
                 .frame(maxWidth: .infinity)
                 .frame(maxHeight: .infinity)
@@ -37,12 +30,10 @@ struct LocationView: View {
                     VStack(alignment: .leading, spacing: 8) {
                         Header(title: "Адрес")
                         
-                        CustomTextField(textFieldValue: .constant(""), placeholder: "Адрес организации")
+                        CustomTextField(textFieldValue: $viewModel.addressName, placeholder: "Адрес организации")
                             .padding(.bottom, 24)
                         
                         CustomButton(label: Text("Завершить регистрацию")) {
-                            counter += 1
-                            alertManager.showAlert(AlertModel(type: .error, description: "description \(counter)"))
                             tagSelection = SignInView.tag
                         }
                     }
@@ -51,10 +42,13 @@ struct LocationView: View {
         }
         .background(Color.customLightGray)
         .defaultScreenSettings()
+        .onAppear {
+            self.viewModel.setupOrganization(self.newOrganization)
+        }
     }
 }
 
-struct LocationScreen_Previews: PreviewProvider {
+struct LocationView_Previews: PreviewProvider {
     @State static var data = OrganizationCreationModel()
     
     static var previews: some View {

@@ -20,8 +20,9 @@ class SignInViewModel: ObservableObject {
     @Published var email = "test@sfedu.ru"
     @Published var password = "aasaaaa"
     
-    @Published var isValide = false
-    
+    @Published private var orgniazationEmailValidation = ""
+    @Published private var passwordValidation = ""
+
     private var isUserEmailValid: AnyPublisher<Bool, Never> {
         $email
             .map { email in
@@ -37,26 +38,58 @@ class SignInViewModel: ObservableObject {
             }.eraseToAnyPublisher()
     }
     
-    private var isSignInFormValidPublisher: AnyPublisher<Bool, Never> {
-        Publishers.CombineLatest(
-            isUserEmailValid,
-            isPasswordValidPublisher
-        )
-        .map { emailValid, passwordValid in
-            return emailValid && passwordValid
-        }.eraseToAnyPublisher()
+    private var isOrganizationEmailValid: AnyPublisher<String, Never> {
+        $email
+            .map { email in
+                let emailPredicate = NSPredicate(format:"SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
+                guard emailPredicate.evaluate(with: email) else {
+                    return FormError.wrongFormat(source: "Почта").localizedDescription
+                }
+                return ""
+            }.eraseToAnyPublisher()
+    }
+    
+    private var isPasswordValid: AnyPublisher<String, Never> {
+        $password
+            .map { password in
+                guard password.count > 5 else {
+                    return FormError.minimumCharactersNumber(source: "Пароль", 5).localizedDescription
+                }
+                return ""
+            }.eraseToAnyPublisher()
     }
     
     init() {
-        isSignInFormValidPublisher
+        isOrganizationEmailValid
             .receive(on: RunLoop.main)
-            .sink { [weak self] validationResult in
-                self?.isValide = true
-            }
-            .store(in: &cancellableSet)
+            .sink { [weak self] error in
+                self?.orgniazationEmailValidation = error
+            }.store(in: &cancellableSet)
+        
+        isPasswordValid
+            .receive(on: RunLoop.main)
+            .sink { [weak self] error in
+                self?.passwordValidation = error
+            }.store(in: &cancellableSet)
+    }
+    
+    private func validateForm() -> Bool {
+        guard orgniazationEmailValidation.isEmpty else {
+            AlertManager.shared.showAlert(.init(type: .error, description: orgniazationEmailValidation))
+            return false
+        }
+        
+        guard passwordValidation.isEmpty else {
+            AlertManager.shared.showAlert(.init(type: .error, description: passwordValidation))
+            return false
+        }
+        
+        return true
     }
     
     func signInOrganization() {
+        guard validateForm() else { return }
+        
         let requestBody = AuthorizationDto(role: role == "Сбыт" ? "WORKER" : "SUPPLIER", email: email, password: password)
         authProvider.request(.login(requestBody)) { [weak self] result in
             switch result {
