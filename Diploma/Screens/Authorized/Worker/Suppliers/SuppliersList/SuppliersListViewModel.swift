@@ -2,8 +2,11 @@ import Foundation
 import SwiftUI
 import Combine
 import MapKit
+import Moya
+
 
 class SuppliersListViewModel: ObservableObject {
+    private let organizationProvider = MoyaProvider<OrganizationProvider>(plugins: [NetworkLoggerPlugin()])
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published private var viewManager = ViewManager.shared
@@ -12,7 +15,7 @@ class SuppliersListViewModel: ObservableObject {
     
     @Published var selectedProductTypes: [ProductType]? = nil
     @Published var distanceFromMe: Double? = nil
-    @Published var suppliersList: [OrganizationModel] = []
+    @Published var suppliersList: [OrganizationBranchModel] = []
 
     @Published var selectedMarker: MapMarker? = nil
     @Published var markers: [MapMarker] = []
@@ -24,10 +27,10 @@ class SuppliersListViewModel: ObservableObject {
             .map { organizationModels -> [MapMarker] in
                 organizationModels.map { organization in
                     let coordinate = CLLocationCoordinate2D(
-                        latitude: organization.address.latitude,
-                        longitude: organization.address.longitude
+                        latitude: organization.branches.last?.address?.latitude ?? 0,
+                        longitude: organization.branches.last?.address?.longitude ?? 0
                     )
-                    return MapMarker(name: organization.title, location: coordinate)
+                    return MapMarker(name: organization.title ?? "None", location: coordinate)
                 }
             }.eraseToAnyPublisher()
     }
@@ -47,32 +50,26 @@ class SuppliersListViewModel: ObservableObject {
     }
     
     func fetchOrganizations() {
-        viewManager.isLoading = true
-        
-        // TODO: request to fetch items
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-
-            guard let self = self else { return }
-            self.viewManager.isLoading = false
-            
-            self.organizations = [
-                .test,
-                OrganizationModel(title: "Brooklyn Bridge",
-                                  organiztionImageUrl: "https://www.wanderlustchloe.com/wp-content/uploads/2021/07/Sydney-Harbour-Bridge-11.jpg",
-                                  address: Address(addressName: "Brooklyn Bridge",
-                                                   longitude: -74,
-                                                   latitude: 40),
-                                  storageItems: []
-                                 ),
-                OrganizationModel(title: "Golden Gate Bridge",
-                                  organiztionImageUrl: "https://www.wanderlustchloe.com/wp-content/uploads/2021/07/Sydney-Harbour-Bridge-11.jpg",
-                                  address: Address(addressName: "Golden Gate Bridge",
-                                                   longitude: -122,
-                                                   latitude: 37),
-                                  storageItems: []
-                                 ),
-                .empty
-            ]
+        let filter = FilterDto(page: 0, perPage: 20)
+        organizationProvider.request(.getOrganizations(filter: filter)) { [weak self] result in
+            switch result {
+            case .success(let response):
+                if (200...299).contains(response.statusCode) {
+                    guard let response = try? response.map(PaginatedDto<OrganizationDto>.self) else {
+                        AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
+                        return
+                    }
+                    self?.organizations = response.items.map { item -> OrganizationModel in
+                        OrganizationModel.from(item)
+                    }
+                } else {
+                    let errorDto = try? response.map(ErrorDto.self)
+                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
+                }
+            case .failure(let error):
+                Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
+                AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
+            }
         }
     }
 }

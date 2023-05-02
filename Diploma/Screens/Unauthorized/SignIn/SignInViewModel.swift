@@ -17,8 +17,8 @@ class SignInViewModel: ObservableObject {
     private let authProvider = MoyaProvider<AuthorizationProvider>(plugins: [NetworkLoggerPlugin()])
     
     @Published var role = OrganizationType.allCases.first!.rawValue
-    @Published var email = "test@sfedu.ru"
-    @Published var password = "aasaaaa"
+    @Published var email = "dlaptev@yandex.ru"
+    @Published var password = "QWERTY"
     
     @Published private var orgniazationEmailValidation = ""
     @Published private var passwordValidation = ""
@@ -90,7 +90,7 @@ class SignInViewModel: ObservableObject {
     func signInOrganization() {
         guard validateForm() else { return }
         
-        let requestBody = AuthorizationDto(role: role == "Сбыт" ? "WORKER" : "SUPPLIER", email: email, password: password)
+        let requestBody = AuthorizationDto(role: role == "Сбыт" ?.worker : .supplier, email: email, password: password)
         authProvider.request(.login(requestBody)) { [weak self] result in
             switch result {
             case .success(let response):
@@ -98,15 +98,17 @@ class SignInViewModel: ObservableObject {
                     let authorizationDto = try? response.map(AuthorizationDto.self)
                     
                     guard let authorizationDto,
-                          let userId = authorizationDto.id,
+                          let organizationId = authorizationDto.organizationId,
+                          let branchId = authorizationDto.mainBranchId,
                           let token = authorizationDto.token,
-                          let role: OrganizationType = authorizationDto.role == "worker" ? .worker : .supplier else {
+                          let role: OrganizationType = authorizationDto.role  else {
                         AlertManager.shared.showAlert(.init(type: .error, description: "Не удалось получить данные пользователя"))
                         self?.authManager.setData(nil)
                         return
                     }
                     
-                    let authData = AuthData(userId: userId, token: token, role: role)
+                    let authData = AuthData(organizationId: organizationId, branchId: branchId, token: token, role: role)
+                    KeychainManager.shared.save(token, key: .accessToken)
                     self?.authManager.setData(authData)
                     
                     if case .supplier = role {

@@ -15,32 +15,24 @@ class LoadingScreenViewModel: ObservableObject {
     }
     
     func checkUserAuth() {
-        let user: KeychainUserModel? = KeychainManager.shared.get(.user)
-        guard let email = user?.email,
-              let password = user?.password else {
-            self.authManager.setData(nil)
-            self.navigateToAuthWrapper = true
-            return
-        }
-        
-        let requestBody = AuthorizationDto(email: email, password: password)
-        
-        authProvider.request(.login(requestBody)) { [weak self] result in
+        authProvider.request(.check) { [weak self] result in
             switch result {
             case .success(let response):
                 if (200...299).contains(response.statusCode) {
                     let authorizationDto = try? response.map(AuthorizationDto.self)
                     
                     guard let authorizationDto,
-                          let userId = authorizationDto.id,
+                          let organizationId = authorizationDto.organizationId,
+                          let branchId = authorizationDto.mainBranchId,
                           let token = authorizationDto.token,
-                          let role: OrganizationType = authorizationDto.role == "worker" ? .worker : .supplier else {
+                          let role = authorizationDto.role else {
                         AlertManager.shared.showAlert(.init(type: .error, description: "Не удалось получить данные пользователя"))
                         self?.authManager.setData(nil)
+                        self?.navigateToAuthWrapper = true
                         return
                     }
                     
-                    let authData = AuthData(userId: userId, token: token, role: role)
+                    let authData = AuthData(organizationId: organizationId, branchId: branchId, token: token, role: role)
                     self?.authManager.setData(authData)
                     self?.navigateToAuthWrapper = true
                 } else {

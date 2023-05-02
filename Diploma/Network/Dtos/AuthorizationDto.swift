@@ -1,8 +1,9 @@
 import Foundation
 
 struct AuthorizationDto: Codable {
-    var id: Int?
-    var role: String?
+    var organizationId: Int?
+    var mainBranchId: Int?
+    var role: OrganizationType?
     var title: String?
     var email: String?
     var password: String?

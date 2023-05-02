@@ -73,7 +73,7 @@ struct OrderingView: View {
         .defaultScreenSettings()
         .onAppear {
             self.tools.bottomBarIsVisible = false
-            self.viewModel.setup(organizationModel: self.organizationModel, selectedItems: self.selectedItems)
+//            self.viewModel.setup(organizationModel: self.organizationModel, selectedItems: self.selectedItems)
         }
     }
 }
@@ -81,6 +81,5 @@ struct OrderingView: View {
 struct OrderingScreen_Previews: PreviewProvider {
     static var previews: some View {
         OrderingView(organizationModel: .empty, selectedItems: [])
-        OrderingView(organizationModel: .test, selectedItems: [])
     }
 }

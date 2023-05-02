@@ -17,8 +17,8 @@ struct SupplierTabBarWrapper: View {
                     SupplierOrdersView()
                 case SupplierStatisticsView.tag:
                     SupplierStatisticsView()
-                case ProfileScreen.tag:
-                    ProfileScreen()
+                case ProfileView.tag:
+                    ProfileView()
                 default:
                     Text("View doesnt exist")
                         .frame(maxHeight: .infinity)

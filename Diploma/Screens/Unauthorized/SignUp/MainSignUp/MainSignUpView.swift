@@ -22,7 +22,7 @@ struct MainSignUpView: View {
                         
                         DropDownList(
                             placeholder: "Тип организации",
-                            items: OrganizationType.allCases.map { $0.rawValue } ,
+                            items: OrganizationType.allCases.map { $0.name } ,
                             selected: $viewModel.role
                         )
                         CustomTextField(textFieldValue: $viewModel.organizationName, placeholder: "Название организации")

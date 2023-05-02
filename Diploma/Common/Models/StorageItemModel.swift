@@ -16,5 +16,19 @@ struct StorageItemModel: Identifiable {
         quantity: 0,
         description: "none"
     )
+    
+    static func from(_ dto: StorageItemDto) -> StorageItemModel {
+        StorageItemModel(
+            product: ProductModel(
+                name: dto.product.name ?? "empty",
+                isApproved: dto.product.approved ?? false,
+                type: dto.product.productType ?? .other
+            ),
+            imageUrl: dto.product.image,
+            price: dto.price ?? 0,
+            quantity: dto.quantity ?? 0,
+            description: dto.description ?? "empty"
+        )
+    }
 }
 

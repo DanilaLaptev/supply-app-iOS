@@ -17,7 +17,7 @@ struct SupplierView: View {
         VStack(spacing: 0) {
             NavigationLink("", destination: OrderingView(organizationModel: organizationModel, selectedItems: viewModel.selectedStorageItems), tag: OrderingView.tag, selection: $tagSelection)
             
-            Header(title: organizationModel.title)
+            Header(title: organizationModel.title ?? "none")
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
             
@@ -25,7 +25,7 @@ struct SupplierView: View {
                 VStack(alignment: .leading) {
                     ExtendableSection {
                         VStack {
-                            SupplierAdditionalInfoRow(icon: .customMarker, hintText: "адрес склада", value: organizationModel.address.addressName ?? "-")
+                            SupplierAdditionalInfoRow(icon: .customMarker, hintText: "адрес склада", value: organizationModel.branches.last?.address?.addressName ?? "-")
                             SupplierAdditionalInfoRow(icon: .customRoute, hintText: "расстояние до вас", value: "3 км")
                             SupplierAdditionalInfoRow(icon: .customCall, hintText: "контактный номер", value: "+7 (999) 999-99-99")
                         }
@@ -38,7 +38,7 @@ struct SupplierView: View {
                         .font(.customTitle)
                         .padding(.horizontal, 16)
                     
-                    TagsGroup<ProductType>()
+                    TagsGroup<ProductType>(selectedTags: .constant([]))
                         .padding(.top, 8)
                         .padding(.bottom, 16)
                     
@@ -82,7 +82,7 @@ struct SupplierView: View {
         .defaultScreenSettings()
         .onAppear {
             self.tools.bottomBarIsVisible = false
-            viewModel.setup(organizationModel: self.organizationModel)
+//            viewModel.setup(organizationModel: self.organizationModel)
         }
     }
 }
@@ -90,7 +90,7 @@ struct SupplierView: View {
 struct SupplierScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SupplierView(organizationModel: .test)
+            SupplierView(organizationModel: .empty)
         }
     }
 }

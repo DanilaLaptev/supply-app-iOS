@@ -6,7 +6,7 @@ class NavigationTabs {
         CustomTab(icon: .customBox, name: "Поставки", screenTag: SuppliersListView.tag),
         CustomTab(icon: .customRoute, name: "Заказы", screenTag: WorkerSupplyListScreen.tag),
         CustomTab(icon: .customChart, name: "Учёт", screenTag: StatisticsScreen.tag),
-        CustomTab(icon: .customUser, name: "Профиль", screenTag: ProfileScreen.tag)
+        CustomTab(icon: .customUser, name: "Профиль", screenTag: ProfileView.tag)
     ]
 
     public static let supplierTabs = [
@@ -14,6 +14,6 @@ class NavigationTabs {
         CustomTab(icon: .customBox, name: "Поставки", screenTag: ClientsListView.tag),
         CustomTab(icon: .customRoute, name: "Заказы", screenTag: SupplierOrdersView.tag),
         CustomTab(icon: .customChart, name: "Учёт", screenTag: SupplierStatisticsView.tag),
-        CustomTab(icon: .customUser, name: "Профиль", screenTag: ProfileScreen.tag)
+        CustomTab(icon: .customUser, name: "Профиль", screenTag: ProfileView.tag)
     ]
 }

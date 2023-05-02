@@ -1,6 +1,15 @@
 import Foundation
 
-enum OrganizationType: String, CaseIterable {
-    case worker = "Сбыт"
-    case supplier = "Поставки"
+enum OrganizationType: String, Codable, CaseIterable {
+    case worker = "WORKER"
+    case supplier = "SUPPLIER"
+    
+    var name: String {
+        switch self {
+        case .worker:
+            return "Сбыт"
+        case .supplier:
+            return "Поставки"
+        }
+    }
 }

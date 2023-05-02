@@ -1,19 +1,42 @@
 import Foundation
 import SwiftUI
 
-enum ProductType: String, TagsGroupProtocol {
-    case meat = "Мясо"
-    case fish = "Рыба"
-    case milk = "Молочные продукты"
-    case bakery = "Выпечка"
-    case cereals = "Крупы"
-    case vegetables = "Овощи"
-    case fruits = "Фрукты"
-    case berries = "Ягоды"
-    case drinks = "Напитки"
-    case other = "Другое"
+enum ProductType: String, Codable, TagsGroupProtocol {
+    case meat = "MEAT"
+    case fish = "FISH"
+    case milk = "MILK"
+    case bakery = "BAKERY"
+    case cereals = "CEREALS"
+    case vegetables = "VEGETABLES"
+    case fruits = "FRUITS"
+    case berries = "BERRIES"
+    case drinks = "DRINKS"
+    case other = "OTHER"
     
-    var name: String { self.rawValue }
+    var name: String {
+        switch self {
+        case .meat:
+            return "Мясо"
+        case .fish:
+            return "Рыба"
+        case .milk:
+            return "Молочные продукты"
+        case .bakery:
+            return "Выпечка"
+        case .cereals:
+            return "Крупы"
+        case .vegetables:
+            return "Овощи"
+        case .fruits:
+            return "Фрукты"
+        case .berries:
+            return "Ягоды"
+        case .drinks:
+            return "Напитки"
+        case .other:
+            return "Другое"
+        }
+    }
     
     var icon: Image {
         switch self {

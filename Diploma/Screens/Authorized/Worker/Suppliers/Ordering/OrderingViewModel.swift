@@ -5,7 +5,7 @@ import Combine
 class OrderingViewModel: ObservableObject {
     private var cancellableSet = Set<AnyCancellable>()
     
-    var organizationModel: OrganizationModel?
+    var organizationModel: OrganizationBranchModel?
     var selectedItems: [StorageItemWrapper]?
     @Published var date = Date()
     
@@ -21,7 +21,7 @@ class OrderingViewModel: ObservableObject {
             .reduce(0, +) ?? 0
     }
     
-    func setup(organizationModel: OrganizationModel, selectedItems: [StorageItemWrapper]) {
+    func setup(organizationModel: OrganizationBranchModel, selectedItems: [StorageItemWrapper]) {
         self.organizationModel = organizationModel
         self.selectedItems = selectedItems
     }

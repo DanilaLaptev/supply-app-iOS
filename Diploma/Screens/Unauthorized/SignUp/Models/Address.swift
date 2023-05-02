@@ -1,7 +1,7 @@
 import Foundation
 
 struct Address {
-    var addressName: String? = nil
-    let longitude: Double
-    let latitude: Double
+    var addressName: String?
+    var longitude: Double?
+    var latitude: Double?
 }

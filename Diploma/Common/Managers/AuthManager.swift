@@ -1,14 +1,15 @@
 import Foundation
 
 struct AuthData {
-    let userId: Int
-    let token: String
-    let role: OrganizationType
+    var organizationId: Int
+    var branchId: Int?
+    var token: String
+    var role: OrganizationType
 }
 
 final class AuthManager: ObservableObject {
     static let shared = AuthManager()
-    private init() { }
+    private init() {}
     
     @Published private(set) var authData: AuthData? = nil
     
@@ -20,3 +21,4 @@ final class AuthManager: ObservableObject {
         authData = nil
     }
 }
+ 

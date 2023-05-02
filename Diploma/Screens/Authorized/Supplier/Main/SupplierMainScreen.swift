@@ -15,7 +15,7 @@ struct SupplierMainScreen: View {
             NavigationLink("", destination: EditProductScreen(), tag: EditProductScreen.tag, selection: $tagSelection)
             NavigationLink("", destination: ProductScreen(model: .empty), tag: ProductScreen.tag, selection: $tagSelection)
             
-            TagsGroup<ProductType>()
+            TagsGroup<ProductType>(selectedTags: .constant([]))
             .padding(.top, 8)
             .padding(.bottom, 16)
             ScrollView(.vertical, showsIndicators: false) {

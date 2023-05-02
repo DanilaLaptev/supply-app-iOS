@@ -5,7 +5,7 @@ struct OrganizationCard: View {
     
     var body: some View {
         HStack(alignment: .top, spacing: 8) {
-            AsyncImage(imageUrl: URL(string: organizationModel.organiztionImageUrl)) {
+            AsyncImage(imageUrl: URL(string: organizationModel.image ?? "none")) {
                 Color.customDarkGray
             }
                 .aspectRatio(1 / 1, contentMode: .fill)
@@ -13,7 +13,7 @@ struct OrganizationCard: View {
                 .cornerRadius(8)
 
             VStack(alignment: .leading, spacing: 4) {
-                Text(organizationModel.title)
+                Text(organizationModel.title ?? "none")
                     .font(.customSubtitle)
                     .foregroundColor(.customBlack)
                 
@@ -21,7 +21,7 @@ struct OrganizationCard: View {
                     Image.customMarker
                         .frame(width: 16, height: 16)
                         .foregroundColor(.customOrange)
-                    Text(organizationModel.address.addressName ?? "－")
+                    Text(organizationModel.branches.last?.address?.addressName ?? "－")
                         .font(.customHint)
                         .foregroundColor(.customDarkGray)
                 }

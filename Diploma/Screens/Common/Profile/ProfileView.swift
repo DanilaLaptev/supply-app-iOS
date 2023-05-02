@@ -1,8 +1,9 @@
 import SwiftUI
 
-struct ProfileScreen: View {
+struct ProfileView: View {
     public static let tag = "ProfileScreen"
     @StateObject private var authManager = AuthManager.shared
+    @StateObject private var viewModel = ProfileViewModel()
     
     var body: some View {
         VStack(alignment: .center) {
@@ -56,6 +57,6 @@ struct ProfileScreen: View {
 
 struct ProfileScreen_Previews: PreviewProvider {
     static var previews: some View {
-        ProfileScreen()
+        ProfileView()
     }
 }

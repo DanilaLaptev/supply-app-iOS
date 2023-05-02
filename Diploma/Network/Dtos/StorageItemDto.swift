@@ -6,4 +6,5 @@ struct StorageItemDto: Codable {
     var description: String?
     var quantity: Int?
     var isHidden: Bool
+    var product: ProductDto
 }

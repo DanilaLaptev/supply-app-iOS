@@ -3,6 +3,7 @@ import Moya
 
 
 enum AuthorizationProvider {
+    case check
     case login(_ authDto: AuthorizationDto)
     case register(_ authDto: AuthorizationDto)
 }
@@ -12,6 +13,8 @@ extension AuthorizationProvider: TargetType {
     
     var path: String {
         switch self {
+        case .check:
+            return "/check"
         case .login:
             return "/login"
         case .register:
@@ -21,6 +24,8 @@ extension AuthorizationProvider: TargetType {
     
     var method: Moya.Method {
         switch self {
+        case .check:
+            return .get
         case .login, .register:
             return .post
         }
@@ -29,6 +34,8 @@ extension AuthorizationProvider: TargetType {
     // TODO: data for requests
     var task: Task {
         switch self {
+        case .check:
+            return .requestPlain
         case .login(let authDto), .register(let authDto):
             guard let body = CoderManager.encode(authDto) else {
                 return .requestPlain
@@ -41,6 +48,8 @@ extension AuthorizationProvider: TargetType {
     // TODO: real samples
     var sampleData: Data {
         switch self {
+        case .check:
+            return .init()
         case .login:
             return .init()
         case .register:
@@ -49,6 +58,8 @@ extension AuthorizationProvider: TargetType {
     }
     var headers: [String: String]? {
         switch self {
+        case .check:
+            return RequestHeader.withAccessToken
         default:
             return RequestHeader.standard
         }

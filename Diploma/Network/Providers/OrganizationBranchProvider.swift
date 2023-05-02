@@ -58,10 +58,18 @@ extension OrganizationBranchProvider: TargetType {
             }
             
             return .requestData(body)
-        case .getStorageItems:
-            return .requestPlain
-        case .addStorageItems:
-            return .requestPlain
+        case .getStorageItems(_, let filter):
+            guard let body = CoderManager.encode(filter) else {
+                return .requestPlain
+            }
+            
+            return .requestData(body)
+        case .addStorageItems(_, let storageItems):
+            guard let body = CoderManager.encode(storageItems) else {
+                return .requestPlain
+            }
+            
+            return .requestData(body)
         }
     }
     
@@ -81,11 +89,6 @@ extension OrganizationBranchProvider: TargetType {
         }
     }
     var headers: [String: String]? {
-        switch self {
-        case .getStorageItems:
-            return RequestHeader.standard
-        default:
-            return RequestHeader.withAccessToken
-        }
+        return RequestHeader.withAccessToken
     }
 }

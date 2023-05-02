@@ -5,6 +5,8 @@ import Keychain
 enum KeychainConstants: String {
     case user = "user"
     case accessToken = "accessToken"
+    case organizationId = "organizationId"
+    case branchId = "branchId"
 }
 
 final class KeychainManager {

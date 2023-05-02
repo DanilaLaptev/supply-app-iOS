@@ -4,7 +4,7 @@ import Moya
 
 enum OrganizationProvider {
     case updateOrganization(organization: OrganizationDto)
-    case getOrganizations(filter: OrganizationFilterDto)
+    case getOrganizations(filter: FilterDto)
     case getOrganization(id: Int)
 }
 

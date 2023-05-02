@@ -5,7 +5,7 @@ import Combine
 class SupplierViewModel: ObservableObject {
     private var cancellableSet = Set<AnyCancellable>()
     
-    var organizationModel: OrganizationModel?
+    var organizationModel: OrganizationBranchModel?
     
     @Published var storageItems: [StorageItemWrapper] = []
     @Published var selectedStorageItems: [StorageItemWrapper] = []
@@ -69,8 +69,8 @@ class SupplierViewModel: ObservableObject {
             }.store(in: &cancellableSet)
     }
  
-    func setup(organizationModel: OrganizationModel?) {
+    func setup(organizationModel: OrganizationBranchModel?) {
         self.organizationModel = organizationModel
-        self.storageItems = organizationModel?.storageItems.map { StorageItemWrapper(item: $0, selectedAmmount: 0) } ?? []
+//        self.storageItems = organizationModel?.storageItems.map { StorageItemWrapper(item: $0, selectedAmmount: 0) } ?? []
     }
 }

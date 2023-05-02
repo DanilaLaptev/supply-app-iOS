@@ -120,7 +120,7 @@ class MainSignUpViewModel: ObservableObject {
         guard validateForm() else { return }
         
         let requestBody = AuthorizationDto(
-            role: role == "Сбыт" ? "WORKER" : "SUPPLIER",
+            role: role == "Сбыт" ? .worker : .supplier,
             title: organizationName,
             email: email,
             password: password
@@ -135,7 +135,7 @@ class MainSignUpViewModel: ObservableObject {
                         return
                     }
                     KeychainManager.shared.save(response.token, key: .accessToken)
-                    self?.organization.organizationId = response.id
+                    self?.organization.organizationId = response.organizationId
                     self?.navigateToContactView.toggle()
                 } else {
                     let errorDto = try? response.map(ErrorDto.self)

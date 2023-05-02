@@ -18,7 +18,7 @@ struct WorkerSupplyListScreen: View {
                     .padding(.horizontal, 16)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    TagsGroup<SupplyProcessingStatus>()
+                    TagsGroup<SupplyProcessingStatus>(selectedTags: .constant([]))
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
                     .padding(.bottom, 16)

@@ -1,9 +1,11 @@
 import Foundation
 import SwiftUI
 import Combine
+import Moya
 
 
 class WorkerMainViewModel: ObservableObject {
+    private let organizationBranchProvider = MoyaProvider<OrganizationBranchProvider>(plugins: [NetworkLoggerPlugin()])
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published private var viewManager = ViewManager.shared
@@ -12,15 +14,17 @@ class WorkerMainViewModel: ObservableObject {
     @Published var storageItems: [StorageItemWrapper] = []
     @Published var selectedStorageItems: [StorageItemModel] = []
     
+    @Published var selectedProductTypes: [ProductType] = []
+    
     @Published var disableSupplyButton = false
     @Published var totalPrice: Double = 0
-
+    
     @Published var editStorageItemActive = false
     @Published var editedStorageItem: StorageItemModel? = nil
-
-    @Published var supply: SupplyModel? = nil
     
-    @Published var enableSaveSupplyButton = false
+    
+    private var page = 0
+    private let perPage = 10
     
     private var selectedProductsPublisher: AnyPublisher<[StorageItemWrapper], Never> {
         $storageItems
@@ -39,8 +43,6 @@ class WorkerMainViewModel: ObservableObject {
     }
     
     init() {
-        fetchStorageItems()
-        
         selectedProductsPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] selectedProducts in
@@ -52,57 +54,55 @@ class WorkerMainViewModel: ObservableObject {
             .sink { [weak self] totalPrice in
                 self?.totalPrice = totalPrice
             }.store(in: &cancellableSet)
+        
+        $selectedProductTypes
+            .receive(on: RunLoop.main)
+            .debounce(for: .seconds(2), scheduler: DispatchQueue.main)
+            .removeDuplicates()
+            .sink { [weak self] selected in
+                self?.page = 0
+                self?.storageItems = []
+                self?.selectedStorageItems = []
+                self?.fetchStorageItems()
+            }.store(in: &cancellableSet)
     }
     
     func fetchStorageItems() {
-        ViewManager.shared.isLoading = true
+        guard page != -1 else {
+            return
+        }
         
-        // TODO: request to fetch items
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-
-            guard let self = self else { return }
-            self.viewManager.isLoading = false
-            
-            self.storageItems = [
-                StorageItemModel(product: ProductModel(
-                    name: "Coca cola 1.0",
-                    isApproved: true,
-                    type: .drinks
-                ),
-                                 imageUrl: "https://mundolatas.com/wp-content/uploads/coca-cola-1080x675.jpg",
-                                 price: 42,
-                                 quantity: 5,
-                                 description: "Газированный напиток"),
-                StorageItemModel(product: ProductModel(
-                    name: "Fanta 0.5",
-                    isApproved: true,
-                    type: .drinks
-                ),
-                                 imageUrl: "https://i.ytimg.com/vi/ZZWOT7HLA48/maxresdefault.jpg",
-                                 price: 45,
-                                 quantity: 32,
-                                 description: "Газированный напиток"),
-                StorageItemModel(product: ProductModel(
-                    name: "Булочка с маком",
-                    isApproved: true,
-                    type: .bakery
-                ),
-                                 imageUrl: "https://british-bakery.ru/upload/iblock/0ad/0add711ccc5a2523929b5c1e26f6a49a.jpg",
-                                 price: 25,
-                                 quantity: 20,
-                                 description: "Выпечка"),
-                StorageItemModel(product: ProductModel(
-                    name: "Сдобная булочка",
-                    isApproved: true,
-                    type: .bakery
-                ),
-                                 imageUrl: "https://static.1000.menu/img/content-v2/8a/8c/43270/bulochki-s-saxarom-iz-sdobnogo-drojjevogo-testa_1582100715_16_max.jpg",
-                                 price: 25,
-                                 quantity: 20,
-                                 description: "Выпечка"),
-                
-            ]
-                .map { StorageItemWrapper(item: $0, selectedAmmount: 0) }
+        let productTypes = selectedProductTypes.isEmpty ? nil : selectedProductTypes.map { $0.rawValue }
+        
+        let filter = FilterDto(
+            productType: productTypes,
+            page: page,
+            perPage: perPage
+        )
+        organizationBranchProvider.request(.getStorageItems(branchId: authManager.authData?.branchId ?? -1, filter: filter)) { [weak self] result in
+            switch result {
+            case .success(let response):
+                if (200...299).contains(response.statusCode) {
+                    guard let self,
+                          let response = try? response.map(PaginatedDto<StorageItemDto>.self),
+                          let total = response.total else {
+                        AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
+                        return
+                    }
+                    let receivedStorageItems =  response.items.map { item -> StorageItemWrapper in
+                        StorageItemWrapper(item: StorageItemModel.from(item), selectedAmmount: 0)
+                    }
+                    
+                    self.storageItems += receivedStorageItems
+                    self.page = total > self.storageItems.count ? self.page + 1 : -1
+                } else {
+                    let errorDto = try? response.map(ErrorDto.self)
+                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
+                }
+            case .failure(let error):
+                Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
+                AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
+            }
         }
     }
     
@@ -116,10 +116,9 @@ class WorkerMainViewModel: ObservableObject {
         
         // TODO: request to hide item
         DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-
+            
             guard let self = self else { return }
             self.viewManager.isLoading = false
-
             
             self.fetchStorageItems()
         }

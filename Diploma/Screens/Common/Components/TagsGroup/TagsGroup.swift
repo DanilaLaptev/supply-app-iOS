@@ -1,9 +1,15 @@
 import SwiftUI
 
+struct GroupTag<TagEnum: TagsGroupProtocol>: Identifiable {
+    let id = UUID()
+    let type: TagEnum
+    var isSelected: Bool
+}
+
 struct TagsGroup<TagEnum: TagsGroupProtocol>: View {
     var selectAllOption: Bool = true
-    
-    @ObservedObject private var viewModel = TagsGroupViewModel<TagEnum>()
+    @Binding var selectedTags: [TagEnum]
+    @State private var tags = TagEnum.allCases.map { GroupTag(type: $0, isSelected: false) }
     
     var body: some View {
         ScrollView(.horizontal, showsIndicators: false) {
@@ -11,29 +17,45 @@ struct TagsGroup<TagEnum: TagsGroupProtocol>: View {
                 if selectAllOption {
                     SmallTag(icon: .customBox,
                              name: "Все",
-                             isSelected: viewModel.noTagsSelected)
+                             isSelected: selectedTags.isEmpty)
                     .onTapGesture {
-                        viewModel.clearFilters()
+                        self.clearFilters()
+                        selectedTags = []
                     }
                 }
 
-                ForEach(viewModel.tags) { tag in
+                ForEach(tags) { tag in
                     SmallTag(icon: tag.type.icon,
                              name: tag.type.name,
                              isSelected: tag.isSelected )
                         .onTapGesture {
-                            viewModel.toggleTag(tag.type)
+                            self.toggleTag(tag.type)
+                            selectedTags = self.tags.filter { $0.isSelected }.map { $0.type }
                         }
                 }
             }
             .padding(.horizontal, 16)
         }
     }
+    
+    func toggleTag(_ type: TagEnum) {
+        guard let index = tags.firstIndex(where: { $0.type == type }) else { return }
+        
+        var tempTags = tags
+        tempTags[index].isSelected.toggle()
+        self.tags = tempTags
+    }
+    
+    func clearFilters() {
+        for index in 0..<tags.count {
+            tags[index].isSelected = false
+        }
+    }
 }
 
 struct TagsGroup_Previews: PreviewProvider {
     static var previews: some View {
-        TagsGroup<ProductType>()
-        TagsGroup<ProductType>()
+        TagsGroup<ProductType>(selectedTags: .constant([]))
+        TagsGroup<ProductType>(selectedTags: .constant([]))
     }
 }

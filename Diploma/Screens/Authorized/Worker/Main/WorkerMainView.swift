@@ -15,24 +15,31 @@ struct WorkerMainView: View {
                            isActive: $viewModel.editStorageItemActive)
             
             VStack {
-                TagsGroup<ProductType>()
+                TagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
                     .padding(.top, 8)
                     .padding(.bottom, 16)
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {
-                        ForEach(viewModel.storageItems) { wrappedItem in
+                        ForEach($viewModel.storageItems) { $wrappedItem in
                             NavigationLink {
                                 ProductScreen(model: wrappedItem.item)
                             } label:  {
-                                DynamicProductCard(model: wrappedItem.item,
-                                                   maximumQuantity: wrappedItem.item.quantity,
-                                                   extraOptions: [
-                                                    ExtraOption(icon: .customPencil, action: {
-                                                        viewModel.editProduct(wrappedItem.item)
-                                                    })
-                                                   ],
-                                                   selectedNumber: $viewModel.storageItems[viewModel.storageItems.firstIndex(of: wrappedItem)!].selectedAmmount)
+                                DynamicProductCard(
+                                    model: wrappedItem.item,
+                                    maximumQuantity: wrappedItem.item.quantity,
+                                    extraOptions: [
+                                        ExtraOption(icon: .customPencil) {
+                                            viewModel.editProduct(wrappedItem.item)
+                                        }
+                                    ],
+                                    selectedNumber: $wrappedItem.selectedAmmount
+                                )
+                                .onAppear {
+                                    if viewModel.storageItems.last == wrappedItem {
+                                        viewModel.fetchStorageItems()
+                                    }
+                                }
                             }
                         }
                     }
