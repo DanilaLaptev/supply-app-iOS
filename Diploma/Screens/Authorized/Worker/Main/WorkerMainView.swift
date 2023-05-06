@@ -15,7 +15,7 @@ struct WorkerMainView: View {
                            isActive: $viewModel.editStorageItemActive)
             
             VStack {
-                TagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
+                SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
                     .padding(.top, 8)
                     .padding(.bottom, 16)
                 

@@ -69,3 +69,14 @@ extension OrganizationProvider: TargetType {
         }
     }
 }
+
+extension OrganizationProvider: MoyaCacheable {
+  var cachePolicy: CachePolicy {
+    switch self {
+    case .getOrganization, .getOrganizations:
+      return .returnCacheDataElseLoad
+    default:
+      return .reloadIgnoringLocalAndRemoteCacheData
+    }
+  }
+}

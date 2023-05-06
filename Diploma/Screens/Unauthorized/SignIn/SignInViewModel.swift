@@ -16,9 +16,8 @@ class SignInViewModel: ObservableObject {
 
     private let authProvider = MoyaProvider<AuthorizationProvider>(plugins: [NetworkLoggerPlugin()])
     
-    @Published var role = OrganizationType.allCases.first!.rawValue
-    @Published var email = "dlaptev@yandex.ru"
-    @Published var password = "QWERTY"
+    @Published var email = "worker@email.com"
+    @Published var password = "123123"
     
     @Published private var orgniazationEmailValidation = ""
     @Published private var passwordValidation = ""
@@ -90,7 +89,7 @@ class SignInViewModel: ObservableObject {
     func signInOrganization() {
         guard validateForm() else { return }
         
-        let requestBody = AuthorizationDto(role: role == "Сбыт" ?.worker : .supplier, email: email, password: password)
+        let requestBody = AuthorizationDto(email: email, password: password)
         authProvider.request(.login(requestBody)) { [weak self] result in
             switch result {
             case .success(let response):

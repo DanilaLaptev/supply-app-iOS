@@ -45,7 +45,7 @@ struct ClientsListView: View {
                 }
                 .frame(maxHeight: .infinity)
                 .sheet(isPresented: $showFilters) {
-                    SuppliersListFilterScreen()
+                    SuppliersListFilterScreen(selectedProductTypes: .constant([]))
                         .environmentObject(viewModel)
                 }
             }

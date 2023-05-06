@@ -27,7 +27,7 @@ struct SupplierView: View {
                         VStack {
                             SupplierAdditionalInfoRow(icon: .customMarker, hintText: "адрес склада", value: organizationModel.branches.last?.address?.addressName ?? "-")
                             SupplierAdditionalInfoRow(icon: .customRoute, hintText: "расстояние до вас", value: "3 км")
-                            SupplierAdditionalInfoRow(icon: .customCall, hintText: "контактный номер", value: "+7 (999) 999-99-99")
+                            SupplierAdditionalInfoRow(icon: .customCall, hintText: "контактный номер", value: organizationModel.branches.last?.contacts.last?.phone ?? "-")
                         }
                     } headerContent: {
                         Text("Подробная информация").font(.customSubtitle)
@@ -38,16 +38,21 @@ struct SupplierView: View {
                         .font(.customTitle)
                         .padding(.horizontal, 16)
                     
-                    TagsGroup<ProductType>(selectedTags: .constant([]))
+                    SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
                         .padding(.top, 8)
                         .padding(.bottom, 16)
                     
                     VStack {
-                        ForEach(viewModel.storageItems) { wrappedItem in
+                        ForEach($viewModel.storageItems) { $wrappedItem in
                             NavigationLink {
                                 ProductScreen(model: wrappedItem.item)
                             } label: {
-                                DynamicProductCard(model: wrappedItem.item, extraOptions: [], selectedNumber: $viewModel.storageItems[viewModel.storageItems.firstIndex(of: wrappedItem)!].selectedAmmount)
+                                DynamicProductCard(model: wrappedItem.item, extraOptions: [], selectedNumber: $wrappedItem.selectedAmmount)
+                                    .onAppear {
+                                        if viewModel.storageItems.last?.id == wrappedItem.item.id {
+                                            viewModel.fetchStorageItems()
+                                        }
+                                    }
                             }
                         }
                     }
@@ -57,7 +62,7 @@ struct SupplierView: View {
             }
             
             BottomSheet {
-                VStack(spacing: 8) {
+                VStack(alignment: .center, spacing: 8) {
                     HStack {
                         VStack(alignment: .leading, spacing: 4) {
                             Text("\(viewModel.selectedItemsNumber) продуктов").font(.customHint)
@@ -70,10 +75,13 @@ struct SupplierView: View {
                         .frame(width: 48)
                         .disabled(viewModel.disableSupplyButton)
                     }
-                    Text("Выберите хотя бы один продукт, чтобы оформить заказ")
-                        .foregroundColor(.customDarkGray)
-                        .font(.customHint)
-                        .opacity(viewModel.disableSupplyButton ? 1 : 0)
+                    
+                    if viewModel.disableSupplyButton {
+                        Text("Выберите продукты, чтобы оформить заказ")
+                            .foregroundColor(.customDarkGray)
+                            .font(.customHint)
+                            .multilineTextAlignment(.center)
+                    }
                 }
             }
         }
@@ -82,7 +90,7 @@ struct SupplierView: View {
         .defaultScreenSettings()
         .onAppear {
             self.tools.bottomBarIsVisible = false
-//            viewModel.setup(organizationModel: self.organizationModel)
+            viewModel.setup(organizationModel: self.organizationModel)
         }
     }
 }

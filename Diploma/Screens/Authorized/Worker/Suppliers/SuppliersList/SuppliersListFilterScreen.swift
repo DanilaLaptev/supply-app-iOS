@@ -3,6 +3,13 @@ import SwiftUI
 struct SuppliersListFilterScreen: View {
     @EnvironmentObject private var viewModel: SuppliersListViewModel
     
+    @Binding var selectedProductTypes: [ProductType]
+    
+    private var selectedTypesString: String {
+        if selectedProductTypes.isEmpty { return "Все" }
+        return selectedProductTypes.map { $0.name }.joined(separator: ", ")
+    }
+    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(spacing: 8) {
@@ -21,19 +28,13 @@ struct SuppliersListFilterScreen: View {
                     VStack(spacing: 16) {
                         CustomTextField(textFieldValue: .constant(""), icon: .customSearch, isDividerVisible: true, placeholder: "Тип продукта")
                         
-                        ScrollView(.horizontal) {
-                            HStack(spacing: 8) {
-                                ForEach((1...24), id: \.self) { _ in
-                                    BigTag(icon: .customBox, name: "Выпечка")
-                                }
-                            }
-                        }
+                        BigTagsGroup(selectedTags: $selectedProductTypes)
                     }
                     .padding(.top, 8)
                 } headerContent: {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Доступная продукция").font(.customSubtitle)
-                        Text("Напитки, выпечка").font(.customHint)
+                        Text(selectedTypesString).font(.customHint)
                     }
                 }
             }
@@ -49,7 +50,7 @@ struct SuppliersListFilterScreen: View {
 struct SuppliersListFilterScreen_Previews: PreviewProvider {
     @State static var vm = SupplierViewModel()
     static var previews: some View {
-        SuppliersListFilterScreen()
+        SuppliersListFilterScreen(selectedProductTypes: .constant([]))
             .environmentObject(vm)
     }
 }

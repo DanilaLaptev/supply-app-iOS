@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct OrderingView: View {
+    @Environment(\.presentationMode) var presentationMode
+    
     public static let tag = "OrderingView"
     
     @StateObject private var tools = ViewManager.shared
@@ -73,7 +75,7 @@ struct OrderingView: View {
         .defaultScreenSettings()
         .onAppear {
             self.tools.bottomBarIsVisible = false
-//            self.viewModel.setup(organizationModel: self.organizationModel, selectedItems: self.selectedItems)
+            self.viewModel.setup(organizationModel: self.organizationModel, selectedItems: self.selectedItems)
         }
     }
 }

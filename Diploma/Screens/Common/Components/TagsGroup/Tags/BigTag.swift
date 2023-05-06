@@ -3,7 +3,7 @@ import SwiftUI
 struct BigTag: View {
     let icon: Image
     let name: String
-    @State var isSelected = false
+    var isSelected = false
     
     var body: some View {
         CustomTag(isSelected: isSelected) {

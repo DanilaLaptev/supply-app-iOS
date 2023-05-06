@@ -9,6 +9,15 @@ struct OrganizationModel: Identifiable {
     
     var branches: [OrganizationBranchModel]
     
+    var mainBranch: OrganizationBranchModel? {
+        branches.last
+    }
+    
+    
+    var mainContact: ContactPersonModel? {
+        mainBranch?.contacts.last
+    }
+    
     static func from(_ dto: OrganizationDto) -> OrganizationModel {
         OrganizationModel(
             id: dto.id,
@@ -16,7 +25,8 @@ struct OrganizationModel: Identifiable {
             image: dto.image,
             organizationType: dto.role,
             approved: dto.approved,
-            branches: [])
+            branches: dto.branches.map { OrganizationBranchModel.from($0) }
+        )
     }
     
     static var empty = OrganizationModel(

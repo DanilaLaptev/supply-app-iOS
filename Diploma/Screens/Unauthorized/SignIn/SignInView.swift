@@ -33,11 +33,6 @@ struct SignInView: View {
                         Text("Вход в аккаунт").font(.customTitle)
                             .padding(.bottom, 8)
                         
-                        DropDownList(
-                            placeholder: "Тип организации",
-                            items: OrganizationType.allCases.map { $0.name } ,
-                            selected: $viewModel.role
-                        )
                         CustomTextField(textFieldValue: $viewModel.email, placeholder: "Логин")
                         CustomTextField(textFieldValue: $viewModel.password, placeholder: "Пароль", isSecure: true)
                             .padding(.bottom, 24)

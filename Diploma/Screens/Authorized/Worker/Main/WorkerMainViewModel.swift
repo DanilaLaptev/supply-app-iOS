@@ -72,7 +72,7 @@ class WorkerMainViewModel: ObservableObject {
             return
         }
         
-        let productTypes = selectedProductTypes.isEmpty ? nil : selectedProductTypes.map { $0.rawValue }
+        let productTypes = selectedProductTypes.isEmpty ? nil : selectedProductTypes
         
         let filter = FilterDto(
             productType: productTypes,

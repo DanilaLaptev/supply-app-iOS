@@ -6,7 +6,7 @@ struct GroupTag<TagEnum: TagsGroupProtocol>: Identifiable {
     var isSelected: Bool
 }
 
-struct TagsGroup<TagEnum: TagsGroupProtocol>: View {
+struct SmallTagsGroup<TagEnum: TagsGroupProtocol>: View {
     var selectAllOption: Bool = true
     @Binding var selectedTags: [TagEnum]
     @State private var tags = TagEnum.allCases.map { GroupTag(type: $0, isSelected: false) }
@@ -53,9 +53,9 @@ struct TagsGroup<TagEnum: TagsGroupProtocol>: View {
     }
 }
 
-struct TagsGroup_Previews: PreviewProvider {
+struct SmallTagsGroup_Previews: PreviewProvider {
     static var previews: some View {
-        TagsGroup<ProductType>(selectedTags: .constant([]))
-        TagsGroup<ProductType>(selectedTags: .constant([]))
+        SmallTagsGroup<ProductType>(selectedTags: .constant([]))
+        SmallTagsGroup<ProductType>(selectedTags: .constant([]))
     }
 }

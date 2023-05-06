@@ -17,9 +17,9 @@ struct ProfileView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("Основная информация").font(.customTitle).padding(.bottom, 8)
-                    Text("Название: ").font(.customStandard)
-                    Text("Тип организации: ").font(.customStandard)
-                    Text("Адрес: ").font(.customStandard)
+                    Text("Название: \(viewModel.organizationInfo?.title ?? "-")").font(.customStandard)
+                    Text("Тип организации: \(viewModel.organizationInfo?.organizationType?.name ?? "-")").font(.customStandard)
+                    Text("Адрес: \(viewModel.organizationInfo?.mainBranch?.address?.addressName ?? "-")").font(.customStandard)
                 }
                 Spacer()
             }
@@ -30,9 +30,9 @@ struct ProfileView: View {
             HStack {
                 VStack(alignment: .leading) {
                     Text("Контакты").font(.customTitle).padding(.bottom, 8)
-                    Text("ФИО: ").font(.customStandard)
-                    Text("Телефон: ").font(.customStandard)
-                    Text("Почта: ").font(.customStandard)
+                    Text("ФИО: \(viewModel.organizationInfo?.mainContact?.fullName ?? "-")").font(.customStandard)
+                    Text("Телефон: \(viewModel.organizationInfo?.mainContact?.phone ?? "-")").font(.customStandard)
+                    Text("Почта: \(viewModel.organizationInfo?.mainContact?.email ?? "-")").font(.customStandard)
                 }
                 Spacer()
             }

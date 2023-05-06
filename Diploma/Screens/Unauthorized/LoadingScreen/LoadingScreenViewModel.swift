@@ -1,17 +1,47 @@
 import Foundation
 import SwiftUI
 import Moya
+import Combine
+
 
 class LoadingScreenViewModel: ObservableObject {
+    private var cancellableSet = Set<AnyCancellable>()
+
     @Published var authManager = AuthManager.shared
     
     @Published var navigateToAuthWrapper: Bool = false
     @Published var isLoading = false
-    
+    @Published var isIpValid = false
+    @Published var ipFieldValue: String = {
+        let currentBaseUrl = RequestDefaults.baseUrl().absoluteString
+        let start = currentBaseUrl.index(currentBaseUrl.startIndex, offsetBy: 7)
+        let end = currentBaseUrl.index(currentBaseUrl.endIndex, offsetBy: -6)
+        let range = start..<end
+
+        let ip = String(currentBaseUrl[range])
+        return ip
+    }()
+
     private let authProvider = MoyaProvider<AuthorizationProvider>()
     
+    private var ipValid: AnyPublisher<Bool, Never> {
+        $ipFieldValue
+            .map { ip in
+                var sin = sockaddr_in()
+                return ip.withCString({ cstring in inet_pton(AF_INET, cstring, &sin.sin_addr) }) == 1
+            }.eraseToAnyPublisher()
+    }
+    
     init() {
-        
+        ipValid
+            .receive(on: RunLoop.main)
+            .sink { [weak self] valid in
+                self?.isIpValid = valid
+            }.store(in: &cancellableSet)
+    }
+    
+    func setBaseUrl() {
+        RequestDefaults.changeBaseUrl(ipFieldValue)
     }
     
     func checkUserAuth() {

@@ -21,7 +21,7 @@ struct MainSignUpView: View {
                         Header(title: "Основное")
                         
                         DropDownList(
-                            placeholder: "Тип организации",
+                            placeholder: "Тип",
                             items: OrganizationType.allCases.map { $0.name } ,
                             selected: $viewModel.role
                         )

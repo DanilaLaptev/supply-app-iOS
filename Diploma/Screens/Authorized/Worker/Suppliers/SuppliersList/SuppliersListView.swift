@@ -15,7 +15,6 @@ struct SuppliersListView: View {
         GeometryReader { geo in
             ScrollView(.vertical, showsIndicators: false) {
                 NavigationLink("", destination: SupplierView(organizationModel: viewModel.selectedOrganization ?? .empty), tag: SupplierView.tag, selection: $tagSelection)
-
                 
                 VStack(alignment: .leading, spacing: 0) {
                     MapView(markers: $viewModel.markers,
@@ -27,7 +26,7 @@ struct SuppliersListView: View {
                     BottomSheet(background: .customLightGray) {
                         VStack {
                             HStack(spacing: 8) {
-                                CustomTextField(textFieldValue: .constant(""), icon: .customSearch, isDividerVisible: true, placeholder: "Поиск", background: .customWhite)
+                                CustomTextField(textFieldValue: $viewModel.organizationNameFilter, icon: .customSearch, isDividerVisible: true, placeholder: "Поиск", background: .customWhite)
                                 CustomButton(icon: .customFilter) {
                                     showFilters.toggle()
                                 }
@@ -42,6 +41,11 @@ struct SuppliersListView: View {
                                             viewModel.selectedOrganization = organization
                                             tagSelection = SupplierView.tag
                                         }
+                                        .onAppear {
+                                            if viewModel.organizations.last?.id == organization.id {
+                                                viewModel.fetchOrganizations()
+                                            }
+                                        }
                                 }
                             }
                         }
@@ -49,7 +53,7 @@ struct SuppliersListView: View {
                 }
                 .frame(maxHeight: .infinity)
                 .sheet(isPresented: $showFilters) {
-                    SuppliersListFilterScreen()
+                    SuppliersListFilterScreen(selectedProductTypes: $viewModel.organizationProductTypes)
                         .environmentObject(viewModel)
                 }
             }

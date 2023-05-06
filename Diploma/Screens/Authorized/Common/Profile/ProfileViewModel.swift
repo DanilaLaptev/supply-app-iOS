@@ -4,7 +4,7 @@ import Combine
 import Moya
 
 class ProfileViewModel: ObservableObject {
-    private let organizationProvider = MoyaProvider<OrganizationProvider>(plugins: [NetworkLoggerPlugin()])
+    private let organizationProvider = MoyaProvider<OrganizationProvider>(plugins: [NetworkLoggerPlugin(), NetworkCacheablePlugin()])
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published private(set) var organizationInfo: OrganizationModel?

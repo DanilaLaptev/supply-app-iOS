@@ -26,6 +26,7 @@
 		999E4B6529FFFE0A00F66ED8 /* ProductDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E4B6429FFFE0A00F66ED8 /* ProductDto.swift */; };
 		999E4B672A00DAE900F66ED8 /* ProfileViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E4B662A00DAE900F66ED8 /* ProfileViewModel.swift */; };
 		999E4B692A00DC6B00F66ED8 /* OrganizationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E4B682A00DC6B00F66ED8 /* OrganizationModel.swift */; };
+		999E4B732A01438C00F66ED8 /* BigTagsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 999E4B722A01438C00F66ED8 /* BigTagsGroup.swift */; };
 		99A0951329B5B51700C0286D /* OrderingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951229B5B51700C0286D /* OrderingView.swift */; };
 		99A0951C29B62D9F00C0286D /* CustomCalendarCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951B29B62D9F00C0286D /* CustomCalendarCell.swift */; };
 		99A0951E29B6305B00C0286D /* OrderStateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99A0951D29B6305B00C0286D /* OrderStateView.swift */; };
@@ -146,7 +147,7 @@
 		99F178CE29DEF93C001903F2 /* OrderingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178CC29DEF93C001903F2 /* OrderingViewModel.swift */; };
 		99F178D429DFEE1F001903F2 /* AsyncImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178D329DFEE1F001903F2 /* AsyncImage.swift */; };
 		99F178DC29E1C90A001903F2 /* Weekdays.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178DB29E1C90A001903F2 /* Weekdays.swift */; };
-		99F178DE29E21512001903F2 /* TagsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178DD29E21512001903F2 /* TagsGroup.swift */; };
+		99F178DE29E21512001903F2 /* SmallTagsGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178DD29E21512001903F2 /* SmallTagsGroup.swift */; };
 		99F178E529E2DE02001903F2 /* SupplyModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178E429E2DE02001903F2 /* SupplyModel.swift */; };
 		99F178F329E4959D001903F2 /* StorageItemWrapper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F178F229E4959D001903F2 /* StorageItemWrapper.swift */; };
 		99F1790D29E5FC69001903F2 /* SupplyCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1790C29E5FC69001903F2 /* SupplyCard.swift */; };
@@ -158,6 +159,8 @@
 		99F1792229E7310A001903F2 /* ChartData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1792129E7310A001903F2 /* ChartData.swift */; };
 		99F1793029EECF07001903F2 /* ClientsListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1792E29EECF07001903F2 /* ClientsListView.swift */; };
 		99F1793129EECF07001903F2 /* ClientsListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99F1792F29EECF07001903F2 /* ClientsListViewModel.swift */; };
+		99FA12142A062B7800B731A6 /* MoyaCacheableRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12132A062B7800B731A6 /* MoyaCacheableRequest.swift */; };
+		99FA12162A062BBA00B731A6 /* NetworkCacheablePlugin.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12152A062BBA00B731A6 /* NetworkCacheablePlugin.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -181,6 +184,7 @@
 		999E4B6429FFFE0A00F66ED8 /* ProductDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductDto.swift; sourceTree = "<group>"; };
 		999E4B662A00DAE900F66ED8 /* ProfileViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileViewModel.swift; sourceTree = "<group>"; };
 		999E4B682A00DC6B00F66ED8 /* OrganizationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationModel.swift; sourceTree = "<group>"; };
+		999E4B722A01438C00F66ED8 /* BigTagsGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BigTagsGroup.swift; sourceTree = "<group>"; };
 		99A0951229B5B51700C0286D /* OrderingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderingView.swift; sourceTree = "<group>"; };
 		99A0951B29B62D9F00C0286D /* CustomCalendarCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomCalendarCell.swift; sourceTree = "<group>"; };
 		99A0951D29B6305B00C0286D /* OrderStateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderStateView.swift; sourceTree = "<group>"; };
@@ -304,7 +308,7 @@
 		99F178CC29DEF93C001903F2 /* OrderingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderingViewModel.swift; sourceTree = "<group>"; };
 		99F178D329DFEE1F001903F2 /* AsyncImage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AsyncImage.swift; sourceTree = "<group>"; };
 		99F178DB29E1C90A001903F2 /* Weekdays.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Weekdays.swift; sourceTree = "<group>"; };
-		99F178DD29E21512001903F2 /* TagsGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsGroup.swift; sourceTree = "<group>"; };
+		99F178DD29E21512001903F2 /* SmallTagsGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SmallTagsGroup.swift; sourceTree = "<group>"; };
 		99F178E429E2DE02001903F2 /* SupplyModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplyModel.swift; sourceTree = "<group>"; };
 		99F178F229E4959D001903F2 /* StorageItemWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageItemWrapper.swift; sourceTree = "<group>"; };
 		99F1790C29E5FC69001903F2 /* SupplyCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplyCard.swift; sourceTree = "<group>"; };
@@ -316,6 +320,8 @@
 		99F1792129E7310A001903F2 /* ChartData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartData.swift; sourceTree = "<group>"; };
 		99F1792E29EECF07001903F2 /* ClientsListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientsListView.swift; sourceTree = "<group>"; };
 		99F1792F29EECF07001903F2 /* ClientsListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClientsListViewModel.swift; sourceTree = "<group>"; };
+		99FA12132A062B7800B731A6 /* MoyaCacheableRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MoyaCacheableRequest.swift; sourceTree = "<group>"; };
+		99FA12152A062BBA00B731A6 /* NetworkCacheablePlugin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkCacheablePlugin.swift; sourceTree = "<group>"; };
 		D95D20718B9E8485FCEDA73C /* Pods_Diploma.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Diploma.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -528,6 +534,7 @@
 		99C14C5029D6FA0B00B8D3E2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				99FA12122A062B5A00B731A6 /* Cache */,
 				99C14C8E29DAB3F400B8D3E2 /* Extensions */,
 				99C14C5E29D6FC2500B8D3E2 /* Dtos */,
 				99C14C5929D6FAE700B8D3E2 /* Providers */,
@@ -655,7 +662,6 @@
 				99C14C7429D985A800B8D3E2 /* Loading */,
 				99A0956B29BCD1A900C0286D /* Alerts */,
 				99A0951A29B62D8500C0286D /* Calendar */,
-				99D454A229B4D71F00462A8F /* Tags */,
 				99D4549B29B45CD300462A8F /* ExtandableSection */,
 				99D4544429AFC80E00462A8F /* Statistics */,
 				99D4543929AE6FDE00462A8F /* BottomNavigation */,
@@ -762,6 +768,7 @@
 		99D4547429B3626D00462A8F /* Authorized */ = {
 			isa = PBXGroup;
 			children = (
+				99FA12112A06232700B731A6 /* Common */,
 				99D4547C29B36DC500462A8F /* Worker */,
 				99D4547B29B36DC000462A8F /* Supplier */,
 			);
@@ -794,7 +801,6 @@
 			isa = PBXGroup;
 			children = (
 				99D4541629AC7E5200462A8F /* Components */,
-				99D4548129B36DEB00462A8F /* Profile */,
 				99D4549029B3CB8800462A8F /* ProductScreen.swift */,
 				99AA129729D229C7002219E0 /* OrganizationType.swift */,
 			);
@@ -845,8 +851,8 @@
 		99D4547F29B36DDD00462A8F /* Suppliers */ = {
 			isa = PBXGroup;
 			children = (
-				99F178BA29DEE14E001903F2 /* Supplier */,
 				99F178B929DEE0BC001903F2 /* SuppliersList */,
+				99F178BA29DEE14E001903F2 /* Supplier */,
 				99F178B829DEE0B0001903F2 /* Ordering */,
 				99D454AF29B50C4D00462A8F /* Components */,
 			);
@@ -962,8 +968,10 @@
 		99F178DF29E2155F001903F2 /* TagsGroup */ = {
 			isa = PBXGroup;
 			children = (
+				99D454A229B4D71F00462A8F /* Tags */,
 				99F1791129E69F52001903F2 /* TagEnums */,
-				99F178DD29E21512001903F2 /* TagsGroup.swift */,
+				99F178DD29E21512001903F2 /* SmallTagsGroup.swift */,
+				999E4B722A01438C00F66ED8 /* BigTagsGroup.swift */,
 			);
 			path = TagsGroup;
 			sourceTree = "<group>";
@@ -1003,6 +1011,23 @@
 				99F1791E29E6EB2C001903F2 /* SupplyViewModel.swift */,
 			);
 			path = Supply;
+			sourceTree = "<group>";
+		};
+		99FA12112A06232700B731A6 /* Common */ = {
+			isa = PBXGroup;
+			children = (
+				99D4548129B36DEB00462A8F /* Profile */,
+			);
+			path = Common;
+			sourceTree = "<group>";
+		};
+		99FA12122A062B5A00B731A6 /* Cache */ = {
+			isa = PBXGroup;
+			children = (
+				99FA12132A062B7800B731A6 /* MoyaCacheableRequest.swift */,
+				99FA12152A062BBA00B731A6 /* NetworkCacheablePlugin.swift */,
+			);
+			path = Cache;
 			sourceTree = "<group>";
 		};
 		B15AE332FCC1211E0F9B1938 /* Pods */ = {
@@ -1176,6 +1201,7 @@
 				99AA12A129D5713F002219E0 /* MainSignUpViewModel.swift in Sources */,
 				99000EBA29F7FE3700E51182 /* OrderReviewViewModel.swift in Sources */,
 				99C14C9629DAF85300B8D3E2 /* DropDownList.swift in Sources */,
+				999E4B732A01438C00F66ED8 /* BigTagsGroup.swift in Sources */,
 				99F178D429DFEE1F001903F2 /* AsyncImage.swift in Sources */,
 				99F1789E29DD58F5001903F2 /* SupplierOrdersView.swift in Sources */,
 				99AA128C29CD935A002219E0 /* EncodableExtension.swift in Sources */,
@@ -1219,11 +1245,12 @@
 				99C14C8D29DAB1EB00B8D3E2 /* TargetTypeExtension.swift in Sources */,
 				99C14C6C29D8B11200B8D3E2 /* SignInViewModel.swift in Sources */,
 				99D4543B29AE6FF500462A8F /* BottomNavigationTab.swift in Sources */,
+				99FA12162A062BBA00B731A6 /* NetworkCacheablePlugin.swift in Sources */,
 				99C14C5629D6FA9E00B8D3E2 /* OrganizationBranchProvider.swift in Sources */,
 				99D4548929B39C5F00462A8F /* StatisticsScreen.swift in Sources */,
 				99A0955529BB333500C0286D /* EditProductScreen.swift in Sources */,
 				99F178A229DD5907001903F2 /* SupplierStatisticsView.swift in Sources */,
-				99F178DE29E21512001903F2 /* TagsGroup.swift in Sources */,
+				99F178DE29E21512001903F2 /* SmallTagsGroup.swift in Sources */,
 				99D4548729B39C4C00462A8F /* ProfileView.swift in Sources */,
 				99A0951E29B6305B00C0286D /* OrderStateView.swift in Sources */,
 				99000EC129F95BD300E51182 /* CoderManager.swift in Sources */,
@@ -1239,6 +1266,7 @@
 				99A0952229B70B2300C0286D /* MainSignUpView.swift in Sources */,
 				99C14C6229D72A5800B8D3E2 /* LoaderView.swift in Sources */,
 				99D4549829B45BA300462A8F /* OrderCard.swift in Sources */,
+				99FA12142A062B7800B731A6 /* MoyaCacheableRequest.swift in Sources */,
 				99F178CE29DEF93C001903F2 /* OrderingViewModel.swift in Sources */,
 				99D4548529B36E0A00462A8F /* WorkerSupplyListScreen.swift in Sources */,
 				99AA128329CCAE73002219E0 /* FileManager.swift in Sources */,
