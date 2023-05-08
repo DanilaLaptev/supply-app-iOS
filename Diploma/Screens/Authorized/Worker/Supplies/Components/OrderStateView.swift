@@ -57,6 +57,8 @@ struct OrderStateCircle<Content: View>: View {
 
 struct OrderStateView: View {
     var stepState: OrderDeliveryState
+    var supplyHistory: SupplyStatusHistory
+    
     
     private var foreground: Color {
         switch stepState {
@@ -72,20 +74,6 @@ struct OrderStateView: View {
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 16) {
-                OrderStateCircle(stepState: stepState) {
-                    Image.customRoute
-                }
-                
-                VStack(alignment: .leading, spacing: 4) {
-                    Text("Доставлен").font(.customStandard)
-                    Text("контактный номер").font(.customHint)
-                }
-                Spacer()
-                Text("25 фев, 00:00")
-                    .foregroundColor(.customDarkGray)
-                    .font(.customHint)
-            }
-            HStack(spacing: 16) {
                 Rectangle()
                     .frame(width: 2, height: 32)
                     .foregroundColor(foreground)
@@ -93,20 +81,31 @@ struct OrderStateView: View {
                 
                 Spacer()
             }
+            HStack(spacing: 16) {
+                OrderStateCircle(stepState: stepState) {
+                    supplyHistory.status.icon
+                }
+                
+                Text(supplyHistory.status.name).font(.customStandard)
+                Spacer()
+                Text(supplyHistory.created?.toString("dd MMM, HH:mm") ?? "-- ---, --:--")
+                    .foregroundColor(.customDarkGray)
+                    .font(.customHint)
+            }
         }
     }
 }
 
 struct OrderStateStep_Previews: PreviewProvider {
     static var previews: some View {
-        OrderStateView(stepState: .passed)
-        OrderStateView(stepState: .next)
-        OrderStateView(stepState: .current)
+        OrderStateView(stepState: .passed, supplyHistory: .init(status: .pending, created: Date()))
+        OrderStateView(stepState: .next, supplyHistory: .init(status: .pending, created: Date()))
+        OrderStateView(stepState: .current, supplyHistory: .init(status: .pending, created: Date()))
 
         VStack(spacing: 0) {
-            OrderStateView(stepState: .current)
-            OrderStateView(stepState: .passed)
-            OrderStateView(stepState: .passed)
+            OrderStateView(stepState: .current, supplyHistory: .init(status: .pending, created: Date()))
+            OrderStateView(stepState: .passed, supplyHistory: .init(status: .pending, created: Date()))
+            OrderStateView(stepState: .passed, supplyHistory: .init(status: .pending, created: Date()))
         }
     }
 }

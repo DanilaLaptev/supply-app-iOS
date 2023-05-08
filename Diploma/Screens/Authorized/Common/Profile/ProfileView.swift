@@ -7,7 +7,7 @@ struct ProfileView: View {
     
     var body: some View {
         VStack(alignment: .center) {
-            AsyncImage(imageUrl: URL(string: "https://avatars.mds.yandex.net/get-altay/7740052/2a000001834d1a593948fb37e2811815989f/XXL_height")) {
+            AsyncImage(imageUrl: URL(string: viewModel.organizationInfo?.image ?? "none")) {
                 Color.customDarkGray
             }
             .clipShape(Circle())

@@ -18,27 +18,9 @@ struct SupplyScreen: View {
                         .padding(.horizontal, 16)
                         .padding(.vertical, 8)
                     
-                    if let commentary = viewModel.supplyModel?.fromOrganizationCommentary {
-                        ExtendableSection {
-                            Text(commentary).font(.customStandard)
-                        } headerContent: {
-                            HStack(spacing: 8) {
-                                switch supplyModel.statusHistory.first?.status ?? .denied {
-                                case .denied:
-                                    Image.customErrorAlert.frame(width: 24, height: 24)
-                                default:
-                                    Image.customSuccessAlert.frame(width: 24, height: 24)
-                                }
-                                
-                                VStack(alignment: .leading, spacing: 4) {
-                                    Text("Заказ отклонён").font(.customSubtitle)
-                                    Text("Комментарий продавца").font(.customHint)
-                                }
-                            }
-                        }
-                        .padding(.horizontal, 16)
-                    }
-                    
+                    SupplyHeader(supplyModel: supplyModel)
+                        .padding(.horizontal , 16)
+
                     ExtendableSection {
                         ScrollView(.vertical) {
                             VStack {
@@ -56,19 +38,11 @@ struct SupplyScreen: View {
                     }
                     .padding(.horizontal, 16)
                     
-                    
                     Text("Статус заказа")
                         .font(.customTitle)
                         .padding(.horizontal, 16)
                     
-                    
-                    // TODO:
-                    VStack(spacing: 0) {
-                        OrderStateView(stepState: .current)
-                        ForEach(1...8, id: \.self) { _ in
-                            OrderStateView(stepState: .passed)
-                        }
-                    }
+                    SupplyHistoryList(history: supplyModel.statusHistory)
                     .padding(.horizontal, 16)
                 }
                 .padding(.top, 8)
@@ -84,7 +58,7 @@ struct SupplyScreen: View {
                             title: Text("Прием заказа"),
                             message: Text("Вы проверили доставленные продукты и готовы принять заказ?"),
                             primaryButton: .default(Text("Принять")) {
-                                // TODO: action
+                                viewModel.acceptSupply()
                             },
                             secondaryButton: .cancel(Text("Отмена"))
                         )

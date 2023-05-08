@@ -1,17 +1,17 @@
 import SwiftUI
 
 struct PieChart: View {
-    @ObservedObject var charDataObj: ChartDataContainer
+    @ObservedObject var chartDataObj: ChartDataContainer
     
     @State private var indexOfTappedSlice: Int?
     var body: some View {
         HStack() {
             ZStack {
-                ForEach(0..<charDataObj.chartData.count) { index in
+                ForEach(0..<chartDataObj.chartData.count) { index in
                     Circle()
-                        .trim(from: index == 0 ? 0.0: charDataObj.chartData[index-1].offset,
-                              to: charDataObj.chartData[index].offset)
-                        .stroke(charDataObj.chartData[index].color, lineWidth: 24)
+                        .trim(from: index == 0 ? 0.0: chartDataObj.chartData[index-1].offset,
+                              to: chartDataObj.chartData[index].offset)
+                        .stroke(chartDataObj.chartData[index].color, lineWidth: 24)
                         .onTapGesture {
                             indexOfTappedSlice = indexOfTappedSlice == index ? nil: index
                         }
@@ -19,7 +19,7 @@ struct PieChart: View {
                         .animation(.spring())
                 }
                 if let indexOfTappedSlice {
-                    Text("\(Int(charDataObj.chartData[indexOfTappedSlice].percent * 100))%")
+                    Text("\(Int(chartDataObj.chartData[indexOfTappedSlice].percent * 100))%")
                         .font(.customSubtitle)
                 }
             }
@@ -28,17 +28,17 @@ struct PieChart: View {
             Spacer()
             
             VStack(alignment: .leading) {
-                ForEach(0..<charDataObj.chartData.count) { index in
+                ForEach(0..<chartDataObj.chartData.count) { index in
                     HStack(spacing: 8) {
                         VStack(alignment: .leading) {
                             RoundedRectangle(cornerRadius: 3)
-                                .fill(charDataObj.chartData[index].color)
+                                .fill(chartDataObj.chartData[index].color)
                                 .frame(width: 24, height: 8)
                             
-                            Text(charDataObj.chartData[index].name)
+                            Text(chartDataObj.chartData[index].name)
                                 .font(indexOfTappedSlice == index ? .customSubtitle: .customStandard)
                         }
-                        Text("\(Int(charDataObj.chartData[index].percent * 100))%")
+                        Text("\(Int(chartDataObj.chartData[index].percent * 100))%")
                             .font(indexOfTappedSlice == index ? .customSubtitle: .customHint)
                     }
                     .onTapGesture {
@@ -54,7 +54,7 @@ struct PieChart: View {
 
 struct PieChart_Previews: PreviewProvider {
     static var previews: some View {
-        PieChart(charDataObj: ChartDataContainer([ChartData(name: "product 1", value: 100),
+        PieChart(chartDataObj: ChartDataContainer([ChartData(name: "product 1", value: 100),
                                                   ChartData(name: "product 2", value: 55),
                                                   ChartData(name: "product 3", value: 32),
                                                   ChartData(name: "product 4", value: 67)]))

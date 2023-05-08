@@ -16,6 +16,8 @@ struct ChartData {
 }
 
 class ChartDataContainer: ObservableObject {
+    static let empty = ChartDataContainer([])
+    
     let chartData: [ChartDataWrapper]
     
     init(_ data: [ChartData], maxSegments: Int = 4) {

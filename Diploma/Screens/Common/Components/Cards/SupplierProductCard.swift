@@ -3,7 +3,7 @@ import SwiftUI
 struct SupplierProductCard: View {
     @State private var showExtraOptions = false
     
-    var name: String
+    var model: StorageItemModel
     
     var tapCard: (()->())? = nil
     var tapEditingButton: (()->())? = nil
@@ -13,10 +13,10 @@ struct SupplierProductCard: View {
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading, spacing: 8) {
-                Text(name)
+                Text(model.product.name)
                     .font(.customSubtitle)
                     .foregroundColor(.customBlack)
-                Text("\(Int.random(in: 20...200)) ₽")
+                Text("\(Int(model.price)) ₽")
                     .font(.customHint)
                     .foregroundColor(.customDarkGray)
             }
@@ -29,18 +29,18 @@ struct SupplierProductCard: View {
         }
         .extraOptions([
             ExtraOption(icon: .customPencil, action: tapEditingButton),
-            ExtraOption(icon: .customEye, action: tapVisibilityButton),
+            ExtraOption(icon: model.isHidden ? Image.customClosedEye : .customEye, action: tapVisibilityButton),
             ExtraOption(icon: .customBin, action: tapDeletingButton)
         ])
         .frame(maxWidth: .infinity)
-        .background(Color.customWhite)
+        .background(model.isHidden ? Color.customGray : .customWhite)
         .cornerRadius(8)
     }
 }
 
 struct SupplierProductCard_Previews: PreviewProvider {
     static var previews: some View {
-        SupplierProductCard(name: "")
+        SupplierProductCard(model: .empty)
             .padding()
     }
 }

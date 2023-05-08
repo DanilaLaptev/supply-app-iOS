@@ -23,24 +23,10 @@ struct ProductScreen: View {
                 .padding(.horizontal, 16)
                 .padding(.bottom, 16)
                 
-                ExtendableSection {
-                    Text("TODO")
+                ExtendableSection(isCollapsed: false) {
+                    Text(model.description)
                 } headerContent: {
                     Text("Описание").font(.customSubtitle)
-                }
-                .padding(.horizontal, 16)
-                
-                ExtendableSection {
-                    Text("TODO")
-                } headerContent: {
-                    Text("Состав").font(.customSubtitle)
-                }
-                .padding(.horizontal, 16)
-                
-                ExtendableSection {
-                    Text("TODO")
-                } headerContent: {
-                    Text("Пищевая ценность").font(.customSubtitle)
                 }
                 .padding(.horizontal, 16)
             }

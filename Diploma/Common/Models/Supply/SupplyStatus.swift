@@ -1,27 +1,38 @@
 import Foundation
+import SwiftUI
 
-enum SupplyStatus: Int {
-    case denied = -1
-    case inProgress = 0
-    case approved = 1
-    case inTransit = 2
-    case delivered = 3
-    case orderAccepted = 4
+enum SupplyStatus: String, Codable, TagsGroupProtocol {
+    case pending = "PENDING"
+    case denied = "DENIED"
+    case approved = "APPROVED"
+    case collected = "COLLECTED"
+    case inTransit = "IN_TRANSIT"
+    case delivered = "DELIVERED"
+    case supplyAccepted = "SUPPLY_ACCEPTED"
     
     var name: String {
         switch self {
         case .denied:
             return "Отклонено"
-        case .inProgress:
+        case .pending:
             return "Обрабатывается"
         case .approved:
             return "Одобрен"
+        case .collected:
+            return "Собран"
         case .inTransit:
             return "В пути"
         case .delivered:
             return "Доставлен"
-        case .orderAccepted:
+        case .supplyAccepted:
             return "Принят"
+        }
+    }
+    
+    var icon: Image {
+        switch self {
+        default:
+            return .customBox
         }
     }
 }

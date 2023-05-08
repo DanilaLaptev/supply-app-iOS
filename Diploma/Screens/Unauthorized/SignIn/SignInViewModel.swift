@@ -16,7 +16,7 @@ class SignInViewModel: ObservableObject {
 
     private let authProvider = MoyaProvider<AuthorizationProvider>(plugins: [NetworkLoggerPlugin()])
     
-    @Published var email = "worker@email.com"
+    @Published var email = "supplier@email.com"
     @Published var password = "123123"
     
     @Published private var orgniazationEmailValidation = ""
@@ -27,13 +27,6 @@ class SignInViewModel: ObservableObject {
             .map { email in
                 let emailPredicate = NSPredicate(format:"SELF MATCHES %@", "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,64}")
                 return emailPredicate.evaluate(with: email)
-            }.eraseToAnyPublisher()
-    }
-    
-    private var isPasswordValidPublisher: AnyPublisher<Bool, Never> {
-        $password
-            .map { password in
-                password.count > 3
             }.eraseToAnyPublisher()
     }
     

@@ -29,6 +29,7 @@ struct MapView: UIViewRepresentable {
     @Binding var markers: [MapMarker]
     @Binding var selectedMarker: MapMarker?
     var showUserLocation = true
+    var onTapDetailDisclosure: (() -> ())?
     func makeUIView(context: Context) -> MKMapView {
         let map = MKMapView()
         map.showsUserLocation = showUserLocation
@@ -65,11 +66,19 @@ struct MapView: UIViewRepresentable {
             if annotationView == nil {
                 annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
                 annotationView?.canShowCallout = true
-                annotationView?.rightCalloutAccessoryView = UIButton(type: .detailDisclosure)
+                
+                let detailButton = UIButton(type: .detailDisclosure)
+                detailButton.addTarget(self, action: #selector(tapDetailDisclosure), for: .touchUpInside)
+                
+                annotationView?.rightCalloutAccessoryView = detailButton
             } else {
                 annotationView?.annotation = annotation
             }
             return annotationView
+        }
+        
+        @objc func tapDetailDisclosure(button: UIButton) {
+            self.control.onTapDetailDisclosure?()
         }
     }
     

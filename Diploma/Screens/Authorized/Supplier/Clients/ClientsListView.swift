@@ -8,9 +8,7 @@ struct ClientsListView: View {
     
     @State private var tagSelection: String? = nil
     @StateObject var viewModel = SuppliersListViewModel()
-    
-    @State private var showFilters = false
-    
+        
     var body: some View {
         GeometryReader { geo in
             ScrollView(.vertical, showsIndicators: false) {
@@ -19,20 +17,16 @@ struct ClientsListView: View {
                 
                 VStack(alignment: .leading, spacing: 0) {
                     MapView(markers: $viewModel.markers,
-                            selectedMarker: $viewModel.selectedMarker)
+                            selectedMarker: $viewModel.selectedMarker) {
+                        print("tap")
+                    }
                     .frame(maxWidth: .infinity)
                     .frame(height: geo.size.height * 0.56)
                     .padding(.bottom, -8)
                     
                     BottomSheet(background: .customLightGray) {
                         VStack {
-                            HStack(spacing: 8) {
-                                CustomTextField(textFieldValue: .constant(""), icon: .customSearch, isDividerVisible: true, placeholder: "Поиск", background: .customWhite)
-                                CustomButton(icon: .customFilter) {
-                                    showFilters.toggle()
-                                }
-                                .frame(width: 48)
-                            }
+                            CustomTextField(textFieldValue: .constant(""), icon: .customSearch, isDividerVisible: true, placeholder: "Поиск", background: .customWhite)
                             .padding(.bottom, 16)
                             
                             VStack {
@@ -44,10 +38,6 @@ struct ClientsListView: View {
                     }
                 }
                 .frame(maxHeight: .infinity)
-                .sheet(isPresented: $showFilters) {
-                    SuppliersListFilterScreen(selectedProductTypes: .constant([]))
-                        .environmentObject(viewModel)
-                }
             }
             .background(Color.customLightGray)
             .defaultScreenSettings()

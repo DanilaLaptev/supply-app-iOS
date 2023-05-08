@@ -4,7 +4,8 @@ import Combine
 struct OrderReviewView: View {
     public static let tag = "OrderReviewView"
     
-    @StateObject var viewModel = OrderReviewViewModel()
+    let supplyModel: SupplyModel
+    @StateObject private var viewModel = OrderReviewViewModel()
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -14,19 +15,11 @@ struct OrderReviewView: View {
                 Text("Причина отказа").font(.customSubtitle)
                     .padding(.bottom, 16)
                 
-                ForEach(viewModel.rejectionReasonsList) { rejectionModel in
-                    HStack(alignment: .top) {
-                        RadioButton(selected: rejectionModel.selected)
-                        Text(rejectionModel.name).font(.customStandard)
-                    }
-                    .onTapGesture {
-                        viewModel.selectReason(rejectionModel.id)
-                    }
-                }
+                RadioButtonGroup<RejectionItem>(items: viewModel.rejectionReasonsList, selected: $viewModel.selectedRejectionReason)
                 
                 HStack(spacing: 16) {
                     Button {
-                        
+                        viewModel.declineSupply()
                     } label: {
                         Text("Отклонить")
                             .frame(maxWidth: .infinity)
@@ -38,7 +31,9 @@ struct OrderReviewView: View {
                             )
                     }
                     
-                    CustomButton(label: Text("Одобрить"))
+                    CustomButton(label: Text("Одобрить")) {
+                        viewModel.acceptSupply()
+                    }
                 }
                 .padding(.top, 48)
             }
@@ -47,13 +42,16 @@ struct OrderReviewView: View {
             Spacer()
         }
         .padding(.top, 24)
+        .onAppear {
+            viewModel.setup(supplyModel)
+        }
     }
 }
 
 struct OrderReviewViewView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            OrderReviewView()
+            OrderReviewView(supplyModel: .empty)
         }
     }
 }

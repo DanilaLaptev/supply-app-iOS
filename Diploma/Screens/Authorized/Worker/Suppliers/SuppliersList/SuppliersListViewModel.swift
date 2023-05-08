@@ -13,14 +13,14 @@ class SuppliersListViewModel: ObservableObject {
     
     @Published var organizations: [OrganizationModel] = []
     
-    @Published var selectedProductTypes: [ProductType]? = nil
-    @Published var distanceFromMe: Double? = nil
+    @Published var selectedProductTypes: [ProductType]?
+    @Published var distanceFromMe: Double?
     @Published var suppliersList: [OrganizationBranchModel] = []
 
-    @Published var selectedMarker: MapMarker? = nil
+    @Published var selectedMarker: MapMarker?
     @Published var markers: [MapMarker] = []
     
-    @Published var selectedOrganization: OrganizationModel? = nil
+    @Published var selectedOrganization: OrganizationModel?
     
     @Published var organizationNameFilter: String = ""
     @Published var organizationProductTypes: [ProductType] = []
@@ -52,6 +52,8 @@ class SuppliersListViewModel: ObservableObject {
     }
     
     init() {
+        fetchOrganizations()
+        
         markersPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] markers in
@@ -59,6 +61,7 @@ class SuppliersListViewModel: ObservableObject {
             }.store(in: &cancellableSet)
         
         updateFiltersPublisher
+            .dropFirst()
             .receive(on: RunLoop.main)
             .sink { [weak self] markers in
                 self?.page = 0
@@ -82,7 +85,7 @@ class SuppliersListViewModel: ObservableObject {
             role: .supplier,
             title: organizationNameFilter,
             productType: productTypes,
-            page: 0,
+            page: page,
             perPage: 20
         )
         

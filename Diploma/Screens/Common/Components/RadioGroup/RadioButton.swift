@@ -1,6 +1,12 @@
 import SwiftUI
 
+protocol RadioGroupItem: Equatable, Identifiable {
+    var id: UUID { get }
+    var name: String { get }
+}
+
 struct RadioButton: View {
+    var id: Int = 0
     var selected: Bool
     
     var body: some View {

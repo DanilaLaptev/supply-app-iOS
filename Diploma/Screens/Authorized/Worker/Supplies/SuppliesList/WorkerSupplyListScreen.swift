@@ -1,8 +1,7 @@
 import SwiftUI
-import Combine
 
-struct SupplierOrdersView: View {
-    public static let tag = "SupplierOrdersView"
+struct WorkerSupplyListScreen: View {
+    public static let tag = "OrdersListScreen"
     
     @StateObject private var tools = ViewManager.shared
     
@@ -19,22 +18,27 @@ struct SupplierOrdersView: View {
                     .padding(.horizontal, 16)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    SmallTagsGroup<SupplyProcessingStatus>(selectedTags: .constant([]))
+                    SmallTagsGroup<SupplyStatus>(selectedTags: $viewModel.supplyStatuses)
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
                     .padding(.bottom, 16)
                 }
                 
-                VStack {
-                    ForEach((0...8), id: \.self) { _ in
+                VStack(alignment: .center) {
+                    if viewModel.supplies.isEmpty {
+                        ListEmptyView()
+                    }
+                    
+                    ForEach(viewModel.supplies) { supply in
                         NavigationLink {
-                            SupplierOrderView(supplyModel: .empty)
+                            SupplyScreen(supplyModel: supply)
                         } label: {
-                            SupplyCard(supplyModel: .empty)
+                            SupplyCard(supplyModel: supply)
                         }
                     }
                 }
-                .padding(.horizontal, 16)
+                .frame(maxWidth: .infinity)
+                .padding([.horizontal, .bottom], 16)
             }
             .padding(.vertical, 8)
         }
@@ -47,10 +51,10 @@ struct SupplierOrdersView: View {
     }
 }
 
-struct SupplierOrdersViewView_Previews: PreviewProvider {
+struct OrdersScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SupplierOrdersView()
+            WorkerSupplyListScreen()
         }
     }
 }

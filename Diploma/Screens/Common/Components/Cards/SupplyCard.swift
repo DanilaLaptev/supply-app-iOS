@@ -4,11 +4,13 @@ struct SupplyCard: View {
     let supplyModel: SupplyModel
     
     private var deliveryTime: String {
-        DateFormatManager.shared.getFormattedString(supplyModel.deliveryTime, dateFormat: "d MMMM HH:mm")
+        guard let deliveryTime = supplyModel.deliveryTime else { return "-"}
+        return DateFormatManager.shared.getFormattedString(deliveryTime, dateFormat: "d MMMM HH:mm")
     }
     
-    private var created: String {
-        DateFormatManager.shared.getFormattedString(supplyModel.created, dateFormat: "d MMM yyyy")
+    private var updated: String {
+        guard let updatedTime = supplyModel.lastTimeUpdated else { return "-"}
+        return DateFormatManager.shared.getFormattedString(updatedTime, dateFormat: "d MMM yyyy")
     }
 
     var body: some View {
@@ -19,14 +21,14 @@ struct SupplyCard: View {
                         .font(.customSubtitle)
                         .foregroundColor(.customBlack)
                     Spacer()
-                    Text(supplyModel.statusHistory.first?.status.name ?? "none")
+                    Text(supplyModel.statusHistory.last?.status.name ?? "none")
                         .font(.customHint)
                         .foregroundColor(.customBlack)
                 }
                 Text("Доставка: \(deliveryTime)")
                     .font(.customStandard)
                     .foregroundColor(.customBlack)
-                Text("Создан: \(created)")
+                Text("Обновлен: \(updated)")
                     .font(.customHint)
                     .foregroundColor(.customDarkGray)
             }

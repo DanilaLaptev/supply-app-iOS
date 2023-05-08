@@ -3,6 +3,7 @@ import SwiftUI
 struct EditProductScreen: View {
     public static let tag = "EditProductScreen"
     
+    @StateObject var viewModel = EditProductViewModel()
     var initialStorageItem: StorageItemModel? = nil
     
     @State private var isSharePresented = false
@@ -23,24 +24,25 @@ struct EditProductScreen: View {
                         PhotoPicker(selectedImage: $selectedImage)
                     }
                 
-                CustomTextField(textFieldValue: .constant(""), placeholder: "Цена")
-                CustomTextField(textFieldValue: .constant(""), placeholder: "Описание")
-                CustomTextField(textFieldValue: .constant(""), placeholder: "Состав")
-                CustomTextField(textFieldValue: .constant(""), placeholder: "Пищевая ценность")
+                CustomTextField(textFieldValue: $viewModel.description, placeholder: "Описание")
+                CustomTextField(textFieldValue: $viewModel.price, placeholder: "Цена").keyboardType(.numberPad)
             }
             .padding(.horizontal, 16)
             
             Spacer()
             
             BottomSheet {
-                NavigationLink(destination: SupplyScreen(supplyModel: .empty)) {
-                    CustomButton(label: Text("Сохранить").font(.customStandard))
+                CustomButton(label: Text("Сохранить").font(.customStandard)) {
+                    viewModel.updateStorageItem()
                 }
             }
         }
         .padding(.top, safeAreaEdgeInsets.top)
         .background(Color.customLightGray)
         .defaultScreenSettings()
+        .onAppear {
+            viewModel.setup(initialStorageItem)
+        }
     }
     
     @ViewBuilder

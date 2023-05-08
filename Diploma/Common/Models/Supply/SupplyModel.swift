@@ -2,7 +2,14 @@ import Foundation
 
 struct SupplyStatusHistory {
     let status: SupplyStatus
-    let created: Date
+    let created: Date?
+    
+    static func from(_ dto: SupplyStatusDto) -> SupplyStatusHistory {
+        SupplyStatusHistory(
+            status: dto.status ?? .pending,
+            created: dto.time?.toDate()
+        )
+    }
 }
 
 struct SupplyModel: Identifiable {
@@ -10,10 +17,31 @@ struct SupplyModel: Identifiable {
     var publicId: Int
     var products: [StorageItemModel]
     var statusHistory: [SupplyStatusHistory]
-    var deliveryTime: Date
-    var created: Date
-    var fromOrganizationCommentary: String
-    var totalPrice: Double
+    var deliveryTime: Date?
+    var created: Date?
+    var fromBranchId: Int?
+    var toBranchId: Int?
+
+    var totalPrice: Double {
+        products.map { $0.price * Double($0.quantity) }.reduce(0, +)
+    }
+    
+    var lastTimeUpdated: Date? {
+        self.statusHistory.first?.created
+    }
+    
+    static func from(_ dto: SupplyDto) -> SupplyModel {
+        SupplyModel(
+            id: dto.groupId ?? -1,
+            publicId: dto.groupId ?? -1,
+            products: dto.items?.map { StorageItemModel.from($0) } ?? [],
+            statusHistory: dto.statuses?.map { SupplyStatusHistory.from($0) } ?? [],
+            deliveryTime:  dto.deliveryTime?.toDate(),
+            created: dto.created?.toDate(),
+            fromBranchId: dto.fromBranch,
+            toBranchId: dto.toBranch
+        )
+    }
 }
 
 extension SupplyModel {
@@ -22,63 +50,6 @@ extension SupplyModel {
                                                 products: [],
                                                 statusHistory: [],
                                                 deliveryTime: Date(),
-                                                created: Date(),
-                                                fromOrganizationCommentary: "commentary",
-                                                totalPrice: 0) }
-    
-    static var test: SupplyModel { SupplyModel(id: UUID().hashValue,
-                                               publicId: 12733,
-                                               products: [
-                                                StorageItemModel(
-                                                    product: ProductModel(
-                                                        name: "name",
-                                                        isApproved: true,
-                                                        type: .bakery
-                                                    ),
-                                                    imageUrl: "",
-                                                    price: 103,
-                                                    quantity: 23,
-                                                    description: "product product product"
-                                                ),
-                                                StorageItemModel(
-                                                    product: ProductModel(
-                                                        name: "name",
-                                                        isApproved: true,
-                                                        type: .bakery
-                                                    ),
-                                                    imageUrl: "",
-                                                    price: 103,
-                                                    quantity: 23,
-                                                    description: "product product product"
-                                                ),
-                                                StorageItemModel(
-                                                    product: ProductModel(
-                                                        name: "name",
-                                                        isApproved: true,
-                                                        type: .bakery
-                                                    ),
-                                                    imageUrl: "",
-                                                    price: 103,
-                                                    quantity: 23,
-                                                    description: "product product product"
-                                                ),
-                                                StorageItemModel(
-                                                    product: ProductModel(
-                                                        name: "name",
-                                                        isApproved: true,
-                                                        type: .bakery
-                                                    ),
-                                                    imageUrl: "",
-                                                    price: 103,
-                                                    quantity: 23,
-                                                    description: "product product product"
-                                                )
-                                               ],
-                                               statusHistory: [
-                                                SupplyStatusHistory(status: .denied, created: Date())
-                                               ],
-                                               deliveryTime: Date(),
-                                               created: Date(),
-                                               fromOrganizationCommentary: "commentary",
-                                               totalPrice: 0) }
+                                                created: Date()
+    ) }
 }

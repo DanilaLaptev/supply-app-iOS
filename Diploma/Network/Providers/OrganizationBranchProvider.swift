@@ -8,6 +8,7 @@ enum OrganizationBranchProvider {
     case addContactPerson(branchId: Int, contactPerson: ContactPersonDto)
     case getStorageItems(branchId: Int, filter: FilterDto)
     case addStorageItems(branchId: Int, items: [StorageItemDto])
+    case updateStorageItem(branchId: Int, item: StorageItemDto)
 }
 
 extension OrganizationBranchProvider: TargetType {
@@ -19,12 +20,14 @@ extension OrganizationBranchProvider: TargetType {
             return "/"
         case .addContactPerson(let branchId, _):
             return "/\(branchId)/contactPerson/"
+        case .updateOrganizationBranch(let branchId, _):
+            return "/\(branchId)/"
         case .getStorageItems(let branchId, _):
             return "/\(branchId)/products/"
         case .addStorageItems(let branchId, _):
             return "/\(branchId)/products/"
-        case .updateOrganizationBranch(let branchId, _):
-            return "/\(branchId)/"
+        case .updateStorageItem(let branchId, _):
+            return "/\(branchId)/products/"
         }
     }
     
@@ -34,6 +37,8 @@ extension OrganizationBranchProvider: TargetType {
             return .post
         case .addStorageItems:
             return .put
+        case .updateStorageItem:
+            return .patch
         }
     }
         
@@ -70,7 +75,14 @@ extension OrganizationBranchProvider: TargetType {
             }
             
             return .requestData(body)
+        case .updateStorageItem(_, let storageItem):
+            guard let body = CoderManager.encode(storageItem) else {
+                return .requestPlain
+            }
+            
+            return .requestData(body)
         }
+        
     }
     
     // TODO: real samples
@@ -85,6 +97,8 @@ extension OrganizationBranchProvider: TargetType {
         case .getStorageItems:
             return .init()
         case .addStorageItems:
+            return .init()
+        case .updateStorageItem:
             return .init()
         }
     }

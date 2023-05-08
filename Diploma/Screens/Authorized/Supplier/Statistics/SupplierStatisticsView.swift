@@ -3,19 +3,7 @@ import Combine
 
 struct SupplierStatisticsView: View {
     public static let tag = "SupplierStatisticsView"
-    
-    let statisticDataContainer = ChartDataContainer(
-        [
-            ChartData(name: "product 1", value: 100),
-            ChartData(name: "product 2", value: 1155),
-            ChartData(name: "product 3", value: 32),
-            ChartData(name: "product 4", value: 55),
-            ChartData(name: "product 5", value: 352),
-            ChartData(name: "product 6", value: 167)
-        ],
-        maxSegments: 4
-    )
-    
+
     @StateObject private var tools = ViewManager.shared
     
     @State private var isSharePresented: Bool = false
@@ -23,7 +11,15 @@ struct SupplierStatisticsView: View {
     @State var startDate: Date? = nil
     @State var endDate: Date? = nil
     
-    @StateObject private var viewModel = WorkerStatisticsViewModel()
+    @StateObject private var viewModel = SupplierStatisticsViewModel()
+    
+    private var incomingStatisticsSubtitle: String {
+        "Общая стоимость: \(viewModel.incomingStatistics.chartData.map { Int($0.value) }.reduce(0, +)) ₽"
+    }
+    
+    private var outcomingStatisticsSubtitle: String {
+        "Общая стоимость: \(viewModel.outcomingStatistics.chartData.map { Int($0.value) }.reduce(0, +)) ₽"
+    }
     
     var statistic: URL? {
         let csvBulderResult = FileManager.shared.exportCSV(
@@ -59,32 +55,22 @@ struct SupplierStatisticsView: View {
                 }
                 
                 ExtendableSection(isCollapsed: false) {
-                    PieChart(charDataObj: statisticDataContainer)
+                    PieChart(chartDataObj: viewModel.incomingStatistics)
                 } headerContent: {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Доступная продукция").font(.customSubtitle)
-                        Text("Напитки, выпечка").font(.customHint)
+                        Text("Купленные товары").font(.customSubtitle)
+                        Text(incomingStatisticsSubtitle).font(.customHint)
                     }
                 }
                 
                 ExtendableSection(isCollapsed: false) {
-                    BarChart(chartDataObj: statisticDataContainer)
+                    BarChart(chartDataObj: viewModel.outcomingStatistics)
                 } headerContent: {
                     VStack(alignment: .leading, spacing: 4) {
-                        Text("Доступная продукция").font(.customSubtitle)
-                        Text("Напитки, выпечка").font(.customHint)
+                        Text("Проданные товары").font(.customSubtitle)
+                        Text(outcomingStatisticsSubtitle).font(.customHint)
                     }
                 }
-                
-                ExtendableSection(isCollapsed: false) {
-                    BarChart(chartDataObj: statisticDataContainer)
-                } headerContent: {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Доступная продукция").font(.customSubtitle)
-                        Text("Напитки, выпечка").font(.customHint)
-                    }
-                }
-                
             }
             .padding(.vertical, 8)
             .padding(.top, safeAreaEdgeInsets.top)

@@ -2,22 +2,28 @@ import Foundation
 import SwiftUI
 import Combine
 import MapKit
+import Moya
+
 
 class ClientsListViewModel: ObservableObject {
+    private let organizationProvider = MoyaProvider<OrganizationProvider>(plugins: [NetworkLoggerPlugin()])
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published private var viewManager = ViewManager.shared
     
     @Published var organizations: [OrganizationModel] = []
     
-    @Published var selectedProductTypes: [ProductType]? = nil
-    @Published var distanceFromMe: Double? = nil
-    @Published var suppliersList: [OrganizationModel] = []
+    @Published var suppliersList: [OrganizationBranchModel] = []
 
     @Published var selectedMarker: MapMarker? = nil
     @Published var markers: [MapMarker] = []
     
     @Published var selectedOrganization: OrganizationModel? = nil
+    
+    @Published var organizationNameFilter: String = ""
+    
+    private var page = 0
+    private let perPage = 10
     
     private var markersPublisher: AnyPublisher<[MapMarker], Never> {
         $organizations
@@ -27,9 +33,16 @@ class ClientsListViewModel: ObservableObject {
                         latitude: organization.branches.last?.address?.latitude ?? 0,
                         longitude: organization.branches.last?.address?.longitude ?? 0
                     )
-                    return MapMarker(name: organization.title ?? "none", location: coordinate)
+                    return MapMarker(name: organization.title ?? "None", location: coordinate)
                 }
             }.eraseToAnyPublisher()
+    }
+    
+    private var updateFiltersPublisher: AnyPublisher<Void, Never> {
+        $organizationNameFilter
+            .removeDuplicates()
+        .debounce(for: .seconds(2), scheduler: DispatchQueue.main)
+        .map { _ in () }.eraseToAnyPublisher()
     }
     
     init() {
@@ -40,6 +53,15 @@ class ClientsListViewModel: ObservableObject {
             .sink { [weak self] markers in
                 self?.markers = markers
             }.store(in: &cancellableSet)
+        
+        updateFiltersPublisher
+            .dropFirst()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] markers in
+                self?.page = 0
+                self?.organizations = []
+                self?.fetchOrganizations()
+            }.store(in: &cancellableSet)
     }
     
     func setSelectedOrganization(_ organization: OrganizationModel) {
@@ -47,15 +69,42 @@ class ClientsListViewModel: ObservableObject {
     }
     
     func fetchOrganizations() {
-        viewManager.isLoading = true
+        guard page != -1 else {
+            return
+        }
+                
+        let filter = FilterDto(
+            role: .worker,
+            title: organizationNameFilter,
+            page: page,
+            perPage: 20
+        )
         
-        // TODO: request to fetch items
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
+        organizationProvider.request(.getOrganizations(filter: filter)) { [weak self] result in
+            switch result {
+            case .success(let response):
+                if (200...299).contains(response.statusCode) {
+                    guard let self,
+                          let response = try? response.map(PaginatedDto<OrganizationDto>.self),
+                          let total = response.total else {
+                        AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
+                        return
+                    }
+                    let receivedOrganizations = response.items.map { item -> OrganizationModel in
+                        OrganizationModel.from(item)
+                    }
+                    
+                    self.organizations += receivedOrganizations
+                    self.page = total > self.organizations.count ? self.page + 1 : -1
 
-            guard let self = self else { return }
-            self.viewManager.isLoading = false
-            
-            self.organizations = [ ]
+                } else {
+                    let errorDto = try? response.map(ErrorDto.self)
+                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
+                }
+            case .failure(let error):
+                Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
+                AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
+            }
         }
     }
 }

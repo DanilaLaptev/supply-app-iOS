@@ -34,7 +34,7 @@ struct OrderingView: View {
                     
                     VStack {
                         ForEach(viewModel.selectedItems ?? []) { wrappedItem in
-                            StaticProductCard(storageItem: StorageItemModel(product: wrappedItem.item.product, imageUrl: "", price: wrappedItem.item.price, quantity: wrappedItem.selectedAmmount, description: ""))
+                            StaticProductCard(storageItem: StorageItemModel(product: wrappedItem.item.product, imageUrl: "", price: wrappedItem.item.price, quantity: wrappedItem.selectedAmmount, description: "", isHidden: false))
                         }
                     }
                     .padding(.horizontal, 16)
@@ -49,7 +49,7 @@ struct OrderingView: View {
                     VStack(alignment: .leading ,spacing: 16) {
                         Text("Выберите дату и время получения заказа").font(.customStandard)
                         VStack(spacing: 8) {
-                            DatePickerField(date: $viewModel.date, icon: .customDate)
+                            DatePickerField(date: $viewModel.deliveryDate, icon: .customDate)
                         }
                     }
                     
@@ -61,7 +61,7 @@ struct OrderingView: View {
                             title: Text("Оформление заказа"),
                             message: Text("Вы точно хотите оформить заказ на \(Int(viewModel.totalPrice)) ₽?"),
                             primaryButton: .default(Text("Оформить")) {
-                                // TODO: action
+                                viewModel.createSupply()
                             },
                             secondaryButton: .cancel(Text("Отмена"))
                         )

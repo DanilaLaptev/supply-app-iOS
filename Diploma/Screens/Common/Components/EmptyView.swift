@@ -5,7 +5,7 @@ struct ListEmptyView: View {
     
     var body: some View {
         VStack(alignment: .center, spacing: 0) {
-            Image("unpacked box").resizable().frame(width: 240, height: 240)
+            Image("unpacked box").resizable().frame(width: 200, height: 200)
             Text(text).font(.customTitle)
         }
     }

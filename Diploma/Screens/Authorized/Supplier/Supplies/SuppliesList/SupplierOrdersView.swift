@@ -1,11 +1,12 @@
 import SwiftUI
+import Combine
 
-struct WorkerSupplyListScreen: View {
-    public static let tag = "OrdersListScreen"
+struct SupplierOrdersView: View {
+    public static let tag = "SupplierOrdersView"
     
     @StateObject private var tools = ViewManager.shared
     
-    @StateObject private var viewModel = WorkerSuppliesListViewModel()
+    @StateObject private var viewModel = SupplierOrdersViewModel()
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -18,18 +19,18 @@ struct WorkerSupplyListScreen: View {
                     .padding(.horizontal, 16)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    SmallTagsGroup<SupplyProcessingStatus>(selectedTags: .constant([]))
+                    SmallTagsGroup<SupplyStatus>(selectedTags: $viewModel.supplyStatuses)
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
                     .padding(.bottom, 16)
                 }
                 
                 VStack {
-                    ForEach((0...8), id: \.self) { _ in
+                    ForEach(viewModel.supplies) { supply in
                         NavigationLink {
-                            SupplyScreen(supplyModel: .empty)
+                            SupplierOrderView(supplyModel: supply)
                         } label: {
-                            SupplyCard(supplyModel: .empty)
+                            SupplyCard(supplyModel: supply)
                         }
                     }
                 }
@@ -46,10 +47,10 @@ struct WorkerSupplyListScreen: View {
     }
 }
 
-struct OrdersScreen_Previews: PreviewProvider {
+struct SupplierOrdersViewView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            WorkerSupplyListScreen()
+            SupplierOrdersView()
         }
     }
 }

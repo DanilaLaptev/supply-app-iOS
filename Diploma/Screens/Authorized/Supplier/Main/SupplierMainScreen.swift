@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct SupplierMainScreen: View {
+    @StateObject var viewModel = SupplierMainViewModel()
+    
     public static let tag = "SupplierMainScreen"
     @State var showEditProductScreen = false
     
@@ -8,43 +10,56 @@ struct SupplierMainScreen: View {
     
     @State private var tagSelection: String? = nil
     @State private var showDeleteProductAlert = false
-    @State private var showHideProductAlert = false
 
     var body: some View {
         VStack {
-            NavigationLink("", destination: EditProductScreen(), tag: EditProductScreen.tag, selection: $tagSelection)
-            NavigationLink("", destination: ProductScreen(model: .empty), tag: ProductScreen.tag, selection: $tagSelection)
+            NavigationLink(
+                "",
+                destination: ProductScreen(model: viewModel.selectedProduct ?? .empty),
+                isActive: $viewModel.showProductScreen
+            )
             
-            SmallTagsGroup<ProductType>(selectedTags: .constant([]))
+            NavigationLink(
+                "",
+                destination: EditProductScreen(initialStorageItem: viewModel.editedProduct),
+                isActive: $viewModel.showEditScreen
+            )
+                        
+            SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
             .padding(.top, 8)
             .padding(.bottom, 16)
             ScrollView(.vertical, showsIndicators: false) {
                 AddProductButton  {
-                    tagSelection = EditProductScreen.tag
-                    
+                    viewModel.openEditView()
                 }
                 .padding(.horizontal, 16)
-                .alert(isPresented: $showHideProductAlert) {
+                .alert(isPresented: $viewModel.showHideProductAlert) {
                     Alert(
-                        title: Text("Скрыть продукт"),
-                        message: Text("Вы точно хотите скрыть выбранный продукт?"),
-                        primaryButton: .default(Text("Скрыть")) {
-                            // TODO: action
+                        title: Text("Видимость продукта"),
+                        message: Text("Вы точно хотите изменить видимость выбранного продукт?"),
+                        primaryButton: .default(Text("Изменить")) {
+                            viewModel.hideProductRequest()
                         },
                         secondaryButton: .cancel(Text("Отмена"))
                     )
                 }
                 
                 VStack {
-                    ForEach(["Кефир, 1 литр", "Гречка", "Рис", "Яблоки, 1 кг", "Картофель", "Творог", "Сыр", "Томатная паста", "Котлеты"], id: \.self) { name in
-                        SupplierProductCard(name: name) {
-                            tagSelection = EditProductScreen.tag
+                    ForEach(viewModel.storageItems) { storageItem in
+                        SupplierProductCard(model: storageItem) {
+                            viewModel.openProductView(storageItem)
+                        } tapEditingButton: {
+                            viewModel.openEditView(storageItem)
                         } tapVisibilityButton : {
-                            self.showHideProductAlert.toggle()
+                            viewModel.hideStorageItem(storageItem)
                         } tapDeletingButton: {
                             self.showDeleteProductAlert.toggle()
                         }
-                        .onTapGesture { tagSelection = ProductScreen.tag }
+                        .onAppear {
+                            if viewModel.storageItems.last?.id == storageItem.id {
+                                viewModel.fetchStorageItems()
+                            }
+                        }
                     }
                 }
                 .padding(.horizontal, 16)

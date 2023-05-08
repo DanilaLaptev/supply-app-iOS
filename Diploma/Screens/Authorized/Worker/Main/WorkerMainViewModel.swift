@@ -43,6 +43,8 @@ class WorkerMainViewModel: ObservableObject {
     }
     
     init() {
+        fetchStorageItems()
+        
         selectedProductsPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] selectedProducts in
@@ -56,6 +58,7 @@ class WorkerMainViewModel: ObservableObject {
             }.store(in: &cancellableSet)
         
         $selectedProductTypes
+            .dropFirst()
             .receive(on: RunLoop.main)
             .debounce(for: .seconds(2), scheduler: DispatchQueue.main)
             .removeDuplicates()
@@ -109,18 +112,5 @@ class WorkerMainViewModel: ObservableObject {
     func editProduct(_ storageItem: StorageItemModel) {
         editedStorageItem = storageItem
         editStorageItemActive.toggle()
-    }
-    
-    func hideStorageItem(_ storageItem: StorageItemModel) {
-        viewManager.isLoading = true
-        
-        // TODO: request to hide item
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) { [weak self] in
-            
-            guard let self = self else { return }
-            self.viewManager.isLoading = false
-            
-            self.fetchStorageItems()
-        }
     }
 }
