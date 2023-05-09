@@ -174,6 +174,7 @@
 		99FA123D2A09B7CC00B731A6 /* CreateProductViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA123B2A09B7CC00B731A6 /* CreateProductViewModel.swift */; };
 		99FA12412A09B8FD00B731A6 /* OrganizationImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA123F2A09B8FD00B731A6 /* OrganizationImageView.swift */; };
 		99FA12422A09B8FD00B731A6 /* OrganizationImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12402A09B8FD00B731A6 /* OrganizationImageViewModel.swift */; };
+		99FA12462A0A429B00B731A6 /* ProductPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12452A0A429B00B731A6 /* ProductPicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -234,7 +235,6 @@
 		99AA129729D229C7002219E0 /* OrganizationType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationType.swift; sourceTree = "<group>"; };
 		99AA129929D22BC7002219E0 /* AuthorizationWrapper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationWrapper.swift; sourceTree = "<group>"; };
 		99AA12A029D5713F002219E0 /* MainSignUpViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainSignUpViewModel.swift; sourceTree = "<group>"; };
-		99AA12A229D57391002219E0 /* TemplateInfo.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = TemplateInfo.plist; sourceTree = "<group>"; };
 		99C14C5129D6FA3300B8D3E2 /* AuthorizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationProvider.swift; sourceTree = "<group>"; };
 		99C14C5329D6FA9200B8D3E2 /* OrganizationProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationProvider.swift; sourceTree = "<group>"; };
 		99C14C5529D6FA9E00B8D3E2 /* OrganizationBranchProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationBranchProvider.swift; sourceTree = "<group>"; };
@@ -348,6 +348,7 @@
 		99FA123B2A09B7CC00B731A6 /* CreateProductViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateProductViewModel.swift; sourceTree = "<group>"; };
 		99FA123F2A09B8FD00B731A6 /* OrganizationImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationImageView.swift; sourceTree = "<group>"; };
 		99FA12402A09B8FD00B731A6 /* OrganizationImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationImageViewModel.swift; sourceTree = "<group>"; };
+		99FA12452A0A429B00B731A6 /* ProductPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductPicker.swift; sourceTree = "<group>"; };
 		D95D20718B9E8485FCEDA73C /* Pods_Diploma.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Diploma.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -496,7 +497,6 @@
 			children = (
 				99D4543229AE4E2300462A8F /* Resources */,
 				99C14C5029D6FA0B00B8D3E2 /* Network */,
-				99AA12A229D57391002219E0 /* TemplateInfo.plist */,
 				99A561EE29A0FDB900F9932A /* Info.plist */,
 				99D4542129AC7F1600462A8F /* Common */,
 				99D4547629B362A400462A8F /* Screens */,
@@ -1102,6 +1102,7 @@
 		99FA12392A09B7B500B731A6 /* CreateProduct */ = {
 			isa = PBXGroup;
 			children = (
+				99FA12442A0A428300B731A6 /* Components */,
 				99FA123A2A09B7CC00B731A6 /* CreateProductView.swift */,
 				99FA123B2A09B7CC00B731A6 /* CreateProductViewModel.swift */,
 			);
@@ -1115,6 +1116,14 @@
 				99FA12402A09B8FD00B731A6 /* OrganizationImageViewModel.swift */,
 			);
 			path = OrganizationImage;
+			sourceTree = "<group>";
+		};
+		99FA12442A0A428300B731A6 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				99FA12452A0A429B00B731A6 /* ProductPicker.swift */,
+			);
+			path = Components;
 			sourceTree = "<group>";
 		};
 		B15AE332FCC1211E0F9B1938 /* Pods */ = {
@@ -1282,6 +1291,7 @@
 				99AA129129CDE6B7002219E0 /* LoadingScreenViewModel.swift in Sources */,
 				99D4542829AD242A00462A8F /* FontsExtension.swift in Sources */,
 				99FA12182A062F9000B731A6 /* SupplyProvider.swift in Sources */,
+				99FA12462A0A429B00B731A6 /* ProductPicker.swift in Sources */,
 				99C14C6E29D955EE00B8D3E2 /* OverflowScroll.swift in Sources */,
 				99C14C5429D6FA9200B8D3E2 /* OrganizationProvider.swift in Sources */,
 				99A0951329B5B51700C0286D /* OrderingView.swift in Sources */,

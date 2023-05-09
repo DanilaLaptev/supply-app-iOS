@@ -5,5 +5,5 @@ struct ProductDto: Codable {
     var productType: ProductType?
     var name: String?
     var approved: Bool?
-    var image: String
+    var image: String?
 }

@@ -6,15 +6,29 @@ import Moya
 
 class CreateProductViewModel: ObservableObject {
     private var organizationBranchProvider = MoyaProvider<OrganizationBranchProvider>(plugins: [NetworkLoggerPlugin()])
+    private var productProvider = MoyaProvider<ProductProvider>(plugins: [NetworkLoggerPlugin()])
     private var cancellableSet = Set<AnyCancellable>()
-    @Published private var initialStorageItem: StorageItemModel?
 
+    @Published private(set) var products: [ProductModel] = []
+    
+    @Published var product: ProductModel?
     @Published var price = ""
     @Published var description = ""
-    @Published var imageUrl = ""
+    @Published private(set) var imageUrl = ""
     
+    @Published private var productValidation = ""
     @Published private var descriptionValidation = ""
     @Published private var priceValidation = ""
+    
+    private var isProductValid: AnyPublisher<String, Never> {
+        $product
+            .map { product in
+                guard product != nil else {
+                    return FormError.requiredField(source: "Продукт").localizedDescription
+                }
+                return ""
+            }.eraseToAnyPublisher()
+    }
     
     private var isDescriptionValid: AnyPublisher<String, Never> {
         $description
@@ -41,7 +55,30 @@ class CreateProductViewModel: ObservableObject {
             }.eraseToAnyPublisher()
     }
     
+    private var productImageUrl: AnyPublisher<String, Never> {
+        $product
+            .compactMap { product -> String? in
+                return URL(string: product?.imageURL ?? "none")?.absoluteString
+            }.eraseToAnyPublisher()
+    }
+    
+    
+    
     init() {
+        fetchProductsList()
+        
+        isProductValid
+            .receive(on: RunLoop.main)
+            .sink { [weak self] valid in
+                self?.productValidation = valid
+            }.store(in: &cancellableSet)
+        
+        productImageUrl
+            .receive(on: RunLoop.main)
+            .sink { [weak self] url in
+                self?.imageUrl = url
+            }.store(in: &cancellableSet)
+        
         isPriceValid
             .receive(on: RunLoop.main)
             .sink { [weak self] valid in
@@ -53,18 +90,14 @@ class CreateProductViewModel: ObservableObject {
             .sink { [weak self] valid in
                 self?.descriptionValidation = valid
             }.store(in: &cancellableSet)
-
-        $initialStorageItem
-            .receive(on: RunLoop.main)
-            .compactMap { $0 }
-            .sink { [weak self] storageItem in
-                self?.price = String(Int(storageItem.price))
-                self?.description = storageItem.description
-                self?.imageUrl = storageItem.imageUrl
-            }.store(in: &cancellableSet)
     }
     
     private func validateForm() -> Bool {
+        guard productValidation.isEmpty else {
+            AlertManager.shared.showAlert(.init(type: .error, description: productValidation))
+            return false
+        }
+        
         guard descriptionValidation.isEmpty else {
             AlertManager.shared.showAlert(.init(type: .error, description: descriptionValidation))
             return false
@@ -78,24 +111,26 @@ class CreateProductViewModel: ObservableObject {
         return true
     }
     
-    private func fetchProductsList() {
-//        organizationBranchProvider.request(.addStorageItems(
-//            branchId: AuthManager.shared.authData?.branchId ?? -1,
-//            items: [requestBody]
-//        )) { [weak self] result in
-//            switch result {
-//            case .success(let response):
-//                if (200...299).contains(response.statusCode) {
-//                    AlertManager.shared.showAlert(.init(type: .success, description: "Товар создан!"))
-//                } else {
-//                    let errorDto = try? response.map(ErrorDto.self)
-//                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
-//                }
-//            case .failure(let error):
-//                Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
-//                AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
-//            }
-//        }
+    func fetchProductsList() {
+        productProvider.request(.getAllProducts) { [weak self] result in
+            switch result {
+            case .success(let response):
+                if (200...299).contains(response.statusCode) {
+                    guard let self,
+                          let response = try? response.map([ProductDto].self) else {
+                        AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
+                        return
+                    }
+                    self.products = response.map { ProductModel.from($0) }
+                } else {
+                    let errorDto = try? response.map(ErrorDto.self)
+                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
+                }
+            case .failure(let error):
+                Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
+                AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
+            }
+        }
     }
     
     func createStorageItem() {
@@ -104,7 +139,7 @@ class CreateProductViewModel: ObservableObject {
         }
         
         let requestBody = StorageItemDto(
-            id: -1, // TODO: product id
+            id: product?.id,
             price: Double(price),
             description: description,
             quantity: -1,
@@ -128,9 +163,5 @@ class CreateProductViewModel: ObservableObject {
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
             }
         }
-    }
-    
-    func setup(_ storageItem: StorageItemModel?) {
-        initialStorageItem = storageItem
     }
 }

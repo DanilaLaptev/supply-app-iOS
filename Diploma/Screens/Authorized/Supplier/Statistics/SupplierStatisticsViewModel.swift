@@ -12,7 +12,6 @@ class SupplierStatisticsViewModel: ObservableObject {
     @Published var endDate: Date? = nil
     @Published var supplies: [SupplyModel] = []
 
-    @Published var incomingStatistics: ChartDataContainer = .empty
     @Published var outcomingStatistics: ChartDataContainer = .empty
 
     var dateRangeTitle: String {
@@ -31,27 +30,6 @@ class SupplierStatisticsViewModel: ObservableObject {
         )
         .debounce(for: .seconds(2), scheduler: DispatchQueue.main)
         .map { _, _ in () }.eraseToAnyPublisher()
-    }
-    
-    private var incomingSuppliesStatistics: AnyPublisher<ChartDataContainer, Never> {
-        $supplies
-            .map { allSupplies -> ChartDataContainer in
-                
-                let allProducts = allSupplies
-                    .filter  { supply in
-                    supply.toBranchId == AuthManager.shared.authData?.branchId
-                }
-                    .flatMap { $0.products }
-                
-                let productsByType = Dictionary(grouping: allProducts, by: { $0.product.type })
-                    .mapValues { $0.reduce(0) { $0 + $1.price } }
-
-                let data = productsByType.map { key, sumPrice -> ChartData in
-                    ChartData(name: key.name, value: sumPrice)
-                }
-                
-                return ChartDataContainer(data)
-            }.eraseToAnyPublisher()
     }
     
     private var outcomingSuppliesStatistics: AnyPublisher<ChartDataContainer, Never> {
@@ -83,12 +61,6 @@ class SupplierStatisticsViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.fetchSupplies()
-            }.store(in: &cancellableSet)
-        
-        incomingSuppliesStatistics
-            .receive(on: RunLoop.main)
-            .sink { [weak self] statistics in
-                self?.incomingStatistics = statistics
             }.store(in: &cancellableSet)
         
         outcomingSuppliesStatistics

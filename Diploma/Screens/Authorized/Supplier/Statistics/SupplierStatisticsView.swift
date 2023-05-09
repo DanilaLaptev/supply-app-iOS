@@ -13,10 +13,6 @@ struct SupplierStatisticsView: View {
     
     @StateObject private var viewModel = SupplierStatisticsViewModel()
     
-    private var incomingStatisticsSubtitle: String {
-        "Общая стоимость: \(viewModel.incomingStatistics.chartData.map { Int($0.value) }.reduce(0, +)) ₽"
-    }
-    
     private var outcomingStatisticsSubtitle: String {
         "Общая стоимость: \(viewModel.outcomingStatistics.chartData.map { Int($0.value) }.reduce(0, +)) ₽"
     }
@@ -51,15 +47,6 @@ struct SupplierStatisticsView: View {
                     .frame(width: 48, height: 48)
                     .sheet(isPresented: $isSharePresented) {
                         ActivityViewController(activityItems: [statistic!])
-                    }
-                }
-                
-                ExtendableSection(isCollapsed: false) {
-                    PieChart(chartDataObj: viewModel.incomingStatistics)
-                } headerContent: {
-                    VStack(alignment: .leading, spacing: 4) {
-                        Text("Купленные товары").font(.customSubtitle)
-                        Text(incomingStatisticsSubtitle).font(.customHint)
                     }
                 }
                 

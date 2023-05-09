@@ -4,6 +4,7 @@ import Moya
 
 enum SupplyProvider {
     case createSupply(supply: SupplyDto)
+    case sellSupply(supply: SupplyDto)
     case getSupplies(filter: SupplyFilterDto)
     case declineSupply(supplyId: Int, branchId: Int)
     case acceptSupply(supplyId: Int, branchId: Int)
@@ -18,6 +19,8 @@ extension SupplyProvider: TargetType {
         switch self {
         case .createSupply, .getSupplies:
             return "/"
+        case .sellSupply:
+            return "/sell"
         case .declineSupply(let supplyId, _):
             return "/\(supplyId)/decline"
         case .acceptSupply(let supplyId, _):
@@ -31,7 +34,7 @@ extension SupplyProvider: TargetType {
     
     var method: Moya.Method {
         switch self {
-        case .createSupply, .declineSupply, .acceptSupply, .acceptSuppliesGroup, .declineSuppliesGroup:
+        case .createSupply, .declineSupply, .acceptSupply, .acceptSuppliesGroup, .declineSuppliesGroup, .sellSupply:
             return .post
         case .getSupplies:
             return .get
@@ -41,7 +44,7 @@ extension SupplyProvider: TargetType {
     // TODO: data for requests
     var task: Task {
         switch self {
-        case .createSupply(let supply):
+        case .createSupply(let supply), .sellSupply(let supply):
             guard let body = CoderManager.encode(supply) else {
                 return .requestPlain
             }
@@ -65,6 +68,8 @@ extension SupplyProvider: TargetType {
     var sampleData: Data {
         switch self {
         case .createSupply:
+            return .init()
+        case .sellSupply:
             return .init()
         case .declineSupply:
             return .init()

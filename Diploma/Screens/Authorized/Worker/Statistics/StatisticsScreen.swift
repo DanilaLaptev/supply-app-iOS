@@ -63,7 +63,7 @@ struct StatisticsScreen: View {
                 }
                     
                 ExtendableSection(isCollapsed: false) {
-                    PieChart(chartDataObj: viewModel.outcomingStatistics)
+                    BarChart(chartDataObj: viewModel.outcomingStatistics)
                 } headerContent: {
                     VStack(alignment: .leading, spacing: 4) {
                         Text("Проданные товары").font(.customSubtitle)

@@ -22,12 +22,7 @@ struct StorageItemModel: Identifiable {
     static func from(_ dto: StorageItemDto) -> StorageItemModel {
         StorageItemModel(
             id: dto.id ?? -1,
-            product: ProductModel(
-                id: dto.product?.id ?? -1,
-                name: dto.product?.name ?? "empty",
-                isApproved: dto.product?.approved ?? false,
-                type: dto.product?.productType ?? .other
-            ),
+            product: dto.product == nil ? .empty : ProductModel.from(dto.product!),
             imageUrl: dto.product?.image ?? "none",
             price: dto.price ?? 0,
             quantity: dto.quantity ?? 0,

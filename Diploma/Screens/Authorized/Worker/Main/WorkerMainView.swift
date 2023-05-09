@@ -59,7 +59,7 @@ struct WorkerMainView: View {
                     title: Text("Сохранить закупку"),
                     message: Text("Сохнаить покупку на \(Int(viewModel.totalPrice)) ₽?"),
                     primaryButton: .default(Text("Сохранить")) {
-                        // TODO: action
+                        viewModel.sellStorageItems()
                     },
                     secondaryButton: .cancel(Text("Отмена"))
                 )

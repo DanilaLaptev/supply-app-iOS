@@ -30,7 +30,7 @@ extension OrganizationProvider: TargetType {
             return .get
         }
     }
-        
+    
     // TODO: data for requests
     var task: Task {
         switch self {
@@ -71,12 +71,12 @@ extension OrganizationProvider: TargetType {
 }
 
 extension OrganizationProvider: MoyaCacheable {
-  var cachePolicy: CachePolicy {
-    switch self {
-    case .getOrganization, .getOrganizations:
-      return .returnCacheDataElseLoad
-    default:
-      return .reloadIgnoringLocalAndRemoteCacheData
+    var cachePolicy: CachePolicy {
+        switch self {
+        case .getOrganization, .getOrganizations:
+            return .returnCacheDataElseLoad
+        default:
+            return .reloadIgnoringLocalAndRemoteCacheData
+        }
     }
-  }
 }

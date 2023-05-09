@@ -10,6 +10,7 @@ struct SupplierMainScreen: View {
     
     @State private var tagSelection: String? = nil
     @State private var showDeleteProductAlert = false
+    @State private var showCreateProductView = false
 
     var body: some View {
         VStack {
@@ -24,13 +25,19 @@ struct SupplierMainScreen: View {
                 destination: EditProductScreen(initialStorageItem: viewModel.editedProduct),
                 isActive: $viewModel.showEditScreen
             )
+            
+            NavigationLink(
+                "",
+                destination: CreateProductView(),
+                isActive: $showCreateProductView
+            )
                         
             SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
             .padding(.top, 8)
             .padding(.bottom, 16)
             ScrollView(.vertical, showsIndicators: false) {
                 AddProductButton  {
-                    viewModel.openEditView()
+                    showCreateProductView.toggle()
                 }
                 .padding(.horizontal, 16)
                 .alert(isPresented: $viewModel.showHideProductAlert) {

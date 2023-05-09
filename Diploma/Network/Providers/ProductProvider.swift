@@ -13,7 +13,7 @@ extension ProductProvider: TargetType {
     var path: String {
         switch self {
         case .getAllProducts:
-            return ""
+            return "/"
         case .createProduct:
             return ""
         }
@@ -48,6 +48,18 @@ extension ProductProvider: TargetType {
         }
     }
     var headers: [String: String]? {
-        return RequestHeader.standard
+        return RequestHeader.withAccessToken
+    }
+}
+
+
+extension ProductProvider: MoyaCacheable {
+    var cachePolicy: CachePolicy {
+        switch self {
+        case .getAllProducts:
+            return .returnCacheDataElseLoad
+        default:
+            return .reloadIgnoringLocalAndRemoteCacheData
+        }
     }
 }

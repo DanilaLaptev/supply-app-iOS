@@ -6,6 +6,7 @@ import Moya
 
 class WorkerMainViewModel: ObservableObject {
     private let organizationBranchProvider = MoyaProvider<OrganizationBranchProvider>(plugins: [NetworkLoggerPlugin()])
+    private let supplyProvider = MoyaProvider<SupplyProvider>(plugins: [NetworkLoggerPlugin()])
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published private var viewManager = ViewManager.shared
@@ -21,7 +22,6 @@ class WorkerMainViewModel: ObservableObject {
     
     @Published var editStorageItemActive = false
     @Published var editedStorageItem: StorageItemModel? = nil
-    
     
     private var page = 0
     private let perPage = 10
@@ -51,6 +51,17 @@ class WorkerMainViewModel: ObservableObject {
                 self?.disableSupplyButton = selectedProducts.isEmpty
             }.store(in: &cancellableSet)
         
+        
+        selectedProductsPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] selectedProducts in
+                self?.selectedStorageItems = selectedProducts.map({ itemWrapper in
+                    var tempItem = itemWrapper.item
+                    tempItem.quantity = itemWrapper.selectedAmmount
+                    return tempItem
+                })
+            }.store(in: &cancellableSet)
+        
         totalPricePublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] totalPrice in
@@ -63,10 +74,7 @@ class WorkerMainViewModel: ObservableObject {
             .debounce(for: .seconds(2), scheduler: DispatchQueue.main)
             .removeDuplicates()
             .sink { [weak self] selected in
-                self?.page = 0
-                self?.storageItems = []
-                self?.selectedStorageItems = []
-                self?.fetchStorageItems()
+                self?.refreshData()
             }.store(in: &cancellableSet)
     }
     
@@ -109,6 +117,39 @@ class WorkerMainViewModel: ObservableObject {
         }
     }
     
+    func sellStorageItems() {
+        let supply = SupplyDto(
+            fromBranch: authManager.authData?.branchId ?? -1,
+            deliveryTime: Date().toString(),
+            items: selectedStorageItems.map({ storageItem -> StorageItemDto in
+                StorageItemDto(id: storageItem.id, quantity: storageItem.quantity)
+            })
+        )
+        
+        supplyProvider.request(.sellSupply(supply: supply)) { [weak self] result in
+            switch result {
+            case .success(let response):
+                if (200...299).contains(response.statusCode) {
+                    AlertManager.shared.showAlert(.init(type: .success, description: "Покупка сохранена"))
+                    self?.refreshData()
+                } else {
+                    let errorDto = try? response.map(ErrorDto.self)
+                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
+                }
+            case .failure(let error):
+                Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
+                AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
+            }
+        }
+    }
+    
+    func refreshData() {
+        page = 0
+        storageItems = []
+        selectedStorageItems = []
+        fetchStorageItems()
+    }
+                               
     func editProduct(_ storageItem: StorageItemModel) {
         editedStorageItem = storageItem
         editStorageItemActive.toggle()

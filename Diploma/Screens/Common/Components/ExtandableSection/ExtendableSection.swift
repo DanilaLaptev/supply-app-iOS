@@ -26,6 +26,7 @@ struct ExtendableSection<Content: View, Header: View>: View {
             }
             .frame(height: isCollapsed ? 0 : nil)
             .clipped()
+            .opacity(isCollapsed ? 0 : 1)
         }
         .padding(16)
         .background(Color.customWhite)
