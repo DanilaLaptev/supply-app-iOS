@@ -9,6 +9,8 @@ class SuppliersListViewModel: ObservableObject {
     private let organizationProvider = MoyaProvider<OrganizationProvider>(plugins: [NetworkLoggerPlugin()])
     private var cancellableSet = Set<AnyCancellable>()
     
+    @Published var navigateToOrganizationView = false
+    
     @Published private var viewManager = ViewManager.shared
     
     @Published var organizations: [OrganizationModel] = []
@@ -16,7 +18,7 @@ class SuppliersListViewModel: ObservableObject {
     @Published var selectedProductTypes: [ProductType]?
     @Published var distanceFromMe: Double?
     @Published var suppliersList: [OrganizationBranchModel] = []
-
+    
     @Published var selectedMarker: MapMarker?
     @Published var markers: [MapMarker] = []
     
@@ -28,6 +30,16 @@ class SuppliersListViewModel: ObservableObject {
     
     private var page = 0
     private let perPage = 10
+    
+    private var selectedMarkerPublisher: AnyPublisher<OrganizationModel, Never> {
+        $selectedMarker.compactMap { [weak self] selected in
+            guard let self,
+                  let organization = self.organizations.first(where: { organization in
+                      organization.title == selected?.name
+                  }) else { return nil }
+            return organization
+        }.eraseToAnyPublisher()
+    }
     
     private var markersPublisher: AnyPublisher<[MapMarker], Never> {
         $organizations
@@ -53,6 +65,19 @@ class SuppliersListViewModel: ObservableObject {
     
     init() {
         fetchOrganizations()
+        
+        $selectedOrganization
+            .dropFirst()
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
+                self?.navigateToOrganizationView.toggle()
+            }.store(in: &cancellableSet)
+        
+        selectedMarkerPublisher
+            .receive(on: RunLoop.main)
+            .sink { [weak self] organization in
+                self?.selectedOrganization = organization
+            }.store(in: &cancellableSet)
         
         markersPublisher
             .receive(on: RunLoop.main)
@@ -105,7 +130,7 @@ class SuppliersListViewModel: ObservableObject {
                     
                     self.organizations += receivedOrganizations
                     self.page = total > self.organizations.count ? self.page + 1 : -1
-
+                    
                 } else {
                     let errorDto = try? response.map(ErrorDto.self)
                     AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))

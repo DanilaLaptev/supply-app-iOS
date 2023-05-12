@@ -43,7 +43,7 @@ class SupplierStatisticsViewModel: ObservableObject {
                     .flatMap { $0.products }
                 
                 let productsByType = Dictionary(grouping: allProducts, by: { $0.product.type })
-                    .mapValues { $0.reduce(0) { $0 + $1.price } }
+                    .mapValues { $0.reduce(0) { $0 + $1.price * Double($1.quantity) } }
 
                 let data = productsByType.map { key, sumPrice -> ChartData in
                     ChartData(name: key.name, value: sumPrice)

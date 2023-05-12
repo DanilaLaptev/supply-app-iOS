@@ -6,23 +6,25 @@ struct EditProductScreen: View {
     @StateObject var viewModel = EditProductViewModel()
     var initialStorageItem: StorageItemModel? = nil
     
-    @State private var isSharePresented = false
-    @State private var selectedImage: UIImage?
-    
     var body: some View {
         VStack {
             VStack(spacing: 16) {
                 Header(title: initialStorageItem?.product.name ?? "Title")
                 
                 // TODO: async image
-                SelectedImage()
+                AsyncImage(imageUrl: URL(string: initialStorageItem?.product.imageURL ?? "none"), placeholder: {
+                    Color.customDarkGray
+                })
+                .frame(height: 200)
+                .frame(maxWidth: .infinity)
+                .clipped()
+                .cornerRadius(8)
                     .padding(.bottom, 8)
-                    .onTapGesture {
-                        isSharePresented.toggle()
-                    }
-                    .sheet(isPresented: $isSharePresented) {
-                        PhotoPicker(selectedImage: $selectedImage)
-                    }
+
+                .frame(height: 200)
+                .frame(maxWidth: .infinity)
+                .clipped()
+                .cornerRadius(8)
                 
                 CustomTextField(textFieldValue: $viewModel.description, placeholder: "Описание")
                 CustomTextField(textFieldValue: $viewModel.price, placeholder: "Цена").keyboardType(.numberPad)
@@ -43,29 +45,6 @@ struct EditProductScreen: View {
         .onAppear {
             viewModel.setup(initialStorageItem)
         }
-    }
-    
-    @ViewBuilder
-    func SelectedImage() -> some View {
-        ZStack(alignment: .center) {
-            if let image = selectedImage {
-                Image(uiImage: image)
-                    .resizable()
-                    .scaledToFill()
-            } else {
-                Rectangle()
-                    .foregroundColor(Color.customWhite)
-                    .frame(maxWidth: .infinity, maxHeight: .infinity)
-                
-                Image.customImage
-                    .frame(width: 24, height: 24)
-                    .foregroundColor(.customOrange)
-            }
-        }
-        .frame(height: 200)
-        .frame(maxWidth: .infinity)
-        .clipped()
-        .cornerRadius(8)
     }
     
 }

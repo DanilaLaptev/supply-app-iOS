@@ -54,7 +54,6 @@ class LoadingScreenViewModel: ObservableObject {
                     guard let authorizationDto,
                           let organizationId = authorizationDto.organizationId,
                           let branchId = authorizationDto.mainBranchId,
-                          let token = authorizationDto.token,
                           let role = authorizationDto.role else {
                         AlertManager.shared.showAlert(.init(type: .error, description: "Не удалось получить данные пользователя"))
                         self?.authManager.setData(nil)
@@ -62,7 +61,12 @@ class LoadingScreenViewModel: ObservableObject {
                         return
                     }
                     
-                    let authData = AuthData(organizationId: organizationId, branchId: branchId, token: token, role: role)
+                    let authData = AuthData(
+                        organizationId: organizationId,
+                        branchId: branchId,
+                        token: KeychainManager.shared.get(.accessToken) ?? "none",
+                        role: role
+                    )
                     self?.authManager.setData(authData)
                     self?.navigateToAuthWrapper = true
                 } else {

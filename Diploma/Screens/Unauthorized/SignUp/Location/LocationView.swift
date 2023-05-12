@@ -2,9 +2,7 @@ import SwiftUI
 
 struct LocationView: View {
     public static let tag = "LocationScreen"
-    
-    @State private var tagSelection: String? = nil
-    
+        
     @StateObject private var tools = ViewManager.shared
     @StateObject private var alertManager = AlertManager.shared
     
@@ -16,7 +14,10 @@ struct LocationView: View {
 
     var body: some View {
         OverflowScroll {
-            NavigationLink("", destination: SignInView(), tag: SignInView.tag, selection: $tagSelection)
+            NavigationLink(
+                "",
+                destination: AuthorizationWrapper(),
+                isActive: $viewModel.navigateToSignIn)
             
             VStack(spacing: 0) {
                 MapView(markers: $viewModel.landmarks,
@@ -34,7 +35,7 @@ struct LocationView: View {
                             .padding(.bottom, 24)
                         
                         CustomButton(label: Text("Завершить регистрацию")) {
-                            tagSelection = SignInView.tag
+                            viewModel.addOrganiztionLocation()
                         }
                     }
                 }

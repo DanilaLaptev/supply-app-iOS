@@ -4,7 +4,7 @@ struct DynamicProductCard: View {
     var model: StorageItemModel
     var minimumQuantity = 0
     var maximumQuantity = 100
-    
+    var showQuantity = false
     var extraOptions: [ExtraOption]
     
     @Binding var selectedNumber: Int
@@ -22,9 +22,17 @@ struct DynamicProductCard: View {
     
     func Content() -> some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text(model.product.name)
-                .font(.customSubtitle)
-                .foregroundColor(.customBlack)
+            HStack {
+                Text(model.product.name)
+                    .font(.customSubtitle)
+                    .foregroundColor(.customBlack)
+                
+                if showQuantity {
+                    Text(" - \(model.quantity)")
+                        .font(.customSubtitle)
+                        .foregroundColor(.customDarkGray)
+                }
+            }
             HStack {
                 Text("\(Int(model.price)) ₽")
                     .font(.customHint)

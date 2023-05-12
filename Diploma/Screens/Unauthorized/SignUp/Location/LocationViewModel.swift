@@ -12,7 +12,7 @@ class LocationViewModel: ObservableObject {
     @Published private var placeLocation: CLLocation?
     @Published private var placeFullName: String?
     @Published private(set) var organization: OrganizationCreationModel?
-    
+        
     @Published private var locationManager = LocationManager()
     private var cancellableSet = Set<AnyCancellable>()
     
@@ -20,7 +20,7 @@ class LocationViewModel: ObservableObject {
     @Published var selectedLandmark: MapMarker? = nil
     
     private var getLandmark: AnyPublisher<MapMarker, Never> {
-        Publishers.CombineLatest(
+        Publishers.Zip(
             $placeLocation,
             $placeFullName
         )
@@ -48,6 +48,12 @@ class LocationViewModel: ObservableObject {
             .debounce(for: .seconds(3), scheduler: DispatchQueue.main)
             .sink { [weak self] addressName in
                 self?.locationManager.getLocation(forPlaceCalled: addressName) { location in
+                    guard let location else {
+                        AlertManager.shared.showAlert(.init(type: .error, description: "Ошибка при обработке адреса"))
+                        self?.placeLocation = nil
+                        return
+                    }
+
                     self?.placeLocation = location
                 }
             }.store(in: &cancellableSet)
@@ -62,27 +68,23 @@ class LocationViewModel: ObservableObject {
                 }
                 self?.locationManager.getPlace(for: placeLocation) { placemark in
                     guard let placemark = placemark else {
+                        AlertManager.shared.showAlert(.init(type: .error, description: "Ошибка при обработке адреса"))
                         self?.placeFullName = nil
                         return
                     }
 
-                    var output = ""
-                    if let country = placemark.country {
-                        output = output + "\n\(country)"
-                    }
-                    if let state = placemark.administrativeArea {
-                        output = output + "\n\(state)"
-                    }
-                    if let town = placemark.locality {
-                        output = output + "\n\(town)"
+                    guard let fullName = placemark.name else {
+                        AlertManager.shared.showAlert(.init(type: .error, description: "Ошибка при обработке адреса"))
+                        self?.placeFullName = nil
+                        return
                     }
                     
-                    self?.placeFullName = output
+                    self?.placeFullName = fullName
                 }
             }.store(in: &cancellableSet)
     }
     
-    private func addOrganiztionLocation() {
+    func addOrganiztionLocation() {
         guard let selectedPlace = landmarks.first else {
             return
         }
@@ -106,6 +108,7 @@ class LocationViewModel: ObservableObject {
             case .success(let response):
                 if (200...299).contains(response.statusCode) {
                     self?.navigateToSignIn.toggle()
+                    AlertManager.shared.showAlert(.init(type: .success, description: "Организация создана"))
                 } else {
                     let errorDto = try? response.map(ErrorDto.self)
                     AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))

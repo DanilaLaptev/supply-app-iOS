@@ -7,7 +7,7 @@ struct ClientsListView: View {
     @StateObject private var tools = ViewManager.shared
     
     @State private var tagSelection: String? = nil
-    @StateObject var viewModel = SuppliersListViewModel()
+    @StateObject var viewModel = ClientsListViewModel()
         
     var body: some View {
         GeometryReader { geo in
@@ -17,9 +17,7 @@ struct ClientsListView: View {
                 
                 VStack(alignment: .leading, spacing: 0) {
                     MapView(markers: $viewModel.markers,
-                            selectedMarker: $viewModel.selectedMarker) {
-                        print("tap")
-                    }
+                            selectedMarker: $viewModel.selectedMarker)
                     .frame(maxWidth: .infinity)
                     .frame(height: geo.size.height * 0.56)
                     .padding(.bottom, -8)
@@ -32,6 +30,9 @@ struct ClientsListView: View {
                             VStack {
                                 ForEach(viewModel.organizations) { organization in
                                     OrganizationCard(organizationModel: organization)
+                                        .onTapGesture {
+                                            AlertManager.shared.showAlert(.init(type: .info, description: "Вы не можете просматривать точки питания"))
+                                        }
                                 }
                             }
                         }

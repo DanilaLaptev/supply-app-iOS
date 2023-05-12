@@ -15,6 +15,8 @@ class WorkerStatisticsViewModel: ObservableObject {
     @Published var incomingStatistics: ChartDataContainer = .empty
     @Published var outcomingStatistics: ChartDataContainer = .empty
 
+    @Published var statistics: URL?
+    
     var dateRangeTitle: String {
         guard let startDate, let endDate else { return "Вся статистика" }
         
@@ -44,7 +46,7 @@ class WorkerStatisticsViewModel: ObservableObject {
                     .flatMap { $0.products }
                 
                 let productsByType = Dictionary(grouping: allProducts, by: { $0.product.type })
-                    .mapValues { $0.reduce(0) { $0 + $1.price } }
+                    .mapValues { $0.reduce(0) { $0 + $1.price * Double($1.quantity) } }
 
                 let data = productsByType.map { key, sumPrice -> ChartData in
                     ChartData(name: key.name, value: sumPrice)
@@ -65,7 +67,7 @@ class WorkerStatisticsViewModel: ObservableObject {
                     .flatMap { $0.products }
                 
                 let productsByType = Dictionary(grouping: allProducts, by: { $0.product.type })
-                    .mapValues { $0.reduce(0) { $0 + $1.price } }
+                    .mapValues { $0.reduce(0) { $0 + $1.price * Double($1.quantity) } }
 
                 let data = productsByType.map { key, sumPrice -> ChartData in
                     ChartData(name: key.name, value: sumPrice)
@@ -75,6 +77,28 @@ class WorkerStatisticsViewModel: ObservableObject {
             }.eraseToAnyPublisher()
     }
     
+    private var statisticFileUrl: AnyPublisher<URL, Never> {
+        $supplies
+            .compactMap { supplyModels -> URL? in
+                let supplyProducts = supplyModels.flatMap { supplyModel in
+                    supplyModel.products.map { (storageItem: $0, supply: supplyModel) }
+                }
+                
+                return CustomFileManager.shared.convertToCSV(supplyProducts) { wrapper in
+                    [
+                        ("from organization", wrapper.supply.fromBranchId ?? "none"),
+                        ("to organization", wrapper.supply.toBranchId ?? "none"),
+                        ("delivery time", wrapper.supply.deliveryTime ?? "none"),
+                        ("product name", wrapper.storageItem.product.name.filter { !$0.isPunctuation } ),
+                        ("quantity", wrapper.storageItem.quantity),
+                        ("price per item", wrapper.storageItem.price),
+                        ("total price", wrapper.storageItem.price * Double(wrapper.storageItem.quantity))
+                    ]
+                }
+            }.eraseToAnyPublisher()
+    }
+    
+    
     init() {
         fetchSupplies()
         
@@ -83,6 +107,12 @@ class WorkerStatisticsViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
                 self?.fetchSupplies()
+            }.store(in: &cancellableSet)
+        
+        statisticFileUrl
+            .receive(on: RunLoop.main)
+            .sink { [weak self] url in
+                self?.statistics = url
             }.store(in: &cancellableSet)
         
         incomingSuppliesStatistics

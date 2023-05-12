@@ -12,10 +12,9 @@ struct ContactView: View {
         
         OverflowScroll {
             NavigationLink(
-                destination: LocationView()
-                    .environmentObject(viewModel.organization),
-                isActive: $viewModel.navigateToLocationView,
-                label: { }
+                "",
+                destination: OrganizationImageView().environmentObject(newOrganization),
+                isActive: $viewModel.navigateToOrganizationImage
             )
 
             VStack {

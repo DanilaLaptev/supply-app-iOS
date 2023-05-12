@@ -29,7 +29,7 @@ struct MapView: UIViewRepresentable {
     @Binding var markers: [MapMarker]
     @Binding var selectedMarker: MapMarker?
     var showUserLocation = true
-    var onTapDetailDisclosure: (() -> ())?
+
     func makeUIView(context: Context) -> MKMapView {
         let map = MKMapView()
         map.showsUserLocation = showUserLocation
@@ -57,6 +57,12 @@ struct MapView: UIViewRepresentable {
             let span = mapView.region.span
             let region = MKCoordinateRegion(center: coordinates, span: span)
             mapView.setRegion(region, animated: true)
+            guard let annotation = view.annotation as? LandmarkAnnotation,
+                  let name = annotation.title else {
+                control.selectedMarker = nil
+                return
+            }
+            control.selectedMarker = MapMarker(name: name, location: annotation.coordinate)
         }
         
         func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation) -> MKAnnotationView? {
@@ -65,20 +71,11 @@ struct MapView: UIViewRepresentable {
             var annotationView: MKMarkerAnnotationView? = mapView.dequeueReusableAnnotationView(withIdentifier: identifier) as? MKMarkerAnnotationView
             if annotationView == nil {
                 annotationView = MKMarkerAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-                annotationView?.canShowCallout = true
-                
-                let detailButton = UIButton(type: .detailDisclosure)
-                detailButton.addTarget(self, action: #selector(tapDetailDisclosure), for: .touchUpInside)
-                
-                annotationView?.rightCalloutAccessoryView = detailButton
+                annotationView?.canShowCallout = false
             } else {
                 annotationView?.annotation = annotation
             }
             return annotationView
-        }
-        
-        @objc func tapDetailDisclosure(button: UIButton) {
-            self.control.onTapDetailDisclosure?()
         }
     }
     

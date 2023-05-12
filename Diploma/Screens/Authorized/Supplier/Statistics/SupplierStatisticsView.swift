@@ -17,20 +17,20 @@ struct SupplierStatisticsView: View {
         "Общая стоимость: \(viewModel.outcomingStatistics.chartData.map { Int($0.value) }.reduce(0, +)) ₽"
     }
     
-    var statistic: URL? {
-        let csvBulderResult = FileManager.shared.exportCSV(
-            fileName: viewModel.dateRangeTitle,
-            dataArray: [
-                StatisticModel(product: "apple", price: 50, ammount: 34),
-                StatisticModel(product: "banana", price: 70, ammount: 41),
-                StatisticModel(product: "potato", price: 40, ammount: 300)
-            ])
-        
-        if case .success(let filePath) = csvBulderResult {
-            return filePath
-        }
-        return nil
-    }
+//    var statistic: URL? {
+//        let csvBulderResult = FileManager.shared.exportCSV(
+//            fileName: viewModel.dateRangeTitle,
+//            dataArray: [
+//                StatisticModel(product: "apple", price: 50, ammount: 34),
+//                StatisticModel(product: "banana", price: 70, ammount: 41),
+//                StatisticModel(product: "potato", price: 40, ammount: 300)
+//            ])
+//
+//        if case .success(let filePath) = csvBulderResult {
+//            return filePath
+//        }
+//        return nil
+//    }
     
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
@@ -45,9 +45,9 @@ struct SupplierStatisticsView: View {
                         isSharePresented = true
                     }
                     .frame(width: 48, height: 48)
-                    .sheet(isPresented: $isSharePresented) {
-                        ActivityViewController(activityItems: [statistic!])
-                    }
+//                    .sheet(isPresented: $isSharePresented) {
+//                        ActivityViewController(activityItems: [statistic!])
+//                    }
                 }
                 
                 ExtendableSection(isCollapsed: false) {

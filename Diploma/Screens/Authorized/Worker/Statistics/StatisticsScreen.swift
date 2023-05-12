@@ -20,21 +20,6 @@ struct StatisticsScreen: View {
         "Общая стоимость: \(viewModel.outcomingStatistics.chartData.map { Int($0.value) }.reduce(0, +)) ₽"
     }
     
-    var statistic: URL? {
-        let csvBulderResult = FileManager.shared.exportCSV(
-            fileName: viewModel.dateRangeTitle,
-            dataArray: [
-                StatisticModel(product: "apple", price: 50, ammount: 34),
-                StatisticModel(product: "banana", price: 70, ammount: 41),
-                StatisticModel(product: "potato", price: 40, ammount: 300)
-            ])
-        
-        if case .success(let filePath) = csvBulderResult {
-            return filePath
-        }
-        return nil
-    }
-    
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
@@ -49,7 +34,9 @@ struct StatisticsScreen: View {
                     }
                     .frame(width: 48, height: 48)
                     .sheet(isPresented: $isSharePresented) {
-                        ActivityViewController(activityItems: [statistic!])
+                        if let statisticFile = viewModel.statistics {
+                            ActivityViewController(activityItems: [statisticFile])
+                        }
                     }
                 }
                 

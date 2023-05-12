@@ -3,7 +3,11 @@ import Foundation
 struct AuthData {
     var organizationId: Int
     var branchId: Int?
-    var token: String
+    var token: String {
+        didSet {
+            KeychainManager.shared.save(token, key: .accessToken)
+        }
+    }
     var role: OrganizationType
 }
 

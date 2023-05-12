@@ -9,10 +9,9 @@ struct MainSignUpView: View {
         OverflowScroll {
             VStack {
                 NavigationLink(
-                    destination: ContactView()
-                        .environmentObject(viewModel.organization),
-                    isActive: $viewModel.navigateToContactView,
-                    label: { }
+                    "",
+                    destination: ContactView().environmentObject(viewModel.organization),
+                    isActive: $viewModel.navigateToContactView
                 )
 
                 Spacer()
@@ -38,6 +37,7 @@ struct MainSignUpView: View {
         }
         .background(Color.customLightGray)
         .defaultScreenSettings()
+        .environmentObject(viewModel.organization)
     }
 }
 

@@ -6,7 +6,6 @@ struct SuppliersListView: View {
     
     @StateObject private var tools = ViewManager.shared
     
-    @State private var tagSelection: String? = nil
     @StateObject var viewModel = SuppliersListViewModel()
     
     @State private var showFilters = false
@@ -14,7 +13,11 @@ struct SuppliersListView: View {
     var body: some View {
         GeometryReader { geo in
             ScrollView(.vertical, showsIndicators: false) {
-                NavigationLink("", destination: SupplierView(organizationModel: viewModel.selectedOrganization ?? .empty), tag: SupplierView.tag, selection: $tagSelection)
+                NavigationLink(
+                    "",
+                    destination: SupplierView(organizationModel: viewModel.selectedOrganization ?? .empty),
+                    isActive: $viewModel.navigateToOrganizationView
+                )
                 
                 VStack(alignment: .leading, spacing: 0) {
                     MapView(markers: $viewModel.markers,
@@ -39,7 +42,6 @@ struct SuppliersListView: View {
                                     OrganizationCard(organizationModel: organization)
                                         .onTapGesture {
                                             viewModel.selectedOrganization = organization
-                                            tagSelection = SupplierView.tag
                                         }
                                         .onAppear {
                                             if viewModel.organizations.last?.id == organization.id {

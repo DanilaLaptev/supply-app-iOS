@@ -13,12 +13,12 @@ struct AsyncImage<Placeholder: View>: View {
     
     var body: some View {
         if let image = imageLoader.image {
-            Rectangle()
-                .overlay(
-                    Image(uiImage: image)
-                        .resizable()
-                        .scaledToFill()
-                )
+            GeometryReader { geometry in
+                Image(uiImage: image)
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+                    .frame(width: geometry.size.width, height: geometry.size.height)
+            }
         } else {
             placeholder
                 .onAppear {
@@ -34,7 +34,7 @@ class ImageLoader: ObservableObject {
     
     private let imageUrl: URL?
     private var cancellable: AnyCancellable?
-
+    
     init(imageUrl: URL?) {
         self.imageUrl = imageUrl
         load()

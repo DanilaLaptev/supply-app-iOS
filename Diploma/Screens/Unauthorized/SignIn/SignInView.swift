@@ -10,21 +10,21 @@ struct SignInView: View {
         OverflowScroll {
             VStack {
                 NavigationLink(
+                    "",
                     destination: SupplierMainScreen(),
-                    isActive: $viewModel.navigateToSupplierMain,
-                    label: { }
+                    isActive: $viewModel.navigateToSupplierMain
                 )
                 
                 NavigationLink(
+                    "",
                     destination: WorkerMainView(),
-                    isActive: $viewModel.navigateToWorkerMain,
-                    label: { }
+                    isActive: $viewModel.navigateToWorkerMain
                 )
                 
                 NavigationLink(
+                    "",
                     destination: MainSignUpView(),
-                    isActive: $viewModel.navigateToSignUp,
-                    label: { }
+                    isActive: $viewModel.navigateToSignUp
                 )
 
                 Spacer()

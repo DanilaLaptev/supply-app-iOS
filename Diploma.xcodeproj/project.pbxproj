@@ -175,6 +175,8 @@
 		99FA12412A09B8FD00B731A6 /* OrganizationImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA123F2A09B8FD00B731A6 /* OrganizationImageView.swift */; };
 		99FA12422A09B8FD00B731A6 /* OrganizationImageViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12402A09B8FD00B731A6 /* OrganizationImageViewModel.swift */; };
 		99FA12462A0A429B00B731A6 /* ProductPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12452A0A429B00B731A6 /* ProductPicker.swift */; };
+		99FA12482A0AE8EA00B731A6 /* FileProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12472A0AE8EA00B731A6 /* FileProvider.swift */; };
+		99FA124A2A0AEE9F00B731A6 /* ImageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12492A0AEE9F00B731A6 /* ImageDto.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -349,6 +351,8 @@
 		99FA123F2A09B8FD00B731A6 /* OrganizationImageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationImageView.swift; sourceTree = "<group>"; };
 		99FA12402A09B8FD00B731A6 /* OrganizationImageViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationImageViewModel.swift; sourceTree = "<group>"; };
 		99FA12452A0A429B00B731A6 /* ProductPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductPicker.swift; sourceTree = "<group>"; };
+		99FA12472A0AE8EA00B731A6 /* FileProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProvider.swift; sourceTree = "<group>"; };
+		99FA12492A0AEE9F00B731A6 /* ImageDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDto.swift; sourceTree = "<group>"; };
 		D95D20718B9E8485FCEDA73C /* Pods_Diploma.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Diploma.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -576,6 +580,7 @@
 				99C14C5529D6FA9E00B8D3E2 /* OrganizationBranchProvider.swift */,
 				99C14C5729D6FACF00B8D3E2 /* ProductProvider.swift */,
 				99FA12172A062F9000B731A6 /* SupplyProvider.swift */,
+				99FA12472A0AE8EA00B731A6 /* FileProvider.swift */,
 			);
 			path = Providers;
 			sourceTree = "<group>";
@@ -595,6 +600,7 @@
 				99FA12192A0633B100B731A6 /* SupplyDto.swift */,
 				99FA121B2A0633D700B731A6 /* SupplyStatusDto.swift */,
 				99FA121D2A06453000B731A6 /* SupplyFilterDto.swift */,
+				99FA12492A0AEE9F00B731A6 /* ImageDto.swift */,
 			);
 			path = Dtos;
 			sourceTree = "<group>";
@@ -1369,11 +1375,13 @@
 				99000EB929F7FE3700E51182 /* OrderReviewView.swift in Sources */,
 				99D4549D29B45D3B00462A8F /* ExtendableSectionHeader.swift in Sources */,
 				99A0952229B70B2300C0286D /* MainSignUpView.swift in Sources */,
+				99FA12482A0AE8EA00B731A6 /* FileProvider.swift in Sources */,
 				99C14C6229D72A5800B8D3E2 /* LoaderView.swift in Sources */,
 				99D4549829B45BA300462A8F /* OrderCard.swift in Sources */,
 				99FA12142A062B7800B731A6 /* MoyaCacheableRequest.swift in Sources */,
 				99F178CE29DEF93C001903F2 /* OrderingViewModel.swift in Sources */,
 				99D4548529B36E0A00462A8F /* WorkerSupplyListScreen.swift in Sources */,
+				99FA124A2A0AEE9F00B731A6 /* ImageDto.swift in Sources */,
 				99AA128329CCAE73002219E0 /* FileManager.swift in Sources */,
 				99FA121E2A06453000B731A6 /* SupplyFilterDto.swift in Sources */,
 				99D4542429AC800500462A8F /* ImageIconsExtension.swift in Sources */,

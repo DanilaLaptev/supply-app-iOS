@@ -28,6 +28,7 @@ struct WorkerMainView: View {
                                 DynamicProductCard(
                                     model: wrappedItem.item,
                                     maximumQuantity: wrappedItem.item.quantity,
+                                    showQuantity: true,
                                     extraOptions: [
                                         ExtraOption(icon: .customPencil) {
                                             viewModel.editProduct(wrappedItem.item)

@@ -7,7 +7,7 @@ class ContactViewModel: ObservableObject {
     @Published var fullName = "test test test"
     @Published var email = "test@sfedu.ru"
     @Published var phone = "8 800 555 35 35"
-    @Published var navigateToLocationView: Bool = false
+    @Published var navigateToOrganizationImage: Bool = false
 
     @Published private(set) var organization = OrganizationCreationModel()
     
@@ -144,7 +144,7 @@ class ContactViewModel: ObservableObject {
             switch result {
             case .success(let response):
                 if (200...299).contains(response.statusCode) {
-                    self?.navigateToLocationView.toggle()
+                    self?.navigateToOrganizationImage.toggle()
                 } else {
                     let errorDto = try? response.map(ErrorDto.self)
                     AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
