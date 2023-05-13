@@ -4,16 +4,16 @@ import Combine
 import Moya
 
 class ContactViewModel: ObservableObject {
+    private let organizationBranchService: OrganizationBranchServiceProtocol
+    private var cancellableSet = Set<AnyCancellable>()
+
     @Published var fullName = "test test test"
     @Published var email = "test@sfedu.ru"
     @Published var phone = "8 800 555 35 35"
     @Published var navigateToOrganizationImage: Bool = false
     
     @Published private(set) var organization = OrganizationCreationModel()
-    
-    private let organizationBranchService: OrganizationBranchServiceProtocol
-    private var cancellableSet = Set<AnyCancellable>()
-    
+        
     @Published private var fullNameValidation = ""
     @Published private var emailValidation = ""
     @Published private var phoneValidation = ""

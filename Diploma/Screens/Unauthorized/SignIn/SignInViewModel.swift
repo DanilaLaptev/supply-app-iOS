@@ -3,6 +3,7 @@ import SwiftUI
 import Combine
 
 class SignInViewModel: ObservableObject {
+    private let authorizationService: AuthorizationServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published private var authManager = AuthManager.shared
@@ -12,9 +13,7 @@ class SignInViewModel: ObservableObject {
     @Published var navigateToSupplierMain: Bool = false
     @Published var navigateToWorkerMain: Bool = false
     @Published var navigateToSignUp: Bool = false
-    
-    private let authorizationService: AuthorizationServiceProtocol
-    
+        
     @Published var email = "supplier@email.com"
     @Published var password = "123123"
     

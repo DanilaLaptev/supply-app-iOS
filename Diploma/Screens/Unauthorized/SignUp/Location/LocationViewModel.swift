@@ -5,6 +5,9 @@ import MapKit
 
 
 class LocationViewModel: ObservableObject {
+    private let organizationBranchService: OrganizationBranchServiceProtocol
+    private var cancellableSet = Set<AnyCancellable>()
+
     @Published var navigateToSignIn: Bool = false
     
     @Published var addressName = ""
@@ -13,7 +16,6 @@ class LocationViewModel: ObservableObject {
     @Published private(set) var organization: OrganizationCreationModel?
     
     @Published private var locationManager = LocationManager()
-    private var cancellableSet = Set<AnyCancellable>()
     
     @Published var landmarks = [MapMarker]()
     @Published var selectedLandmark: MapMarker? = nil
@@ -32,9 +34,7 @@ class LocationViewModel: ObservableObject {
             return MapMarker(name: placeName, location: location.coordinate)
         }.eraseToAnyPublisher()
     }
-    
-    private let organizationBranchService: OrganizationBranchServiceProtocol
-    
+        
     init(organizationBranchService: OrganizationBranchServiceProtocol = OrganizationBranchService()) {
         self.organizationBranchService = organizationBranchService
         

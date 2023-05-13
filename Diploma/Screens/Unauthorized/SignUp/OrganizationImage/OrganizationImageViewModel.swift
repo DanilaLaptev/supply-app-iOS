@@ -4,13 +4,13 @@ import Combine
 
 
 class OrganizationImageViewModel: ObservableObject {
-    @Published var navigateToLocationView = false
-    @Published var selectedImage: UIImage?
-    
     private let fileService: FileServiceProtocol
     private let organizationService: OrganizationServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
-    
+
+    @Published var navigateToLocationView = false
+    @Published var selectedImage: UIImage?
+        
     private var uploadedImageName: String?
     
     init(

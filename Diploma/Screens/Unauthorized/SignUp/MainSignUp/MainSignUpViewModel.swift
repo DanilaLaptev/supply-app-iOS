@@ -3,6 +3,9 @@ import SwiftUI
 import Combine
 
 class MainSignUpViewModel: ObservableObject {
+    private let authorizationService: AuthorizationServiceProtocol
+    private var cancellableSet = Set<AnyCancellable>()
+
     @Published var navigateToContactView: Bool = false
     @Published var role = OrganizationType.allCases.first!.rawValue
     @Published var organizationName = "Test name"
@@ -16,10 +19,6 @@ class MainSignUpViewModel: ObservableObject {
     @Published private var orgniazationEmailValidation = ""
     @Published private var passwordValidation = ""
     @Published private var passwordMatchingValidation = ""
-    
-    
-    private let authorizationService: AuthorizationServiceProtocol
-    private var cancellableSet = Set<AnyCancellable>()
     
     private var isOrganizationNameValid: AnyPublisher<String, Never> {
         $organizationName

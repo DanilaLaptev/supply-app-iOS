@@ -4,6 +4,7 @@ import Combine
 
 
 class LoadingScreenViewModel: ObservableObject {
+    private let authorizationService: AuthorizationServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published var authManager = AuthManager.shared
@@ -20,9 +21,7 @@ class LoadingScreenViewModel: ObservableObject {
         let ip = String(currentBaseUrl[range])
         return ip
     }()
-    
-    private let authorizationService: AuthorizationServiceProtocol
-    
+        
     private var ipValid: AnyPublisher<Bool, Never> {
         $ipFieldValue
             .map { ip in
