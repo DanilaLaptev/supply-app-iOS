@@ -1,14 +1,13 @@
 import Foundation
 import SwiftUI
 import Combine
-import Moya
 
 
 class CreateProductViewModel: ObservableObject {
-    private var organizationBranchProvider = MoyaProvider<OrganizationBranchProvider>(plugins: [NetworkLoggerPlugin()])
-    private var productProvider = MoyaProvider<ProductProvider>(plugins: [NetworkLoggerPlugin()])
+    private let organizationBranchService: OrganizationBranchServiceProtocol
+    private let productService: ProductServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
-
+    
     @Published private(set) var products: [ProductModel] = []
     
     @Published var product: ProductModel?
@@ -19,6 +18,8 @@ class CreateProductViewModel: ObservableObject {
     @Published private var productValidation = ""
     @Published private var descriptionValidation = ""
     @Published private var priceValidation = ""
+    
+    private let branchId = AuthManager.shared.authData?.branchId ?? -1
     
     private var isProductValid: AnyPublisher<String, Never> {
         $product
@@ -46,11 +47,11 @@ class CreateProductViewModel: ObservableObject {
                 guard !price.isEmpty else {
                     return FormError.requiredField(source: "Цена").localizedDescription
                 }
-
+                
                 guard Int(price) != nil else {
                     return FormError.wrongFormat(source: "Цена").localizedDescription
                 }
-
+                
                 return ""
             }.eraseToAnyPublisher()
     }
@@ -62,11 +63,19 @@ class CreateProductViewModel: ObservableObject {
             }.eraseToAnyPublisher()
     }
     
-    
-    
-    init() {
+    init(
+        organizationBranchService: OrganizationBranchServiceProtocol = OrganizationBranchService(),
+        productService: ProductServiceProtocol = ProductService()
+    ) {
+        self.organizationBranchService = organizationBranchService
+        self.productService = productService
+        
         fetchProductsList()
         
+        setupBindings()
+    }
+    
+    private func setupBindings() {
         isProductValid
             .receive(on: RunLoop.main)
             .sink { [weak self] valid in
@@ -84,7 +93,7 @@ class CreateProductViewModel: ObservableObject {
             .sink { [weak self] valid in
                 self?.priceValidation = valid
             }.store(in: &cancellableSet)
-
+        
         isDescriptionValid
             .receive(on: RunLoop.main)
             .sink { [weak self] valid in
@@ -112,20 +121,10 @@ class CreateProductViewModel: ObservableObject {
     }
     
     func fetchProductsList() {
-        productProvider.request(.getAllProducts) { [weak self] result in
+        productService.getAllProducts { [weak self] result in
             switch result {
             case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    guard let self,
-                          let response = try? response.map([ProductDto].self) else {
-                        AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
-                        return
-                    }
-                    self.products = response.map { ProductModel.from($0) }
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
-                }
+                self?.products = response.map { ProductModel.from($0) }
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
@@ -146,18 +145,13 @@ class CreateProductViewModel: ObservableObject {
             isHidden: true
         )
         
-        organizationBranchProvider.request(.addStorageItems(
-            branchId: AuthManager.shared.authData?.branchId ?? -1,
+        organizationBranchService.addStorageItems(
+            branchId: branchId,
             items: [requestBody]
-        )) { [weak self] result in
+        ) { [weak self] result in
             switch result {
             case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    AlertManager.shared.showAlert(.init(type: .success, description: "Товар создан!"))
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
-                }
+                AlertManager.shared.showAlert(.init(type: .success, description: "Товар создан!"))
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

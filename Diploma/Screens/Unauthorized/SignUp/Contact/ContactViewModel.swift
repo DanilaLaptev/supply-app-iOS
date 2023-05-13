@@ -8,16 +8,16 @@ class ContactViewModel: ObservableObject {
     @Published var email = "test@sfedu.ru"
     @Published var phone = "8 800 555 35 35"
     @Published var navigateToOrganizationImage: Bool = false
-
+    
     @Published private(set) var organization = OrganizationCreationModel()
     
-    private let organizationBranchProvider = MoyaProvider<OrganizationBranchProvider>(plugins: [NetworkLoggerPlugin()])
+    private let organizationBranchService: OrganizationBranchServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published private var fullNameValidation = ""
     @Published private var emailValidation = ""
     @Published private var phoneValidation = ""
-
+    
     private var isFullNameValid: AnyPublisher<String, Never> {
         $fullName
             .map { fullName in
@@ -49,7 +49,13 @@ class ContactViewModel: ObservableObject {
             }.eraseToAnyPublisher()
     }
     
-    init() {
+    init(organizationBranchService: OrganizationBranchServiceProtocol = OrganizationBranchService()) {
+        self.organizationBranchService = organizationBranchService
+        
+        setupBindings()
+    }
+    
+    private func setupBindings() {
         isFullNameValid
             .receive(on: RunLoop.main)
             .sink { [weak self] error in
@@ -69,23 +75,22 @@ class ContactViewModel: ObservableObject {
             }.store(in: &cancellableSet)
     }
     
-    
     private func validateForm() -> Bool {
         guard fullNameValidation.isEmpty else {
             AlertManager.shared.showAlert(.init(type: .error, description: fullNameValidation))
             return false
         }
-
+        
         guard emailValidation.isEmpty else {
             AlertManager.shared.showAlert(.init(type: .error, description: emailValidation))
             return false
         }
-
+        
         guard phoneValidation.isEmpty else {
             AlertManager.shared.showAlert(.init(type: .error, description: phoneValidation))
             return false
         }
-
+        
         return true
     }
     
@@ -96,27 +101,11 @@ class ContactViewModel: ObservableObject {
             contactPersons: []
         )
         
-        guard let organizationId = organization.organizationId else {
-            return
-        }
-            
-        organizationBranchProvider.request(.createOrganizationBranch(
-            branch: branchDto
-        )) { [weak self] result in
+        organizationBranchService.createOrganizationBranch(branch: branchDto) { [weak self] result in
             switch result {
             case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    guard let response = try? response.map(OrganizationBranchDto.self) else {
-                        AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
-
-                        return
-                    }
-                    self?.organization.organizationBranchId = response.id
-                    self?.addOrganiztionContactPerson()
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
-                }
+                self?.organization.organizationBranchId = response.id
+                self?.addOrganiztionContactPerson()
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
@@ -137,18 +126,10 @@ class ContactViewModel: ObservableObject {
             return
         }
         
-        organizationBranchProvider.request(.addContactPerson(
-            branchId: branchId,
-            contactPerson: requestBody)
-        ) { [weak self] result in
+        organizationBranchService.addContactPerson(branchId: branchId, contactPerson: requestBody) { [weak self] result in
             switch result {
-            case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    self?.navigateToOrganizationImage.toggle()
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
-                }
+            case .success:
+                self?.navigateToOrganizationImage.toggle()
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

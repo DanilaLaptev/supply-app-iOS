@@ -2,11 +2,10 @@ import Foundation
 import SwiftUI
 import Combine
 import MapKit
-import Moya
 
 
 class SuppliersListViewModel: ObservableObject {
-    private let organizationProvider = MoyaProvider<OrganizationProvider>(plugins: [NetworkLoggerPlugin()])
+    private let organizationService: OrganizationServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published var navigateToOrganizationView = false
@@ -63,9 +62,14 @@ class SuppliersListViewModel: ObservableObject {
         .map { _, _ in () }.eraseToAnyPublisher()
     }
     
-    init() {
+    init(organizationService: OrganizationServiceProtocol = OrganizationService()) {
+        self.organizationService = organizationService
         fetchOrganizations()
         
+        setupBindings()
+    }
+    
+    private func setupBindings() {
         $selectedOrganization
             .dropFirst()
             .receive(on: RunLoop.main)
@@ -114,27 +118,20 @@ class SuppliersListViewModel: ObservableObject {
             perPage: 20
         )
         
-        organizationProvider.request(.getOrganizations(filter: filter)) { [weak self] result in
+        organizationService.getOrganizations(filter: filter) { [weak self] result in
             switch result {
             case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    guard let self,
-                          let response = try? response.map(PaginatedDto<OrganizationDto>.self),
-                          let total = response.total else {
-                        AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
-                        return
-                    }
-                    let receivedOrganizations = response.items.map { item -> OrganizationModel in
-                        OrganizationModel.from(item)
-                    }
-                    
-                    self.organizations += receivedOrganizations
-                    self.page = total > self.organizations.count ? self.page + 1 : -1
-                    
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
+                guard let self,
+                      let total = response.total else {
+                    AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
+                    return
                 }
+                let receivedOrganizations = response.items.map { item -> OrganizationModel in
+                    OrganizationModel.from(item)
+                }
+                
+                self.organizations += receivedOrganizations
+                self.page = total > self.organizations.count ? self.page + 1 : -1
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

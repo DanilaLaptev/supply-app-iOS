@@ -1,20 +1,21 @@
 import Foundation
 import SwiftUI
 import Combine
-import Moya
 
 
 class EditProductViewModel: ObservableObject {
-    private var organizationBranchProvider = MoyaProvider<OrganizationBranchProvider>(plugins: [NetworkLoggerPlugin()])
+    private let organizationBranchService: OrganizationBranchServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     @Published private var initialStorageItem: StorageItemModel?
-
+    
     @Published var price = ""
     @Published var description = ""
     @Published var imageUrl = ""
     
     @Published private var descriptionValidation = ""
     @Published private var priceValidation = ""
+    
+    private let branchId = AuthManager.shared.authData?.branchId ?? -1
     
     private var isDescriptionValid: AnyPublisher<String, Never> {
         $description
@@ -32,28 +33,34 @@ class EditProductViewModel: ObservableObject {
                 guard !price.isEmpty else {
                     return FormError.requiredField(source: "Цена").localizedDescription
                 }
-
+                
                 guard Int(price) != nil else {
                     return FormError.wrongFormat(source: "Цена").localizedDescription
                 }
-
+                
                 return ""
             }.eraseToAnyPublisher()
     }
     
-    init() {
+    init(organizationBranchService: OrganizationBranchServiceProtocol = OrganizationBranchService()) {
+        self.organizationBranchService = organizationBranchService
+        
+        setupBindings()
+    }
+    
+    private func setupBindings() {
         isPriceValid
             .receive(on: RunLoop.main)
             .sink { [weak self] valid in
                 self?.priceValidation = valid
             }.store(in: &cancellableSet)
-
+        
         isDescriptionValid
             .receive(on: RunLoop.main)
             .sink { [weak self] valid in
                 self?.descriptionValidation = valid
             }.store(in: &cancellableSet)
-
+        
         $initialStorageItem
             .receive(on: RunLoop.main)
             .compactMap { $0 }
@@ -89,18 +96,13 @@ class EditProductViewModel: ObservableObject {
             description: description
         )
         
-        organizationBranchProvider.request(.updateStorageItem(
-            branchId: AuthManager.shared.authData?.branchId ?? -1,
+        organizationBranchService.updateStorageItem(
+            branchId: branchId,
             item: requestBody
-        )) { [weak self] result in
+        ) { result in
             switch result {
-            case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    AlertManager.shared.showAlert(.init(type: .success, description: "Товар обновлен!"))
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
-                }
+            case .success:
+                AlertManager.shared.showAlert(.init(type: .success, description: "Товар обновлен!"))
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

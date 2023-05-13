@@ -1,19 +1,18 @@
 import Foundation
 import SwiftUI
 import Combine
-import Moya
 
 
 class SupplierStatisticsViewModel: ObservableObject {
-    private let supplyProvider = MoyaProvider<SupplyProvider>(plugins: [NetworkLoggerPlugin()])
+    private let supplyService: SupplyServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published var startDate: Date? = nil
     @Published var endDate: Date? = nil
     @Published var supplies: [SupplyModel] = []
-
+    
     @Published var outcomingStatistics: ChartDataContainer = .empty
-
+    
     var dateRangeTitle: String {
         guard let startDate, let endDate else { return "Вся статистика" }
         
@@ -22,7 +21,7 @@ class SupplierStatisticsViewModel: ObservableObject {
         
         return "Статистика за \(startStr) - \(endStr)"
     }
-
+    
     private var updateFiltersPublisher: AnyPublisher<Void, Never> {
         Publishers.CombineLatest(
             $startDate.removeDuplicates(),
@@ -38,13 +37,13 @@ class SupplierStatisticsViewModel: ObservableObject {
                 
                 let allProducts = allSupplies
                     .filter  { supply in
-                    supply.fromBranchId == AuthManager.shared.authData?.branchId
-                }
+                        supply.fromBranchId == AuthManager.shared.authData?.branchId
+                    }
                     .flatMap { $0.products }
                 
                 let productsByType = Dictionary(grouping: allProducts, by: { $0.product.type })
                     .mapValues { $0.reduce(0) { $0 + $1.price * Double($1.quantity) } }
-
+                
                 let data = productsByType.map { key, sumPrice -> ChartData in
                     ChartData(name: key.name, value: sumPrice)
                 }
@@ -53,9 +52,14 @@ class SupplierStatisticsViewModel: ObservableObject {
             }.eraseToAnyPublisher()
     }
     
-    init() {
+    init(supplyService: SupplyServiceProtocol = SupplyService()) {
+        self.supplyService = supplyService
         fetchSupplies()
         
+        setupBindings()
+    }
+    
+    private func setupBindings() {
         updateFiltersPublisher
             .dropFirst()
             .receive(on: RunLoop.main)
@@ -79,24 +83,14 @@ class SupplierStatisticsViewModel: ObservableObject {
             branchId: AuthManager.shared.authData?.branchId
         )
         
-        supplyProvider.request(.getSupplies(filter: filter)) { [weak self] result in
+        supplyService.getSupplies(filter: filter) { [weak self] result in
             switch result {
             case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    guard let self,
-                          let response = try? response.map([SupplyDto].self) else {
-                        AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
-                        return
-                    }
-                    let receivedSupplies = response.map { dto in
-                            SupplyModel.from(dto)
-                        }
-                    
-                    self.supplies = receivedSupplies
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
+                let receivedSupplies = response.map { dto in
+                    SupplyModel.from(dto)
                 }
+                
+                self?.supplies = receivedSupplies
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

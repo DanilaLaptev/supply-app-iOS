@@ -2,11 +2,10 @@ import Foundation
 import SwiftUI
 import Combine
 import MapKit
-import Moya
 
 
 class ClientsListViewModel: ObservableObject {
-    private let organizationProvider = MoyaProvider<OrganizationProvider>(plugins: [NetworkLoggerPlugin()])
+    private let organizationService: OrganizationServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published private var viewManager = ViewManager.shared
@@ -14,7 +13,7 @@ class ClientsListViewModel: ObservableObject {
     @Published var organizations: [OrganizationModel] = []
     
     @Published var suppliersList: [OrganizationBranchModel] = []
-
+    
     @Published var selectedMarker: MapMarker? = nil
     @Published var markers: [MapMarker] = []
     
@@ -41,13 +40,18 @@ class ClientsListViewModel: ObservableObject {
     private var updateFiltersPublisher: AnyPublisher<Void, Never> {
         $organizationNameFilter
             .removeDuplicates()
-        .debounce(for: .seconds(2), scheduler: DispatchQueue.main)
-        .map { _ in () }.eraseToAnyPublisher()
+            .debounce(for: .seconds(2), scheduler: DispatchQueue.main)
+            .map { _ in () }.eraseToAnyPublisher()
     }
     
-    init() {
+    init(organizationService: OrganizationServiceProtocol = OrganizationService()) {
+        self.organizationService = organizationService
         fetchOrganizations()
         
+        setupBindings()
+    }
+    
+    private func setupBindings() {
         markersPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] markers in
@@ -72,7 +76,7 @@ class ClientsListViewModel: ObservableObject {
         guard page != -1 else {
             return
         }
-                
+        
         let filter = FilterDto(
             role: .worker,
             title: organizationNameFilter,
@@ -80,27 +84,20 @@ class ClientsListViewModel: ObservableObject {
             perPage: 20
         )
         
-        organizationProvider.request(.getOrganizations(filter: filter)) { [weak self] result in
+        organizationService.getOrganizations(filter: filter) { [weak self] result in
             switch result {
             case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    guard let self,
-                          let response = try? response.map(PaginatedDto<OrganizationDto>.self),
-                          let total = response.total else {
-                        AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
-                        return
-                    }
-                    let receivedOrganizations = response.items.map { item -> OrganizationModel in
-                        OrganizationModel.from(item)
-                    }
-                    
-                    self.organizations += receivedOrganizations
-                    self.page = total > self.organizations.count ? self.page + 1 : -1
-
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
+                guard let self,
+                      let total = response.total else {
+                    AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
+                    return
                 }
+                let receivedOrganizations = response.items.map { item -> OrganizationModel in
+                    OrganizationModel.from(item)
+                }
+                
+                self.organizations += receivedOrganizations
+                self.page = total > self.organizations.count ? self.page + 1 : -1
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

@@ -1,11 +1,10 @@
 import Foundation
 import SwiftUI
 import Combine
-import Moya
 
 
 class SupplierOrdersViewModel: ObservableObject {
-    private let supplyProvider = MoyaProvider<SupplyProvider>(plugins: [NetworkLoggerPlugin()])
+    private let supplyService: SupplyServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published var startDate: Date? = nil
@@ -34,9 +33,14 @@ class SupplierOrdersViewModel: ObservableObject {
         .map { _, _, _ in () }.eraseToAnyPublisher()
     }
     
-    init() {
+    init(supplyService: SupplyServiceProtocol = SupplyService()) {
+        self.supplyService = supplyService
         fetchSupplies()
         
+        setupBindings()
+    }
+    
+    private func setupBindings() {
         updateFiltersPublisher
             .dropFirst()
             .receive(on: RunLoop.main)
@@ -54,29 +58,23 @@ class SupplierOrdersViewModel: ObservableObject {
             branchId: AuthManager.shared.authData?.branchId
         )
         
-        supplyProvider.request(.getSupplies(filter: filter)) { [weak self] result in
+        supplyService.getSupplies(filter: filter) { [weak self] result in
             switch result {
             case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    guard let self,
-                          let response = try? response.map([SupplyDto].self) else {
-                        AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
-                        return
-                    }
-                    let receivedSupplies = response
-                        .filter { dto in
-                            guard let status = dto.statuses?.first?.status else { return true }
-                            return self.supplyStatuses.isEmpty || self.supplyStatuses.contains(status)
-                        }
-                        .map { dto in
-                            SupplyModel.from(dto)
-                        }
-                    
-                    self.supplies = receivedSupplies
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
+                guard let self else {
+                    AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
+                    return
                 }
+                let receivedSupplies = response
+                    .filter { dto in
+                        guard let status = dto.statuses?.first?.status else { return true }
+                        return self.supplyStatuses.isEmpty || self.supplyStatuses.contains(status)
+                    }
+                    .map { dto in
+                        SupplyModel.from(dto)
+                    }
+                
+                self.supplies = receivedSupplies
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

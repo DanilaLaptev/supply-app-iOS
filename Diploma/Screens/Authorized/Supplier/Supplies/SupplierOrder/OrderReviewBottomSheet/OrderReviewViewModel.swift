@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 import Combine
-import Moya
 
 
 struct RejectionItem: RadioGroupItem {
@@ -10,10 +9,12 @@ struct RejectionItem: RadioGroupItem {
 }
 
 class OrderReviewViewModel: ObservableObject {
-    private let supplyProvider = MoyaProvider<SupplyProvider>(plugins: [NetworkLoggerPlugin()])
+    private let supplyService: SupplyServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
     var supplyModel: SupplyModel?
+    
+    private let branchId = AuthManager.shared.authData?.branchId ?? -1
     
     @Published var rejectionReasonsList = [
         RejectionItem(name: "Недостаточная сумма заказа"),
@@ -24,25 +25,19 @@ class OrderReviewViewModel: ObservableObject {
     
     @Published var selectedRejectionReason: RejectionItem?
     
-    init() {
-        
-    }    
+    init(supplyService: SupplyServiceProtocol = SupplyService()) {
+        self.supplyService = supplyService
+    }
     
     func setup(_ supply: SupplyModel) {
         supplyModel = supply
     }
     
     func acceptSupply() {
-        supplyProvider.request(.acceptSuppliesGroup(groupId: supplyModel?.id ?? -1, branchId: AuthManager.shared.authData?.branchId ?? -1)) { [weak self] result in
+        supplyService.acceptSuppliesGroup(groupId: supplyModel?.id ?? -1, branchId: branchId) { result in
             switch result {
-            case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    AlertManager.shared.showAlert(.init(type: .success, description: "Заказ принят!"))
-                    // TODO: back to pervious screen
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
-                }
+            case .success:
+                AlertManager.shared.showAlert(.init(type: .success, description: "Заказ принят!"))
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
@@ -51,22 +46,15 @@ class OrderReviewViewModel: ObservableObject {
     }
     
     func declineSupply() {
-        guard let selectedRejectionReason else {
+        guard selectedRejectionReason != nil else {
             AlertManager.shared.showAlert(.init(type: .error, description: "Вы должны указать причину отказа!"))
             return
         }
         
-        
-        supplyProvider.request(.declineSuppliesGroup(groupId: supplyModel?.id ?? -1, branchId: AuthManager.shared.authData?.branchId ?? -1)) { [weak self] result in
+        supplyService.declineSuppliesGroup(groupId: supplyModel?.id ?? -1, branchId: branchId) { result in
             switch result {
-            case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    AlertManager.shared.showAlert(.init(type: .success, description: "Заказ отклонен!"))
-                    // TODO: back to pervious screen
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
-                }
+            case .success:
+                AlertManager.shared.showAlert(.init(type: .success, description: "Заказ отклонен!"))
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

@@ -1,11 +1,9 @@
 import Foundation
 import SwiftUI
 import Combine
-import Moya
 
 
 class SupplierOrderViewModel: ObservableObject {
-    private let supplyProvider = MoyaProvider<SupplyProvider>(plugins: [NetworkLoggerPlugin()])
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published var supplyModel: SupplyModel?

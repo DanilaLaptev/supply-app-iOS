@@ -1,6 +1,5 @@
 import Foundation
 import SwiftUI
-import Moya
 import Combine
 
 class MainSignUpViewModel: ObservableObject {
@@ -10,16 +9,16 @@ class MainSignUpViewModel: ObservableObject {
     @Published var email = "test@sfedu.ru"
     @Published var password = "qqqqqq"
     @Published var repeatedPassword = "qqqqqq"
-
+    
     @Published private(set) var organization = OrganizationCreationModel()
     
     @Published private var orgniazationNameValidation = ""
     @Published private var orgniazationEmailValidation = ""
     @Published private var passwordValidation = ""
     @Published private var passwordMatchingValidation = ""
-
     
-    private let authProvider = MoyaProvider<AuthorizationProvider>(plugins: [NetworkLoggerPlugin()])
+    
+    private let authorizationService: AuthorizationServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
     private var isOrganizationNameValid: AnyPublisher<String, Never> {
@@ -65,8 +64,13 @@ class MainSignUpViewModel: ObservableObject {
             return ""
         }.eraseToAnyPublisher()
     }
-
-    init() {
+    
+    init(authorizationService: AuthorizationServiceProtocol = AuthorizationService()) {
+        self.authorizationService = authorizationService
+        setupBindings()
+    }
+    
+    private func setupBindings() {
         isOrganizationNameValid
             .receive(on: RunLoop.main)
             .sink { [weak self] error in
@@ -126,21 +130,12 @@ class MainSignUpViewModel: ObservableObject {
             password: password
         )
         
-        authProvider.request(.register(requestBody)) { [weak self] result in
+        authorizationService.register(requestBody) { [weak self] result in
             switch result {
             case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    guard let response = try? response.map(AuthorizationDto.self) else {
-                        AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
-                        return
-                    }
-                    KeychainManager.shared.save(response.token, key: .accessToken)
-                    self?.organization.organizationId = response.organizationId
-                    self?.navigateToContactView.toggle()
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
-                }
+                KeychainManager.shared.save(response.token, key: .accessToken)
+                self?.organization.organizationId = response.organizationId
+                self?.navigateToContactView.toggle()
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

@@ -1,7 +1,6 @@
 import Foundation
 import SwiftUI
 import Combine
-import Moya
 
 class SignInViewModel: ObservableObject {
     private var cancellableSet = Set<AnyCancellable>()
@@ -9,19 +8,19 @@ class SignInViewModel: ObservableObject {
     @Published private var authManager = AuthManager.shared
     @Published private var viewManager = ViewManager.shared
     @Published private var alertManager = AlertManager.shared
-
+    
     @Published var navigateToSupplierMain: Bool = false
     @Published var navigateToWorkerMain: Bool = false
     @Published var navigateToSignUp: Bool = false
-
-    private let authProvider = MoyaProvider<AuthorizationProvider>(plugins: [NetworkLoggerPlugin()])
+    
+    private let authorizationService: AuthorizationServiceProtocol
     
     @Published var email = "supplier@email.com"
     @Published var password = "123123"
     
     @Published private var orgniazationEmailValidation = ""
     @Published private var passwordValidation = ""
-
+    
     private var isUserEmailValid: AnyPublisher<Bool, Never> {
         $email
             .map { email in
@@ -51,7 +50,12 @@ class SignInViewModel: ObservableObject {
             }.eraseToAnyPublisher()
     }
     
-    init() {
+    init(authorizationService: AuthorizationServiceProtocol = AuthorizationService()) {
+        self.authorizationService = authorizationService
+        setupBindings()
+    }
+    
+    private func setupBindings() {
         isOrganizationEmailValid
             .receive(on: RunLoop.main)
             .sink { [weak self] error in
@@ -83,35 +87,26 @@ class SignInViewModel: ObservableObject {
         guard validateForm() else { return }
         
         let requestBody = AuthorizationDto(email: email, password: password)
-        authProvider.request(.login(requestBody)) { [weak self] result in
+        authorizationService.login(requestBody) { [weak self] result in
             switch result {
-            case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    let authorizationDto = try? response.map(AuthorizationDto.self)
-                    
-                    guard let authorizationDto,
-                          let organizationId = authorizationDto.organizationId,
-                          let branchId = authorizationDto.mainBranchId,
-                          let token = authorizationDto.token,
-                          let role: OrganizationType = authorizationDto.role  else {
-                        AlertManager.shared.showAlert(.init(type: .error, description: "Не удалось получить данные пользователя"))
-                        self?.authManager.setData(nil)
-                        return
-                    }
-                    
-                    let authData = AuthData(organizationId: organizationId, branchId: branchId, token: token, role: role)
-                    KeychainManager.shared.save(token, key: .accessToken)
-                    self?.authManager.setData(authData)
-                    
-                    if case .supplier = role {
-                        self?.navigateToSupplierMain.toggle()
-                    } else {
-                        self?.navigateToWorkerMain.toggle()
-                    }
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
+            case .success(let authorizationDto):
+                guard let organizationId = authorizationDto.organizationId,
+                      let branchId = authorizationDto.mainBranchId,
+                      let token = authorizationDto.token,
+                      let role: OrganizationType = authorizationDto.role  else {
+                    AlertManager.shared.showAlert(.init(type: .error, description: "Не удалось получить данные пользователя"))
                     self?.authManager.setData(nil)
+                    return
+                }
+                
+                let authData = AuthData(organizationId: organizationId, branchId: branchId, token: token, role: role)
+                KeychainManager.shared.save(token, key: .accessToken)
+                self?.authManager.setData(authData)
+                
+                if case .supplier = role {
+                    self?.navigateToSupplierMain.toggle()
+                } else {
+                    self?.navigateToWorkerMain.toggle()
                 }
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")

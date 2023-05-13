@@ -1,18 +1,17 @@
 import Foundation
 import SwiftUI
 import Combine
-import Moya
 import MapKit
 
 
 class LocationViewModel: ObservableObject {
     @Published var navigateToSignIn: Bool = false
-
+    
     @Published var addressName = ""
     @Published private var placeLocation: CLLocation?
     @Published private var placeFullName: String?
     @Published private(set) var organization: OrganizationCreationModel?
-        
+    
     @Published private var locationManager = LocationManager()
     private var cancellableSet = Set<AnyCancellable>()
     
@@ -34,9 +33,15 @@ class LocationViewModel: ObservableObject {
         }.eraseToAnyPublisher()
     }
     
-    private let organizationBranchProvider = MoyaProvider<OrganizationBranchProvider>(plugins: [NetworkLoggerPlugin()])
+    private let organizationBranchService: OrganizationBranchServiceProtocol
     
-    init() {
+    init(organizationBranchService: OrganizationBranchServiceProtocol = OrganizationBranchService()) {
+        self.organizationBranchService = organizationBranchService
+        
+        setupBindings()
+    }
+    
+    private func setupBindings() {
         getLandmark
             .receive(on: RunLoop.main)
             .sink { [weak self] marker in
@@ -53,7 +58,7 @@ class LocationViewModel: ObservableObject {
                         self?.placeLocation = nil
                         return
                     }
-
+                    
                     self?.placeLocation = location
                 }
             }.store(in: &cancellableSet)
@@ -72,7 +77,7 @@ class LocationViewModel: ObservableObject {
                         self?.placeFullName = nil
                         return
                     }
-
+                    
                     guard let fullName = placemark.name else {
                         AlertManager.shared.showAlert(.init(type: .error, description: "Ошибка при обработке адреса"))
                         self?.placeFullName = nil
@@ -100,19 +105,14 @@ class LocationViewModel: ObservableObject {
             return
         }
         
-        organizationBranchProvider.request(.updateOrganizationBranch(
+        organizationBranchService.updateOrganizationBranch(
             branchId: branchId,
             branch: requestBody
-        )) { [weak self] result in
+        ) { [weak self] result in
             switch result {
-            case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    self?.navigateToSignIn.toggle()
-                    AlertManager.shared.showAlert(.init(type: .success, description: "Организация создана"))
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
-                }
+            case .success:
+                self?.navigateToSignIn.toggle()
+                AlertManager.shared.showAlert(.init(type: .success, description: "Организация создана"))
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

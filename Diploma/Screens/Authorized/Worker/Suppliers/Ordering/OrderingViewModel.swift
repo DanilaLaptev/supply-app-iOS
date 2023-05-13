@@ -1,11 +1,10 @@
 import Foundation
 import SwiftUI
 import Combine
-import Moya
 
 
 class OrderingViewModel: ObservableObject {
-    private let supplyProvider = MoyaProvider<SupplyProvider>(plugins: [NetworkLoggerPlugin()])
+    private let supplyService: SupplyServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
     var organizationModel: OrganizationModel?
@@ -22,6 +21,10 @@ class OrderingViewModel: ObservableObject {
         selectedItems?
             .map { $0.selectedAmmount }
             .reduce(0, +) ?? 0
+    }
+    
+    init(supplyService: SupplyServiceProtocol = SupplyService()) {
+        self.supplyService = supplyService
     }
     
     func setup(organizationModel: OrganizationModel, selectedItems: [StorageItemWrapper]) {
@@ -43,15 +46,10 @@ class OrderingViewModel: ObservableObject {
             items: storageItems
         )
         
-        supplyProvider.request(.createSupply(supply: supplyDto)) { [weak self] result in
+        supplyService.createSupply(supply: supplyDto) { result in
             switch result {
-            case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    AlertManager.shared.showAlert(.init(type: .success, description: "Заказ оформлен"))
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
-                }
+            case .success:
+                AlertManager.shared.showAlert(.init(type: .success, description: "Заказ оформлен"))
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

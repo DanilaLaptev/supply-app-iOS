@@ -1,5 +1,4 @@
 import SwiftUI
-import Moya
 import Combine
 
 struct AsyncImage<Placeholder: View>: View {

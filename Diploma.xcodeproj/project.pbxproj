@@ -177,6 +177,20 @@
 		99FA12462A0A429B00B731A6 /* ProductPicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12452A0A429B00B731A6 /* ProductPicker.swift */; };
 		99FA12482A0AE8EA00B731A6 /* FileProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12472A0AE8EA00B731A6 /* FileProvider.swift */; };
 		99FA124A2A0AEE9F00B731A6 /* ImageDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12492A0AEE9F00B731A6 /* ImageDto.swift */; };
+		99FA12572A0E89DB00B731A6 /* AuthorizationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12562A0E89DB00B731A6 /* AuthorizationServiceProtocol.swift */; };
+		99FA12592A0E8A1E00B731A6 /* OrganizationServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12582A0E8A1E00B731A6 /* OrganizationServiceProtocol.swift */; };
+		99FA125B2A0E8A6400B731A6 /* OrganizationBranchServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA125A2A0E8A6400B731A6 /* OrganizationBranchServiceProtocol.swift */; };
+		99FA125D2A0E8A9800B731A6 /* ProductServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA125C2A0E8A9800B731A6 /* ProductServiceProtocol.swift */; };
+		99FA125F2A0E8AA600B731A6 /* SupplyServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA125E2A0E8AA600B731A6 /* SupplyServiceProtocol.swift */; };
+		99FA12612A0E8AB300B731A6 /* FileServiceProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12602A0E8AB300B731A6 /* FileServiceProtocol.swift */; };
+		99FA12632A0F950300B731A6 /* AuthorizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12622A0F950300B731A6 /* AuthorizationService.swift */; };
+		99FA12652A0F994400B731A6 /* OrganizationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12642A0F994400B731A6 /* OrganizationService.swift */; };
+		99FA12672A0F996E00B731A6 /* OrganizationBranchService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12662A0F996E00B731A6 /* OrganizationBranchService.swift */; };
+		99FA12692A0F9A0600B731A6 /* ProductService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12682A0F9A0600B731A6 /* ProductService.swift */; };
+		99FA126B2A0F9A1A00B731A6 /* SupplyService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA126A2A0F9A1A00B731A6 /* SupplyService.swift */; };
+		99FA126D2A0F9A2600B731A6 /* FileService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA126C2A0F9A2500B731A6 /* FileService.swift */; };
+		99FA126F2A0F9D8A00B731A6 /* ResultHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA126E2A0F9D8A00B731A6 /* ResultHandler.swift */; };
+		99FA12732A0FC35A00B731A6 /* EmptyDto.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99FA12722A0FC35A00B731A6 /* EmptyDto.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -353,6 +367,20 @@
 		99FA12452A0A429B00B731A6 /* ProductPicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductPicker.swift; sourceTree = "<group>"; };
 		99FA12472A0AE8EA00B731A6 /* FileProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileProvider.swift; sourceTree = "<group>"; };
 		99FA12492A0AEE9F00B731A6 /* ImageDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageDto.swift; sourceTree = "<group>"; };
+		99FA12562A0E89DB00B731A6 /* AuthorizationServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationServiceProtocol.swift; sourceTree = "<group>"; };
+		99FA12582A0E8A1E00B731A6 /* OrganizationServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationServiceProtocol.swift; sourceTree = "<group>"; };
+		99FA125A2A0E8A6400B731A6 /* OrganizationBranchServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationBranchServiceProtocol.swift; sourceTree = "<group>"; };
+		99FA125C2A0E8A9800B731A6 /* ProductServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductServiceProtocol.swift; sourceTree = "<group>"; };
+		99FA125E2A0E8AA600B731A6 /* SupplyServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplyServiceProtocol.swift; sourceTree = "<group>"; };
+		99FA12602A0E8AB300B731A6 /* FileServiceProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileServiceProtocol.swift; sourceTree = "<group>"; };
+		99FA12622A0F950300B731A6 /* AuthorizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthorizationService.swift; sourceTree = "<group>"; };
+		99FA12642A0F994400B731A6 /* OrganizationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationService.swift; sourceTree = "<group>"; };
+		99FA12662A0F996E00B731A6 /* OrganizationBranchService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrganizationBranchService.swift; sourceTree = "<group>"; };
+		99FA12682A0F9A0600B731A6 /* ProductService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProductService.swift; sourceTree = "<group>"; };
+		99FA126A2A0F9A1A00B731A6 /* SupplyService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SupplyService.swift; sourceTree = "<group>"; };
+		99FA126C2A0F9A2500B731A6 /* FileService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileService.swift; sourceTree = "<group>"; };
+		99FA126E2A0F9D8A00B731A6 /* ResultHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultHandler.swift; sourceTree = "<group>"; };
+		99FA12722A0FC35A00B731A6 /* EmptyDto.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyDto.swift; sourceTree = "<group>"; };
 		D95D20718B9E8485FCEDA73C /* Pods_Diploma.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Diploma.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -562,6 +590,7 @@
 		99C14C5029D6FA0B00B8D3E2 /* Network */ = {
 			isa = PBXGroup;
 			children = (
+				99FA12532A0E849C00B731A6 /* Services */,
 				99FA12122A062B5A00B731A6 /* Cache */,
 				99C14C8E29DAB3F400B8D3E2 /* Extensions */,
 				99C14C5E29D6FC2500B8D3E2 /* Dtos */,
@@ -601,6 +630,7 @@
 				99FA121B2A0633D700B731A6 /* SupplyStatusDto.swift */,
 				99FA121D2A06453000B731A6 /* SupplyFilterDto.swift */,
 				99FA12492A0AEE9F00B731A6 /* ImageDto.swift */,
+				99FA12722A0FC35A00B731A6 /* EmptyDto.swift */,
 			);
 			path = Dtos;
 			sourceTree = "<group>";
@@ -685,6 +715,7 @@
 			children = (
 				99C14C8C29DAB1EB00B8D3E2 /* TargetTypeExtension.swift */,
 				99C14C8F29DAB40800B8D3E2 /* MoyaProviderExtension.swift */,
+				99FA126E2A0F9D8A00B731A6 /* ResultHandler.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1132,6 +1163,41 @@
 			path = Components;
 			sourceTree = "<group>";
 		};
+		99FA12532A0E849C00B731A6 /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				99FA12542A0E89B100B731A6 /* Protocols */,
+				99FA12552A0E89C100B731A6 /* Implementations */,
+			);
+			path = Services;
+			sourceTree = "<group>";
+		};
+		99FA12542A0E89B100B731A6 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				99FA12562A0E89DB00B731A6 /* AuthorizationServiceProtocol.swift */,
+				99FA12582A0E8A1E00B731A6 /* OrganizationServiceProtocol.swift */,
+				99FA125A2A0E8A6400B731A6 /* OrganizationBranchServiceProtocol.swift */,
+				99FA125C2A0E8A9800B731A6 /* ProductServiceProtocol.swift */,
+				99FA125E2A0E8AA600B731A6 /* SupplyServiceProtocol.swift */,
+				99FA12602A0E8AB300B731A6 /* FileServiceProtocol.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
+		99FA12552A0E89C100B731A6 /* Implementations */ = {
+			isa = PBXGroup;
+			children = (
+				99FA12622A0F950300B731A6 /* AuthorizationService.swift */,
+				99FA12642A0F994400B731A6 /* OrganizationService.swift */,
+				99FA12662A0F996E00B731A6 /* OrganizationBranchService.swift */,
+				99FA12682A0F9A0600B731A6 /* ProductService.swift */,
+				99FA126A2A0F9A1A00B731A6 /* SupplyService.swift */,
+				99FA126C2A0F9A2500B731A6 /* FileService.swift */,
+			);
+			path = Implementations;
+			sourceTree = "<group>";
+		};
 		B15AE332FCC1211E0F9B1938 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -1262,12 +1328,14 @@
 				99C14C6529D8932000B8D3E2 /* AuthManager.swift in Sources */,
 				99F1792029E6EB2C001903F2 /* SupplyViewModel.swift in Sources */,
 				99D4548329B36DFA00462A8F /* WorkerMainView.swift in Sources */,
+				99FA12672A0F996E00B731A6 /* OrganizationBranchService.swift in Sources */,
 				99F178AD29DE1619001903F2 /* WorkerStatisticsViewModel.swift in Sources */,
 				99C14C8B29DAA48700B8D3E2 /* LocationViewModel.swift in Sources */,
 				99AA128A29CD8419002219E0 /* DateFormatManager.swift in Sources */,
 				99D4541D29AC7EDD00462A8F /* Counter.swift in Sources */,
 				99F178E529E2DE02001903F2 /* SupplyModel.swift in Sources */,
 				99D4542C29AE022C00462A8F /* CustomSmallButton.swift in Sources */,
+				99FA12652A0F994400B731A6 /* OrganizationService.swift in Sources */,
 				99D4549F29B4863100462A8F /* SupplierAdditionalInfoRow.swift in Sources */,
 				99F1792229E7310A001903F2 /* ChartData.swift in Sources */,
 				99A561E329A0FCFD00F9932A /* ContentView.swift in Sources */,
@@ -1276,9 +1344,11 @@
 				99D4546D29B3592500462A8F /* DynamicProductCard.swift in Sources */,
 				99F1789829DD42B5001903F2 /* OrganizationBranchModel.swift in Sources */,
 				99A0954C29BAFF0100C0286D /* SupplierProductCard.swift in Sources */,
+				99FA125F2A0E8AA600B731A6 /* SupplyServiceProtocol.swift in Sources */,
 				99A0956529BC950400C0286D /* ViewModifier.swift in Sources */,
 				99FA12412A09B8FD00B731A6 /* OrganizationImageView.swift in Sources */,
 				99D4546F29B35ABF00462A8F /* StaticProductCard.swift in Sources */,
+				99FA126B2A0F9A1A00B731A6 /* SupplyService.swift in Sources */,
 				99D4543129AE117200462A8F /* CustomTextField.swift in Sources */,
 				99F1789429DC6C54001903F2 /* DatePickerField.swift in Sources */,
 				99D4548B29B39C7500462A8F /* SuppliersListView.swift in Sources */,
@@ -1287,6 +1357,7 @@
 				99F1793129EECF07001903F2 /* ClientsListViewModel.swift in Sources */,
 				99000EC829FAC83500E51182 /* FilterDto.swift in Sources */,
 				99A0955029BB1A0100C0286D /* AddProductButton.swift in Sources */,
+				99FA12732A0FC35A00B731A6 /* EmptyDto.swift in Sources */,
 				99C14C7B29D9B6F300B8D3E2 /* ResultVoidExtension.swift in Sources */,
 				99FA12202A066A7100B731A6 /* StringExtension.swift in Sources */,
 				99D4549329B3CC8600462A8F /* SupplyScreen.swift in Sources */,
@@ -1296,6 +1367,7 @@
 				99F178A329DD5907001903F2 /* SupplierStatisticsViewModel.swift in Sources */,
 				99AA129129CDE6B7002219E0 /* LoadingScreenViewModel.swift in Sources */,
 				99D4542829AD242A00462A8F /* FontsExtension.swift in Sources */,
+				99FA126F2A0F9D8A00B731A6 /* ResultHandler.swift in Sources */,
 				99FA12182A062F9000B731A6 /* SupplyProvider.swift in Sources */,
 				99FA12462A0A429B00B731A6 /* ProductPicker.swift in Sources */,
 				99C14C6E29D955EE00B8D3E2 /* OverflowScroll.swift in Sources */,
@@ -1346,6 +1418,7 @@
 				99C14C8329D9DD2B00B8D3E2 /* ContactPersonModel.swift in Sources */,
 				99A0952429B70B7400C0286D /* ContactView.swift in Sources */,
 				99F178CA29DEF8FD001903F2 /* SuppliersListViewModel.swift in Sources */,
+				99FA12592A0E8A1E00B731A6 /* OrganizationServiceProtocol.swift in Sources */,
 				99F178A929DE14E2001903F2 /* WorkerMainViewModel.swift in Sources */,
 				99AA126029C82273002219E0 /* DateRangeSegment.swift in Sources */,
 				99D4544829AFC87A00462A8F /* BarChart.swift in Sources */,
@@ -1362,6 +1435,7 @@
 				99A0955529BB333500C0286D /* EditProductScreen.swift in Sources */,
 				99F178A229DD5907001903F2 /* SupplierStatisticsView.swift in Sources */,
 				99F178DE29E21512001903F2 /* SmallTagsGroup.swift in Sources */,
+				99FA125B2A0E8A6400B731A6 /* OrganizationBranchServiceProtocol.swift in Sources */,
 				99D4548729B39C4C00462A8F /* ProfileView.swift in Sources */,
 				99A0951E29B6305B00C0286D /* OrderStateView.swift in Sources */,
 				99000EC129F95BD300E51182 /* CoderManager.swift in Sources */,
@@ -1380,6 +1454,7 @@
 				99D4549829B45BA300462A8F /* OrderCard.swift in Sources */,
 				99FA12142A062B7800B731A6 /* MoyaCacheableRequest.swift in Sources */,
 				99F178CE29DEF93C001903F2 /* OrderingViewModel.swift in Sources */,
+				99FA12692A0F9A0600B731A6 /* ProductService.swift in Sources */,
 				99D4548529B36E0A00462A8F /* WorkerSupplyListScreen.swift in Sources */,
 				99FA124A2A0AEE9F00B731A6 /* ImageDto.swift in Sources */,
 				99AA128329CCAE73002219E0 /* FileManager.swift in Sources */,
@@ -1389,6 +1464,7 @@
 				99C14C8929DAA34A00B8D3E2 /* ContactViewModel.swift in Sources */,
 				99F178B129DE1645001903F2 /* WorkerSuppliesListViewModel.swift in Sources */,
 				99AA128829CCB411002219E0 /* ActivityViewController.swift in Sources */,
+				99FA12632A0F950300B731A6 /* AuthorizationService.swift in Sources */,
 				99D4543F29AE88E000462A8F /* CustomTag.swift in Sources */,
 				99D454A129B4959200462A8F /* BottomSheet.swift in Sources */,
 				99D4547929B3644E00462A8F /* NavigationTabs.swift in Sources */,
@@ -1402,9 +1478,11 @@
 				99D4541829AC7E7700462A8F /* CustomButton.swift in Sources */,
 				99C14C9429DAF21400B8D3E2 /* OrganizationDto.swift in Sources */,
 				99A0952629B70B8C00C0286D /* LocationView.swift in Sources */,
+				99FA12612A0E8AB300B731A6 /* FileServiceProtocol.swift in Sources */,
 				99FA121A2A0633B100B731A6 /* SupplyDto.swift in Sources */,
 				99A0956D29BCD1BB00C0286D /* AlertModel.swift in Sources */,
 				99D4543D29AE883300462A8F /* CornersViewExtension.swift in Sources */,
+				99FA12572A0E89DB00B731A6 /* AuthorizationServiceProtocol.swift in Sources */,
 				99A0956F29BD0AFD00C0286D /* CustomerTabBarWrapper.swift in Sources */,
 				99FA12252A07B43C00B731A6 /* SupplyHistoryList.swift in Sources */,
 				99AA125D29C821E5002219E0 /* DateRangeSegmentsView.swift in Sources */,
@@ -1412,6 +1490,7 @@
 				99D4549A29B45CC900462A8F /* ExtendableSection.swift in Sources */,
 				99F178BE29DEE169001903F2 /* SupplierViewModel.swift in Sources */,
 				99C14C6029D7150A00B8D3E2 /* LoadingIndicator.swift in Sources */,
+				99FA125D2A0E8A9800B731A6 /* ProductServiceProtocol.swift in Sources */,
 				99000EAC29F6CD9300E51182 /* ErrorDto.swift in Sources */,
 				99FA12382A08F87000B731A6 /* RadioButtonGroup.swift in Sources */,
 				99000EAE29F7CA1C00E51182 /* KeychainManager.swift in Sources */,
@@ -1422,6 +1501,7 @@
 				99D4544129AE8CA700462A8F /* CustomAlert.swift in Sources */,
 				99000EB429F7FAF100E51182 /* SupplierOrderView.swift in Sources */,
 				99000EB529F7FAF100E51182 /* SupplierOrderViewModel.swift in Sources */,
+				99FA126D2A0F9A2600B731A6 /* FileService.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

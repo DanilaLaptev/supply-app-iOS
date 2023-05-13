@@ -1,11 +1,10 @@
 import Foundation
 import SwiftUI
 import Combine
-import Moya
 
 
 class SupplierMainViewModel: ObservableObject {
-    private let organizationBranchProvider = MoyaProvider<OrganizationBranchProvider>(plugins: [NetworkLoggerPlugin()])
+    private let organizationBranchService: OrganizationBranchServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published private var authManager = AuthManager.shared
@@ -15,13 +14,15 @@ class SupplierMainViewModel: ObservableObject {
     
     @Published var showEditScreen = false
     @Published var showProductScreen = false
-
+    
     @Published private(set) var editedProduct: StorageItemModel?
     @Published private(set) var selectedProduct: StorageItemModel?
     @Published private(set) var productToHide: StorageItemModel?
-
+    
     @Published var showHideProductAlert = false
-
+    
+    private var branchId = AuthManager.shared.authData?.branchId ?? -1
+    
     
     private var selectedProducPublisher: AnyPublisher<StorageItemModel, Never> {
         $selectedProduct
@@ -36,9 +37,14 @@ class SupplierMainViewModel: ObservableObject {
     private var page = 0
     private let perPage = 10
     
-    init() {
+    init(organizationBranchService: OrganizationBranchServiceProtocol = OrganizationBranchService()) {
+        self.organizationBranchService = organizationBranchService
         fetchStorageItems()
-
+        
+        setupBindings()
+    }
+    
+    private func setupBindings() {
         $editedProduct
             .receive(on: RunLoop.main)
             .dropFirst()
@@ -87,26 +93,21 @@ class SupplierMainViewModel: ObservableObject {
             page: page,
             perPage: perPage
         )
-        organizationBranchProvider.request(.getStorageItems(branchId: authManager.authData?.branchId ?? -1, filter: filter)) { [weak self] result in
+                
+        organizationBranchService.getStorageItems(branchId: branchId, filter: filter) { [weak self] result in
             switch result {
             case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    guard let self,
-                          let response = try? response.map(PaginatedDto<StorageItemDto>.self),
-                          let total = response.total else {
-                        AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
-                        return
-                    }
-                    let receivedStorageItems =  response.items.map { item -> StorageItemModel in
-                        StorageItemModel.from(item)
-                    }
-                    
-                    self.storageItems += receivedStorageItems
-                    self.page = total > self.storageItems.count ? self.page + 1 : -1
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
+                guard let self,
+                      let total = response.total else {
+                    AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
+                    return
                 }
+                let receivedStorageItems =  response.items.map { item -> StorageItemModel in
+                    StorageItemModel.from(item)
+                }
+                
+                self.storageItems += receivedStorageItems
+                self.page = total > self.storageItems.count ? self.page + 1 : -1
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
@@ -124,19 +125,14 @@ class SupplierMainViewModel: ObservableObject {
             isHidden: !productToHide.isHidden
         )
         
-        organizationBranchProvider.request(.updateStorageItem(
-            branchId: AuthManager.shared.authData?.branchId ?? -1,
+        organizationBranchService.updateStorageItem(
+            branchId: branchId,
             item: requestBody
-        )) { [weak self] result in
+        ) { [weak self] result in
             switch result {
-            case .success(let response):
-                if (200...299).contains(response.statusCode) {
-                    AlertManager.shared.showAlert(.init(type: .success, description: "Товар скрыт!"))
-                    self?.refreshData()
-                } else {
-                    let errorDto = try? response.map(ErrorDto.self)
-                    AlertManager.shared.showAlert(.init(type: .error, description: errorDto?.message ?? "Произошла ошибка"))
-                }
+            case .success:
+                AlertManager.shared.showAlert(.init(type: .success, description: "Операция выполнена!"))
+                self?.refreshData()
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
