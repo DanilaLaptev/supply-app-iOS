@@ -18,10 +18,16 @@ struct WorkerSupplyListScreen: View {
                     .padding(.horizontal, 16)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    SmallTagsGroup<SupplyStatus>(selectedTags: $viewModel.supplyStatuses)
-                    .padding(.horizontal, 16)
-                    .padding(.top, 8)
-                    .padding(.bottom, 16)
+                    HStack {
+                        CustomButton(icon: .customReload, isCircleShape: true) {
+                            viewModel.refreshData()
+                        }
+                        .frame(width: 48)
+                        SmallTagsGroup<SupplyStatus>(selectedTags: $viewModel.supplyStatuses)
+                            .padding(.top, 8)
+                            .padding(.bottom, 16)
+                    }
+                    .padding(.leading, 16)
                 }
                 
                 VStack(alignment: .center) {

@@ -12,9 +12,9 @@ struct ContactView: View {
         
         OverflowScroll {
             NavigationLink(
-                "",
                 destination: OrganizationImageView().environmentObject(newOrganization),
-                isActive: $viewModel.navigateToOrganizationImage
+                isActive: $viewModel.navigateToOrganizationImage,
+                label: { }
             )
 
             VStack {
@@ -26,6 +26,7 @@ struct ContactView: View {
                         CustomTextField(textFieldValue: $viewModel.fullName, placeholder: "ФИО")
                         CustomTextField(textFieldValue: $viewModel.phone, placeholder: "Номер телефона")
                         CustomTextField(textFieldValue: $viewModel.email, placeholder: "Электронная почта")
+                            .autocapitalization(.none)
                             .padding(.bottom, 24)
                         
                         CustomButton(label: Text("Продолжить")) { viewModel.createOrganizationBranch() }

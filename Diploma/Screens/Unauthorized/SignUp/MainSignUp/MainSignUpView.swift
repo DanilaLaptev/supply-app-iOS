@@ -9,9 +9,9 @@ struct MainSignUpView: View {
         OverflowScroll {
             VStack {
                 NavigationLink(
-                    "",
                     destination: ContactView().environmentObject(viewModel.organization),
-                    isActive: $viewModel.navigateToContactView
+                    isActive: $viewModel.navigateToContactView,
+                    label: { }
                 )
 
                 Spacer()
@@ -26,6 +26,8 @@ struct MainSignUpView: View {
                         )
                         CustomTextField(textFieldValue: $viewModel.organizationName, placeholder: "Название организации")
                         CustomTextField(textFieldValue: $viewModel.email, placeholder: "Почта")
+                            .autocapitalization(.none)
+                        
                         CustomTextField(textFieldValue: $viewModel.password, placeholder: "Пароль", isSecure: true)
                         CustomTextField(textFieldValue: $viewModel.repeatedPassword, placeholder: "Подтверхдение пароля", isSecure: true)
                             .padding(.bottom, 24)

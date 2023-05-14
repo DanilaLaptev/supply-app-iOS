@@ -15,7 +15,12 @@ struct SupplierView: View {
     
     var body: some View {
         VStack(spacing: 0) {
-            NavigationLink("", destination: OrderingView(organizationModel: organizationModel, selectedItems: viewModel.selectedStorageItems), tag: OrderingView.tag, selection: $tagSelection)
+            NavigationLink(
+                "",
+                destination: OrderingView(organizationModel: organizationModel, selectedItems: viewModel.selectedStorageItems),
+                tag: OrderingView.tag,
+                selection: $tagSelection
+            )
             
             Header(title: organizationModel.title ?? "none")
                 .padding(.horizontal, 16)
@@ -38,9 +43,16 @@ struct SupplierView: View {
                         .font(.customTitle)
                         .padding(.horizontal, 16)
                     
-                    SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
-                        .padding(.top, 8)
-                        .padding(.bottom, 16)
+                    HStack {
+                        CustomButton(icon: .customReload, isCircleShape: true) {
+                            viewModel.refreshData()
+                        }
+                        .frame(width: 48)
+                        SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
+                            .padding(.top, 8)
+                            .padding(.bottom, 16)
+                    }
+                    .padding(.leading, 16)
                     
                     VStack {
                         ForEach($viewModel.storageItems) { $wrappedItem in

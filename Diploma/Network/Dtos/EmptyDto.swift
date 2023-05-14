@@ -1,3 +1,3 @@
 import Foundation
 
-struct EmptyDto: Codable { }
+struct EmptyDto: Decodable { }

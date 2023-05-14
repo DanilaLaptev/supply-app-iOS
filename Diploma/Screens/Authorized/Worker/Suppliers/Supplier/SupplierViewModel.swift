@@ -91,9 +91,7 @@ class SupplierViewModel: ObservableObject {
         updateFiltersPublisher
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                self?.page = 0
-                self?.storageItems = []
-                self?.fetchStorageItems()
+                self?.refreshData()
             }.store(in: &cancellableSet)
     }
     
@@ -135,5 +133,12 @@ class SupplierViewModel: ObservableObject {
     
     func setup(organizationModel: OrganizationModel?) {
         self.organizationModel = organizationModel
+    }
+    
+    func refreshData() {
+        page = 0
+        storageItems = []
+        
+        fetchStorageItems()
     }
 }

@@ -7,7 +7,7 @@ class MainSignUpViewModel: ObservableObject {
     private var cancellableSet = Set<AnyCancellable>()
 
     @Published var navigateToContactView: Bool = false
-    @Published var role = OrganizationType.allCases.first!.rawValue
+    @Published var role = OrganizationType.allCases.first!.name
     @Published var organizationName = "Test name"
     @Published var email = "test@sfedu.ru"
     @Published var password = "qqqqqq"

@@ -10,14 +10,22 @@ struct WorkerMainView: View {
     
     var body: some View {
         ZStack(alignment: .bottom) {
-            NavigationLink("",
-                           destination: EditProductScreen(initialStorageItem: viewModel.editedStorageItem),
-                           isActive: $viewModel.editStorageItemActive)
+            NavigationLink(
+                destination: EditProductScreen(initialStorageItem: viewModel.editedStorageItem),
+                isActive: $viewModel.editStorageItemActive,
+                label: { }
+            )
             
             VStack {
-                SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
-                    .padding(.top, 8)
-                    .padding(.bottom, 16)
+                HStack {
+                    CustomButton(icon: .customReload, isCircleShape: true) {
+                        viewModel.refreshData()
+                    }
+                    .frame(width: 48)
+                    SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
+                }
+                .padding(.top, 8)
+                .padding([.leading, .bottom], 16)
                 
                 ScrollView(.vertical, showsIndicators: false) {
                     VStack {

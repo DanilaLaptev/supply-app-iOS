@@ -9,6 +9,7 @@ struct RejectionItem: RadioGroupItem {
 }
 
 class OrderReviewViewModel: ObservableObject {
+    var navigation: NavigationProtocol?
     private let supplyService: SupplyServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
@@ -34,10 +35,11 @@ class OrderReviewViewModel: ObservableObject {
     }
     
     func acceptSupply() {
-        supplyService.acceptSuppliesGroup(groupId: supplyModel?.id ?? -1, branchId: branchId) { result in
+        supplyService.acceptSuppliesGroup(groupId: supplyModel?.id ?? -1, branchId: branchId) { [weak self] result in
             switch result {
             case .success:
                 AlertManager.shared.showAlert(.init(type: .success, description: "Заказ принят!"))
+                self?.navigation?.back()
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
@@ -51,10 +53,11 @@ class OrderReviewViewModel: ObservableObject {
             return
         }
         
-        supplyService.declineSuppliesGroup(groupId: supplyModel?.id ?? -1, branchId: branchId) { result in
+        supplyService.declineSuppliesGroup(groupId: supplyModel?.id ?? -1, branchId: branchId) { [weak self] result in
             switch result {
             case .success:
                 AlertManager.shared.showAlert(.init(type: .success, description: "Заказ отклонен!"))
+                self?.navigation?.back()
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

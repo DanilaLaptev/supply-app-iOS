@@ -15,9 +15,10 @@ struct LocationView: View {
     var body: some View {
         OverflowScroll {
             NavigationLink(
-                "",
                 destination: AuthorizationWrapper(),
-                isActive: $viewModel.navigateToSignIn)
+                isActive: $viewModel.navigateToSignIn,
+                label: { }
+            )
             
             VStack(spacing: 0) {
                 MapView(markers: $viewModel.landmarks,

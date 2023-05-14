@@ -75,8 +75,15 @@ struct OrderingView: View {
         .defaultScreenSettings()
         .onAppear {
             self.tools.bottomBarIsVisible = false
+            self.viewModel.navigation = self
             self.viewModel.setup(organizationModel: self.organizationModel, selectedItems: self.selectedItems)
         }
+    }
+}
+
+extension OrderingView: NavigationProtocol {
+    func back() {
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

@@ -4,6 +4,7 @@ import Combine
 
 
 class OrderingViewModel: ObservableObject {
+    var navigation: NavigationProtocol?
     private let supplyService: SupplyServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
@@ -46,10 +47,11 @@ class OrderingViewModel: ObservableObject {
             items: storageItems
         )
         
-        supplyService.createSupply(supply: supplyDto) { result in
+        supplyService.createSupply(supply: supplyDto) { [weak self] result in
             switch result {
             case .success:
                 AlertManager.shared.showAlert(.init(type: .success, description: "Заказ оформлен"))
+                self?.navigation?.back()
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

@@ -8,15 +8,15 @@ struct SupplyService: SupplyServiceProtocol {
         self.provider = provider
     }
     
-    func createSupply(supply: SupplyDto, completion: @escaping (Result<EmptyDto, Error>) -> ()) {
+    func createSupply(supply: SupplyDto, completion: @escaping (Result<Void, Error>) -> ()) {
         provider.request(.createSupply(supply: supply)) { result in
-            completion(result.handleResponse(EmptyDto.self))
+            completion(result.ignoreResponse())
         }
     }
     
-    func sellSupply(supply: SupplyDto, completion: @escaping (Result<EmptyDto, Error>) -> ()) {
+    func sellSupply(supply: SupplyDto, completion: @escaping (Result<Void, Error>) -> ()) {
         provider.request(.sellSupply(supply: supply)) { result in
-            completion(result.handleResponse(EmptyDto.self))
+            completion(result.ignoreResponse())
         }
     }
     
@@ -26,27 +26,27 @@ struct SupplyService: SupplyServiceProtocol {
         }
     }
     
-    func declineSupply(supplyId: Int, branchId: Int, completion: @escaping (Result<EmptyDto, Error>) -> ()) {
+    func declineSupply(supplyId: Int, branchId: Int, completion: @escaping (Result<Void, Error>) -> ()) {
         provider.request(.declineSupply(supplyId: supplyId, branchId: branchId)) { result in
-            completion(result.handleResponse(EmptyDto.self))
+            completion(result.ignoreResponse())
         }
     }
     
-    func acceptSupply(supplyId: Int, branchId: Int, completion: @escaping (Result<EmptyDto, Error>) -> ()) {
+    func acceptSupply(supplyId: Int, branchId: Int, completion: @escaping (Result<Void, Error>) -> ()) {
         provider.request(.acceptSupply(supplyId: supplyId, branchId: branchId)) { result in
-            completion(result.handleResponse(EmptyDto.self))
+            completion(result.ignoreResponse())
         }
     }
     
-    func acceptSuppliesGroup(groupId: Int, branchId: Int, completion: @escaping (Result<EmptyDto, Error>) -> ()) {
+    func acceptSuppliesGroup(groupId: Int, branchId: Int, completion: @escaping (Result<Void, Error>) -> ()) {
         provider.request(.acceptSuppliesGroup(groupId: groupId, branchId: branchId)) { result in
-            completion(result.handleResponse(EmptyDto.self))
+            completion(result.ignoreResponse())
         }
     }
     
-    func declineSuppliesGroup(groupId: Int, branchId: Int, completion: @escaping (Result<EmptyDto, Error>) -> ()) {
+    func declineSuppliesGroup(groupId: Int, branchId: Int, completion: @escaping (Result<Void, Error>) -> ()) {
         provider.request(.declineSuppliesGroup(groupId: groupId, branchId: branchId)) { result in
-            completion(result.handleResponse(EmptyDto.self))
+            completion(result.ignoreResponse())
         }
     }
 }

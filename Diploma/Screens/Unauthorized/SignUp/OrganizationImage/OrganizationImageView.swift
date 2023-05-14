@@ -12,9 +12,9 @@ struct OrganizationImageView: View {
     var body: some View {
         VStack {
             NavigationLink(
-                "",
                 destination: LocationView().environmentObject(newOrganization),
-                isActive: $viewModel.navigateToLocationView
+                isActive: $viewModel.navigateToLocationView,
+                label: { }
             )
             
             Header(title: "Фото организации")

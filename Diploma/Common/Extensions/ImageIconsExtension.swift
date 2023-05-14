@@ -24,6 +24,7 @@ extension Image {
     public static let customPencil: Image = Image("pencil").resizable()
     public static let customBin: Image = Image("bin").resizable()
     public static let customImage: Image = Image("image").resizable()
+    public static let customReload: Image = Image("reload").resizable()
 
     public static let customErrorAlert: Image = Image("error alert").resizable()
     public static let customSuccessAlert: Image = Image("success alert").resizable()

@@ -67,7 +67,7 @@ class SupplierOrdersViewModel: ObservableObject {
                 }
                 let receivedSupplies = response
                     .filter { dto in
-                        guard let status = dto.statuses?.first?.status else { return true }
+                        guard let status = dto.statuses?.last?.status else { return true }
                         return self.supplyStatuses.isEmpty || self.supplyStatuses.contains(status)
                     }
                     .map { dto in

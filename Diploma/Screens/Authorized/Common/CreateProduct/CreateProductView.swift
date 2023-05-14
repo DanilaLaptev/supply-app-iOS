@@ -2,6 +2,8 @@ import SwiftUI
 import Combine
 
 struct CreateProductView: View {
+    @Environment(\.presentationMode) private var presentationMode
+
     public static let tag = "EditProductScreen"
     
     @StateObject var viewModel = CreateProductViewModel()
@@ -17,7 +19,6 @@ struct CreateProductView: View {
                             viewModel.fetchProductsList()
                         }
                         
-                        // TODO: async image
                         AsyncImage(imageUrl: URL(string: viewModel.imageUrl)) {
                             Color.customDarkGray
                         }
@@ -43,6 +44,15 @@ struct CreateProductView: View {
         .padding(.top, safeAreaEdgeInsets.top)
         .background(Color.customLightGray)
         .defaultScreenSettings()
+        .onAppear {
+            viewModel.navigation = self
+        }
+    }
+}
+
+extension CreateProductView: NavigationProtocol {
+    func back() {
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

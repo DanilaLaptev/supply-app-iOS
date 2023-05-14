@@ -44,7 +44,7 @@ struct SupplierOrderView: View {
                         .font(.customTitle)
                         .padding(.horizontal, 16)
                     
-                    SupplyHistoryList(history: supplyModel.statusHistory)
+                    SupplyHistoryList(history: viewModel.supplyModel?.statusHistory ?? [])
                     .padding(.horizontal, 16)
                 }
                 .padding(.top, 8)

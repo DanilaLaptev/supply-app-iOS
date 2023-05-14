@@ -9,32 +9,38 @@ struct SupplierMainScreen: View {
     @StateObject private var tools = ViewManager.shared
     
     @State private var tagSelection: String? = nil
-    @State private var showDeleteProductAlert = false
     @State private var showCreateProductView = false
 
     var body: some View {
         VStack {
             NavigationLink(
-                "",
                 destination: ProductScreen(model: viewModel.selectedProduct ?? .empty),
-                isActive: $viewModel.showProductScreen
+                isActive: $viewModel.showProductScreen,
+                label: { }
             )
             
             NavigationLink(
-                "",
                 destination: EditProductScreen(initialStorageItem: viewModel.editedProduct),
-                isActive: $viewModel.showEditScreen
+                isActive: $viewModel.showEditScreen,
+                label: { }
             )
             
             NavigationLink(
-                "",
                 destination: CreateProductView(),
-                isActive: $showCreateProductView
+                isActive: $showCreateProductView,
+                label: { }
             )
-                        
-            SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
+            
+            HStack {
+                CustomButton(icon: .customReload, isCircleShape: true) {
+                    viewModel.refreshData()
+                }
+                .frame(width: 48)
+                SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
+            }
             .padding(.top, 8)
-            .padding(.bottom, 16)
+            .padding([.leading, .bottom], 16)
+            
             ScrollView(.vertical, showsIndicators: false) {
                 AddProductButton  {
                     showCreateProductView.toggle()
@@ -59,8 +65,6 @@ struct SupplierMainScreen: View {
                             viewModel.openEditView(storageItem)
                         } tapVisibilityButton : {
                             viewModel.hideStorageItem(storageItem)
-                        } tapDeletingButton: {
-                            self.showDeleteProductAlert.toggle()
                         }
                         .onAppear {
                             if viewModel.storageItems.last?.id == storageItem.id {
@@ -70,17 +74,8 @@ struct SupplierMainScreen: View {
                     }
                 }
                 .padding(.horizontal, 16)
-                .alert(isPresented: $showDeleteProductAlert) {
-                    Alert(
-                        title: Text("Удалить продукт"),
-                        message: Text("Вы точно хотите удалить выбранный продукт?"),
-                        primaryButton: .destructive(Text("Удалить")) {
-                            // TODO: action
-                        },
-                        secondaryButton: .cancel(Text("Отмена"))
-                    )
-                }
             }
+            .frame(maxHeight: .infinity)
         }
         .padding(.top, safeAreaEdgeInsets.top)
         .background(Color.customLightGray)

@@ -1,7 +1,7 @@
 import UIKit
 import SwiftUI
 
-// TODO: Rewrite
+
 struct ActivityViewController: UIViewControllerRepresentable {
 
     var activityItems: [Any]

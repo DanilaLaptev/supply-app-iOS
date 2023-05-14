@@ -1,6 +1,8 @@
 import SwiftUI
 
 struct EditProductScreen: View {
+    @Environment(\.presentationMode) private var presentationMode
+
     public static let tag = "EditProductScreen"
     
     @StateObject var viewModel = EditProductViewModel()
@@ -11,7 +13,6 @@ struct EditProductScreen: View {
             VStack(spacing: 16) {
                 Header(title: initialStorageItem?.product.name ?? "Title")
                 
-                // TODO: async image
                 AsyncImage(imageUrl: URL(string: initialStorageItem?.product.imageURL ?? "none"), placeholder: {
                     Color.customDarkGray
                 })
@@ -43,10 +44,17 @@ struct EditProductScreen: View {
         .background(Color.customLightGray)
         .defaultScreenSettings()
         .onAppear {
+            viewModel.navigation = self
             viewModel.setup(initialStorageItem)
         }
     }
     
+}
+
+extension EditProductScreen: NavigationProtocol {
+    func back() {
+        presentationMode.wrappedValue.dismiss()
+    }
 }
 
 struct EditProductScreen_Previews: PreviewProvider {

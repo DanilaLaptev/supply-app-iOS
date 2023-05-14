@@ -14,15 +14,15 @@ struct OrganizationBranchService: OrganizationBranchServiceProtocol {
         }
     }
     
-    func updateOrganizationBranch(branchId: Int, branch: OrganizationBranchDto, completion: @escaping (Result<EmptyDto , Error>) -> ()) {
+    func updateOrganizationBranch(branchId: Int, branch: OrganizationBranchDto, completion: @escaping (Result<Void , Error>) -> ()) {
         provider.request(.updateOrganizationBranch(branchId: branchId, branch: branch)) { result in
-            completion(result.handleResponse(EmptyDto.self))
+            completion(result.ignoreResponse())
         }
     }
     
-    func addContactPerson(branchId: Int, contactPerson: ContactPersonDto, completion: @escaping (Result<EmptyDto , Error>) -> ()) {
+    func addContactPerson(branchId: Int, contactPerson: ContactPersonDto, completion: @escaping (Result<Void , Error>) -> ()) {
         provider.request(.addContactPerson(branchId: branchId, contactPerson: contactPerson)) { result in
-            completion(result.handleResponse(EmptyDto.self))
+            completion(result.ignoreResponse())
         }
     }
     
@@ -32,15 +32,15 @@ struct OrganizationBranchService: OrganizationBranchServiceProtocol {
         }
     }
     
-    func addStorageItems(branchId: Int, items: [StorageItemDto], completion: @escaping (Result<EmptyDto, Error>) -> ()) {
+    func addStorageItems(branchId: Int, items: [StorageItemDto], completion: @escaping (Result<Void, Error>) -> ()) {
         provider.request(.addStorageItems(branchId: branchId, items: items)) { result in
-            completion(result.handleResponse(EmptyDto.self))
+            completion(result.ignoreResponse())
         }
     }
     
-    func updateStorageItem(branchId: Int, item: StorageItemDto, completion: @escaping (Result<EmptyDto, Error>) -> ()) {
+    func updateStorageItem(branchId: Int, item: StorageItemDto, completion: @escaping (Result<Void, Error>) -> ()) {
         provider.request(.updateStorageItem(branchId: branchId, item: item)) { result in
-            completion(result.handleResponse(EmptyDto.self))
+            completion(result.ignoreResponse())
         }
     }
 }

@@ -8,9 +8,9 @@ struct OrganizationService: OrganizationServiceProtocol {
         self.provider = provider
     }
     
-    func updateOrganization(organization: OrganizationDto, completion: @escaping (Result<EmptyDto, Error>) -> ()) {
+    func updateOrganization(organization: OrganizationDto, completion: @escaping (Result<Void, Error>) -> ()) {
         provider.request(.updateOrganization(organization: organization)) { result in
-            completion(result.handleResponse(EmptyDto.self))
+            completion(result.ignoreResponse())
         }
     }
     

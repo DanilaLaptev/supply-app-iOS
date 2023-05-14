@@ -4,6 +4,7 @@ import Combine
 
 
 class EditProductViewModel: ObservableObject {
+    var navigation: NavigationProtocol?
     private let organizationBranchService: OrganizationBranchServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     @Published private var initialStorageItem: StorageItemModel?
@@ -99,10 +100,11 @@ class EditProductViewModel: ObservableObject {
         organizationBranchService.updateStorageItem(
             branchId: branchId,
             item: requestBody
-        ) { result in
+        ) { [weak self] result in
             switch result {
             case .success:
                 AlertManager.shared.showAlert(.init(type: .success, description: "Товар обновлен!"))
+                self?.navigation?.back()
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

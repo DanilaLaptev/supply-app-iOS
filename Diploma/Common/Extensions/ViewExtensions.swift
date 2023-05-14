@@ -20,3 +20,11 @@ extension View {
         }
     }
 }
+
+protocol NavigationProtocol {
+    func back()
+}
+
+protocol UpdateBindingsProtocol {
+    func update()
+}

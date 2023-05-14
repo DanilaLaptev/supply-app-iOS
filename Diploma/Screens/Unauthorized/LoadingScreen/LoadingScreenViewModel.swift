@@ -11,7 +11,6 @@ class LoadingScreenViewModel: ObservableObject {
     
     @Published var navigateToAuthWrapper: Bool = false
     @Published var isLoading = false
-    @Published var isIpValid = false
     @Published var ipFieldValue: String = {
         let currentBaseUrl = RequestDefaults.baseUrl().absoluteString
         let start = currentBaseUrl.index(currentBaseUrl.startIndex, offsetBy: 7)
@@ -22,27 +21,11 @@ class LoadingScreenViewModel: ObservableObject {
         return ip
     }()
         
-    private var ipValid: AnyPublisher<Bool, Never> {
-        $ipFieldValue
-            .map { ip in
-                var sin = sockaddr_in()
-                return ip.withCString({ cstring in inet_pton(AF_INET, cstring, &sin.sin_addr) }) == 1
-            }.eraseToAnyPublisher()
-    }
     
     init(authorizationService: AuthorizationServiceProtocol = AuthorizationService()) {
         self.authorizationService = authorizationService
-        setupBindings()
     }
-    
-    private func setupBindings() {
-        ipValid
-            .receive(on: RunLoop.main)
-            .sink { [weak self] valid in
-                self?.isIpValid = valid
-            }.store(in: &cancellableSet)
-    }
-    
+
     func setBaseUrl() {
         RequestDefaults.changeBaseUrl(ipFieldValue)
     }

@@ -14,9 +14,9 @@ struct ProductService: ProductServiceProtocol {
         }
     }
     
-    func createProduct(completion: @escaping (Result<EmptyDto, Error>) -> ()) {
+    func createProduct(completion: @escaping (Result<Void, Error>) -> ()) {
         provider.request(.createProduct) { result in
-            completion(result.handleResponse(EmptyDto.self))
+            completion(result.ignoreResponse())
         }
     }
 }

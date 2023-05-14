@@ -10,21 +10,21 @@ struct SignInView: View {
         OverflowScroll {
             VStack {
                 NavigationLink(
-                    "",
                     destination: SupplierMainScreen(),
-                    isActive: $viewModel.navigateToSupplierMain
+                    isActive: $viewModel.navigateToSupplierMain,
+                    label: { }
                 )
                 
                 NavigationLink(
-                    "",
                     destination: WorkerMainView(),
-                    isActive: $viewModel.navigateToWorkerMain
+                    isActive: $viewModel.navigateToWorkerMain,
+                    label: { }
                 )
                 
                 NavigationLink(
-                    "",
                     destination: MainSignUpView(),
-                    isActive: $viewModel.navigateToSignUp
+                    isActive: $viewModel.navigateToSignUp,
+                    label: { }
                 )
 
                 Spacer()
@@ -34,7 +34,9 @@ struct SignInView: View {
                             .padding(.bottom, 8)
                         
                         CustomTextField(textFieldValue: $viewModel.email, placeholder: "Логин")
+                            .autocapitalization(.none)
                         CustomTextField(textFieldValue: $viewModel.password, placeholder: "Пароль", isSecure: true)
+                            .autocapitalization(.none)
                             .padding(.bottom, 24)
                         
                         VStack(alignment: .center, spacing: 8) {

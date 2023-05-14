@@ -16,7 +16,7 @@ class SupplyViewModel: ObservableObject {
     private var disableAcceptButtonPublisher: AnyPublisher<Bool, Never> {
         $supplyModel
             .map { supply in
-                supply?.statusHistory.filter { $0.status == .delivered || $0.status == .supplyAccepted }.isEmpty ?? true
+                supply?.statusHistory.last?.status != .delivered
             }.eraseToAnyPublisher()
     }
     
@@ -34,10 +34,11 @@ class SupplyViewModel: ObservableObject {
     }
     
     func acceptSupply() {
-        supplyService.acceptSuppliesGroup(groupId: supplyModel?.id ?? -1, branchId: branchId) { result in
+        supplyService.acceptSuppliesGroup(groupId: supplyModel?.id ?? -1, branchId: branchId) { [weak self] result in
             switch result {
             case .success:
                 AlertManager.shared.showAlert(.init(type: .success, description: "Заказ принят!"))
+                self?.supplyModel?.statusHistory.append(SupplyStatusHistory(status: .supplyAccepted, created: Date()))
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

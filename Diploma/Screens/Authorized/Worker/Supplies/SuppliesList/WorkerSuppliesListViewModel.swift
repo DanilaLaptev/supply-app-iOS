@@ -46,7 +46,7 @@ class WorkerSuppliesListViewModel: ObservableObject {
             .dropFirst()
             .receive(on: RunLoop.main)
             .sink { [weak self] _ in
-                self?.fetchSupplies()
+                self?.refreshData()
             }.store(in: &cancellableSet)
     }
     
@@ -68,7 +68,7 @@ class WorkerSuppliesListViewModel: ObservableObject {
                 }
                 let receivedSupplies = response
                     .filter { dto in
-                        guard let status = dto.statuses?.first?.status else { return true }
+                        guard let status = dto.statuses?.last?.status else { return true }
                         return self.supplyStatuses.isEmpty || self.supplyStatuses.contains(status)
                     }
                     .map { dto in
@@ -81,6 +81,11 @@ class WorkerSuppliesListViewModel: ObservableObject {
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
             }
         }
+    }
+    
+    func refreshData() {
+        supplies = []
+        fetchSupplies()
     }
 }
 

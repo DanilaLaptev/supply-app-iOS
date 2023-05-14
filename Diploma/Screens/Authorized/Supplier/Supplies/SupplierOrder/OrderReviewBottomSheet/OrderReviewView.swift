@@ -2,6 +2,8 @@ import SwiftUI
 import Combine
 
 struct OrderReviewView: View {
+    @Environment(\.presentationMode) private var presentationMode
+
     public static let tag = "OrderReviewView"
     
     let supplyModel: SupplyModel
@@ -43,8 +45,15 @@ struct OrderReviewView: View {
         }
         .padding(.top, 24)
         .onAppear {
+            viewModel.navigation = self
             viewModel.setup(supplyModel)
         }
+    }
+}
+
+extension OrderReviewView: NavigationProtocol {
+    func back() {
+        presentationMode.wrappedValue.dismiss()
     }
 }
 

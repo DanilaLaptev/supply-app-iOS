@@ -1,6 +1,5 @@
 import SwiftUI
 
-// TODO: Map elements rewrite
 struct SuppliersListView: View {
     public static let tag = "SuppliersListView"
     
@@ -14,9 +13,9 @@ struct SuppliersListView: View {
         GeometryReader { geo in
             ScrollView(.vertical, showsIndicators: false) {
                 NavigationLink(
-                    "",
                     destination: SupplierView(organizationModel: viewModel.selectedOrganization ?? .empty),
-                    isActive: $viewModel.navigateToOrganizationView
+                    isActive: $viewModel.navigateToOrganizationView,
+                    label: { }
                 )
                 
                 VStack(alignment: .leading, spacing: 0) {
@@ -29,6 +28,11 @@ struct SuppliersListView: View {
                     BottomSheet(background: .customLightGray) {
                         VStack {
                             HStack(spacing: 8) {
+                                CustomButton(icon: .customReload, isCircleShape: true) {
+                                    viewModel.refreshData()
+                                }
+                                .frame(width: 48)
+                                
                                 CustomTextField(textFieldValue: $viewModel.organizationNameFilter, icon: .customSearch, isDividerVisible: true, placeholder: "Поиск", background: .customWhite)
                                 CustomButton(icon: .customFilter) {
                                     showFilters.toggle()

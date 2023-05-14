@@ -15,7 +15,7 @@ struct ContentView: View {
             }
             
             VStack(spacing: 8) {
-                ForEach(alertsManager.alertsList) { alertModel in
+                ForEach(AlertManager.shared.alertsList) { alertModel in
                     CustomAlert(alertModel)
                 }
                 .animation(.easeInOut)
@@ -23,7 +23,7 @@ struct ContentView: View {
             }
             .padding(.top, safeAreaEdgeInsets.top)
             .clipped()
-            .frame(maxWidth: .infinity, maxHeight: .infinity)            
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
         .edgesIgnoringSafeArea(.all)
     }

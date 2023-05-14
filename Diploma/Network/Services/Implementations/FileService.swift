@@ -14,9 +14,9 @@ struct FileService: FileServiceProtocol {
         }
     }
     
-    func getFile(imageName: String, completion: @escaping (Result<EmptyDto, Error>) -> ()) {
+    func getFile(imageName: String, completion: @escaping (Result<Void, Error>) -> ()) {
         provider.request(.getFile(imageName: imageName)) { result in
-            completion(result.handleResponse(EmptyDto.self))
+            completion(result.ignoreResponse())
         }
     }
 }

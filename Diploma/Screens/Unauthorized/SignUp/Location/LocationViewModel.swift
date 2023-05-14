@@ -25,6 +25,7 @@ class LocationViewModel: ObservableObject {
             $placeLocation,
             $placeFullName
         )
+        .dropFirst()
         .compactMap { location, placeName in
             guard let location, let placeName else {
                 Debugger.shared.printLog("couldn't get location name or coordinate")
@@ -49,8 +50,9 @@ class LocationViewModel: ObservableObject {
             }.store(in: &cancellableSet)
         
         $addressName
+            .dropFirst()
             .receive(on: RunLoop.main)
-            .debounce(for: .seconds(3), scheduler: DispatchQueue.main)
+            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
             .sink { [weak self] addressName in
                 self?.locationManager.getLocation(forPlaceCalled: addressName) { location in
                     guard let location else {
@@ -64,8 +66,9 @@ class LocationViewModel: ObservableObject {
             }.store(in: &cancellableSet)
         
         $placeLocation
+            .dropFirst()
             .receive(on: RunLoop.main)
-            .debounce(for: .seconds(3), scheduler: DispatchQueue.main)
+            .debounce(for: .seconds(1), scheduler: DispatchQueue.main)
             .sink { [weak self] placeLocation in
                 guard let placeLocation else {
                     self?.placeFullName = nil

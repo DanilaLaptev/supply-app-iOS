@@ -21,7 +21,6 @@ class OrganizationImageViewModel: ObservableObject {
         self.organizationService = organizationService
     }
     
-    // TODO: compress func
     private func compressImageData(_ image: UIImage?, maxSizeMB: Int) -> Data? {
         guard let image else { return nil }
         

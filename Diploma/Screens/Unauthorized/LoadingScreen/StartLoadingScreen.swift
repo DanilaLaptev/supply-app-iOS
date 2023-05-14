@@ -23,7 +23,6 @@ struct StartLoadingScreen: View {
                     viewModel.checkUserAuth()
                 }
                 .frame(width: 48)
-                .disabled(!viewModel.isIpValid)
             }
             
             LoadingIndicator(isLoading: $viewModel.isLoading)

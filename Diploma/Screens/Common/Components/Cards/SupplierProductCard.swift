@@ -8,7 +8,6 @@ struct SupplierProductCard: View {
     var tapCard: (()->())? = nil
     var tapEditingButton: (()->())? = nil
     var tapVisibilityButton: (()->())? = nil
-    var tapDeletingButton: (()->())? = nil
     
     var body: some View {
         HStack(alignment: .top) {
@@ -29,8 +28,7 @@ struct SupplierProductCard: View {
         }
         .extraOptions([
             ExtraOption(icon: .customPencil, action: tapEditingButton),
-            ExtraOption(icon: model.isHidden ? Image.customClosedEye : .customEye, action: tapVisibilityButton),
-            ExtraOption(icon: .customBin, action: tapDeletingButton)
+            ExtraOption(icon: model.isHidden ? Image.customClosedEye : .customEye, action: tapVisibilityButton)
         ])
         .frame(maxWidth: .infinity)
         .background(model.isHidden ? Color.customGray : .customWhite)
