@@ -4,6 +4,7 @@ import Combine
 
 
 class SupplyViewModel: ObservableObject {
+    var updateBindings: UpdateBindingsProtocol?
     private let supplyService: SupplyServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
@@ -39,6 +40,7 @@ class SupplyViewModel: ObservableObject {
             case .success:
                 AlertManager.shared.showAlert(.init(type: .success, description: "Заказ принят!"))
                 self?.supplyModel?.statusHistory.append(SupplyStatusHistory(status: .supplyAccepted, created: Date()))
+                self?.updateBindings?.update()
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))

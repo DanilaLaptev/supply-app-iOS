@@ -6,7 +6,7 @@ struct EditProductScreen: View {
     public static let tag = "EditProductScreen"
     
     @StateObject var viewModel = EditProductViewModel()
-    var initialStorageItem: StorageItemModel? = nil
+    @Binding var initialStorageItem: StorageItemModel?
     
     var body: some View {
         VStack {
@@ -44,6 +44,7 @@ struct EditProductScreen: View {
         .background(Color.customLightGray)
         .defaultScreenSettings()
         .onAppear {
+            viewModel.updateBindings = self
             viewModel.navigation = self
             viewModel.setup(initialStorageItem)
         }
@@ -57,10 +58,17 @@ extension EditProductScreen: NavigationProtocol {
     }
 }
 
+extension EditProductScreen: UpdateBindingsProtocol {
+    func update() {
+        self.initialStorageItem?.description = viewModel.description
+        self.initialStorageItem?.price = Double(viewModel.price) ?? 0
+    }
+}
+
 struct EditProductScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            EditProductScreen()
+            EditProductScreen(initialStorageItem: .constant(.empty))
         }
     }
 }

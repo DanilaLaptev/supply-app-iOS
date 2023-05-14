@@ -19,7 +19,14 @@ struct SupplierOrdersView: View {
                     .padding(.horizontal, 16)
                 
                 ScrollView(.horizontal, showsIndicators: false) {
-                    SmallTagsGroup<SupplyStatus>(selectedTags: $viewModel.supplyStatuses)
+                    HStack(alignment: .center) {
+                        CustomButton(icon: .customReload, isCircleShape: true) {
+                            viewModel.refreshData()
+                        }
+                        .frame(width: 48)
+                        SmallTagsGroup<SupplyStatus>(selectedTags: $viewModel.supplyStatuses)
+                    }
+
                     .padding(.horizontal, 16)
                     .padding(.top, 8)
                     .padding(.bottom, 16)

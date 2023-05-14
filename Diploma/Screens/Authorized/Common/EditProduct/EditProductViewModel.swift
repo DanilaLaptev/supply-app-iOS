@@ -4,6 +4,7 @@ import Combine
 
 
 class EditProductViewModel: ObservableObject {
+    var updateBindings: UpdateBindingsProtocol?
     var navigation: NavigationProtocol?
     private let organizationBranchService: OrganizationBranchServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
@@ -104,6 +105,7 @@ class EditProductViewModel: ObservableObject {
             switch result {
             case .success:
                 AlertManager.shared.showAlert(.init(type: .success, description: "Товар обновлен!"))
+                self?.updateBindings?.update()
                 self?.navigation?.back()
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")

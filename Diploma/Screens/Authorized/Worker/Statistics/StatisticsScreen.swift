@@ -23,7 +23,7 @@ struct StatisticsScreen: View {
     var body: some View {
         ScrollView(.vertical, showsIndicators: false) {
             VStack(alignment: .leading) {
-                CalendarView(startDate: $viewModel.startDate, endDate: $viewModel.endDate)
+                CalendarView(startDate: $viewModel.startDate, endDate: $viewModel.endDate, disablePastDays: false)
                     .padding(.bottom, 8)
                 
                 HStack {

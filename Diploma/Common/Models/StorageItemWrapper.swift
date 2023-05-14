@@ -6,7 +6,7 @@ class StorageItemWrapper: ObservableObject, Identifiable, Equatable {
     }
     
     let id = UUID().hashValue
-    let item: StorageItemModel
+    var item: StorageItemModel
     @Published var selectedAmmount: Int
     
     init(item: StorageItemModel, selectedAmmount: Int) {

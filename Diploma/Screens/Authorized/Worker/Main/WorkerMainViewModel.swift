@@ -84,6 +84,18 @@ class WorkerMainViewModel: ObservableObject {
             .sink { [weak self] selected in
                 self?.refreshData()
             }.store(in: &cancellableSet)
+        
+        $editedStorageItem
+            .compactMap { $0 }
+            .receive(on: RunLoop.main)
+            .sink { [weak self] editedItem in
+                self?.editStorageItemActive.toggle()
+                
+                guard let index = self?.storageItems.firstIndex(where: {$0.item.id == editedItem.id}) else {
+                    return
+                }
+                self?.storageItems[index].item = editedItem
+            }.store(in: &cancellableSet)
     }
     
     func fetchStorageItems() {
@@ -152,6 +164,5 @@ class WorkerMainViewModel: ObservableObject {
     
     func editProduct(_ storageItem: StorageItemModel) {
         editedStorageItem = storageItem
-        editStorageItemActive.toggle()
     }
 }

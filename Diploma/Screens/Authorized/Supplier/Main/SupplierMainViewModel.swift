@@ -14,8 +14,10 @@ class SupplierMainViewModel: ObservableObject {
     
     @Published var showEditScreen = false
     @Published var showProductScreen = false
-    
-    @Published private(set) var editedProduct: StorageItemModel?
+    @Published var showCreateProductView = false
+
+    @Published var newProductCreated: Bool = false
+    @Published var editedProduct: StorageItemModel?
     @Published private(set) var selectedProduct: StorageItemModel?
     @Published private(set) var productToHide: StorageItemModel?
     
@@ -46,10 +48,11 @@ class SupplierMainViewModel: ObservableObject {
     
     private func setupBindings() {
         $editedProduct
+            .compactMap { $0 }
             .receive(on: RunLoop.main)
-            .dropFirst()
-            .sink { [weak self] productModel in
+            .sink { [weak self] editedItem in
                 self?.showEditScreen.toggle()
+                self?.updateStorageItem(editedItem)
             }.store(in: &cancellableSet)
         
         productToHidePublisher
@@ -70,6 +73,13 @@ class SupplierMainViewModel: ObservableObject {
             .debounce(for: .seconds(2), scheduler: DispatchQueue.main)
             .removeDuplicates()
             .sink { [weak self] selected in
+                self?.refreshData()
+            }.store(in: &cancellableSet)
+        
+        $newProductCreated
+            .filter { $0 }
+            .receive(on: RunLoop.main)
+            .sink { [weak self] _ in
                 self?.refreshData()
             }.store(in: &cancellableSet)
     }
@@ -116,13 +126,15 @@ class SupplierMainViewModel: ObservableObject {
     }
     
     func hideProductRequest() {
-        guard let productToHide else {
+        guard var productToHide else {
             AlertManager.shared.showAlert(.init(type: .error, description: "Произошла ошибка"))
             return
         }
+        productToHide.isHidden.toggle()
+        
         let requestBody = StorageItemDto(
             id: productToHide.id,
-            isHidden: !productToHide.isHidden
+            isHidden: productToHide.isHidden
         )
         
         organizationBranchService.updateStorageItem(
@@ -132,7 +144,7 @@ class SupplierMainViewModel: ObservableObject {
             switch result {
             case .success:
                 AlertManager.shared.showAlert(.init(type: .success, description: "Операция выполнена!"))
-                self?.refreshData()
+                self?.updateStorageItem(productToHide)
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
@@ -148,7 +160,18 @@ class SupplierMainViewModel: ObservableObject {
         self.editedProduct = product
     }
     
+    func openCreateProductView(_ product: StorageItemModel? = nil) {
+        self.showCreateProductView.toggle()
+    }
+    
     func openProductView(_ product: StorageItemModel) {
         self.selectedProduct = product
+    }
+    
+    func updateStorageItem(_ editedItem: StorageItemModel) {
+        guard let index = storageItems.firstIndex(where: {$0.id == editedItem.id}) else {
+            return
+        }
+        storageItems[index] = editedItem
     }
 }

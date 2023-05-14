@@ -11,19 +11,13 @@ struct WorkerMainView: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             NavigationLink(
-                destination: EditProductScreen(initialStorageItem: viewModel.editedStorageItem),
+                destination: EditProductScreen(initialStorageItem: $viewModel.editedStorageItem),
                 isActive: $viewModel.editStorageItemActive,
                 label: { }
             )
             
             VStack {
-                HStack {
-                    CustomButton(icon: .customReload, isCircleShape: true) {
-                        viewModel.refreshData()
-                    }
-                    .frame(width: 48)
-                    SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
-                }
+                SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
                 .padding(.top, 8)
                 .padding([.leading, .bottom], 16)
                 

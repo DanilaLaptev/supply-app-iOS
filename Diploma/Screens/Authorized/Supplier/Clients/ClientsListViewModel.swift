@@ -62,9 +62,7 @@ class ClientsListViewModel: ObservableObject {
             .dropFirst()
             .receive(on: RunLoop.main)
             .sink { [weak self] markers in
-                self?.page = 0
-                self?.organizations = []
-                self?.fetchOrganizations()
+                self?.refreshData()
             }.store(in: &cancellableSet)
     }
     
@@ -103,5 +101,11 @@ class ClientsListViewModel: ObservableObject {
                 AlertManager.shared.showAlert(.init(type: .error, description: "Сервер недоступен или был превышен лимит времени на запрос"))
             }
         }
+    }
+    
+    func refreshData() {
+        page = 0
+        organizations = []
+        fetchOrganizations()
     }
 }

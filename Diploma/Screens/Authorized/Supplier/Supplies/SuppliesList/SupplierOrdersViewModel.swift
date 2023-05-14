@@ -81,4 +81,9 @@ class SupplierOrdersViewModel: ObservableObject {
             }
         }
     }
+    
+    func refreshData() {
+        supplies = []
+        fetchSupplies()
+    }
 }

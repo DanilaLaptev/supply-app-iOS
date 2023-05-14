@@ -13,6 +13,8 @@ class SupplierStatisticsViewModel: ObservableObject {
     
     @Published var outcomingStatistics: ChartDataContainer = .empty
     
+    @Published var statistics: URL?
+    
     var dateRangeTitle: String {
         guard let startDate, let endDate else { return "Вся статистика" }
         
@@ -52,6 +54,27 @@ class SupplierStatisticsViewModel: ObservableObject {
             }.eraseToAnyPublisher()
     }
     
+    private var statisticFileUrl: AnyPublisher<URL, Never> {
+        $supplies
+            .compactMap { supplyModels -> URL? in
+                let supplyProducts = supplyModels.flatMap { supplyModel in
+                    supplyModel.products.map { (storageItem: $0, supply: supplyModel) }
+                }
+                
+                return CustomFileManager.shared.convertToCSV(supplyProducts) { wrapper in
+                    [
+                        ("from organization", wrapper.supply.fromBranchId ?? "none"),
+                        ("to organization", wrapper.supply.toBranchId ?? "none"),
+                        ("delivery time", wrapper.supply.deliveryTime ?? "none"),
+                        ("product name", wrapper.storageItem.product.name.filter { !$0.isPunctuation } ),
+                        ("quantity", wrapper.storageItem.quantity),
+                        ("price per item", wrapper.storageItem.price),
+                        ("total price", wrapper.storageItem.price * Double(wrapper.storageItem.quantity))
+                    ]
+                }
+            }.eraseToAnyPublisher()
+    }
+    
     init(supplyService: SupplyServiceProtocol = SupplyService()) {
         self.supplyService = supplyService
         fetchSupplies()
@@ -71,6 +94,12 @@ class SupplierStatisticsViewModel: ObservableObject {
             .receive(on: RunLoop.main)
             .sink { [weak self] statistics in
                 self?.outcomingStatistics = statistics
+            }.store(in: &cancellableSet)
+        
+        statisticFileUrl
+            .receive(on: RunLoop.main)
+            .sink { [weak self] url in
+                self?.statistics = url
             }.store(in: &cancellableSet)
     }
     

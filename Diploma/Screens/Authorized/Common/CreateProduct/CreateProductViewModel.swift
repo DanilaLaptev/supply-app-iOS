@@ -4,13 +4,14 @@ import Combine
 
 
 class CreateProductViewModel: ObservableObject {
+    var updateBindings: UpdateBindingsProtocol?
     var navigation: NavigationProtocol?
     private let organizationBranchService: OrganizationBranchServiceProtocol
     private let productService: ProductServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
     @Published private(set) var products: [ProductModel] = []
-    
+        
     @Published var product: ProductModel?
     @Published var price = ""
     @Published var description = ""
@@ -153,6 +154,7 @@ class CreateProductViewModel: ObservableObject {
             switch result {
             case .success:
                 AlertManager.shared.showAlert(.init(type: .success, description: "Товар создан!"))
+                self?.updateBindings?.update()
                 self?.navigation?.back()
             case .failure(let error):
                 Debugger.shared.printLog("Ошибка сети: \(error.localizedDescription)")

@@ -7,6 +7,7 @@ struct CreateProductView: View {
     public static let tag = "EditProductScreen"
     
     @StateObject var viewModel = CreateProductViewModel()
+    @Binding var newProductCreated: Bool
     
     var body: some View {
         OverflowScroll {
@@ -45,6 +46,7 @@ struct CreateProductView: View {
         .background(Color.customLightGray)
         .defaultScreenSettings()
         .onAppear {
+            viewModel.updateBindings = self
             viewModel.navigation = self
         }
     }
@@ -56,10 +58,16 @@ extension CreateProductView: NavigationProtocol {
     }
 }
 
+extension CreateProductView: UpdateBindingsProtocol {
+    func update() {
+        newProductCreated = true
+    }
+}
+
 struct CreateProductViewView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            CreateProductView()
+            CreateProductView(newProductCreated: .constant(false))
         }
     }
 }

@@ -28,7 +28,7 @@ struct DynamicProductCard: View {
                     .foregroundColor(.customBlack)
                 
                 if showQuantity {
-                    Text(" - \(model.quantity)")
+                    Text(" - \(model.quantity - selectedNumber)")
                         .font(.customSubtitle)
                         .foregroundColor(.customDarkGray)
                 }

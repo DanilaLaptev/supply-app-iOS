@@ -27,8 +27,14 @@ struct ClientsListView: View {
                     
                     BottomSheet(background: .customLightGray) {
                         VStack {
-                            CustomTextField(textFieldValue: .constant(""), icon: .customSearch, isDividerVisible: true, placeholder: "Поиск", background: .customWhite)
-                                .padding(.bottom, 16)
+                            HStack(alignment: .center) {
+                                CustomButton(icon: .customReload, isCircleShape: true) {
+                                    viewModel.refreshData()
+                                }
+                                .frame(width: 48)
+                                CustomTextField(textFieldValue: .constant(""), icon: .customSearch, isDividerVisible: true, placeholder: "Поиск", background: .customWhite)
+                            }
+                            .padding(.bottom, 16)
                             
                             VStack {
                                 ForEach(viewModel.organizations) { organization in

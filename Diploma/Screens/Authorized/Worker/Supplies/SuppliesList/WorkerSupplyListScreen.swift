@@ -24,10 +24,10 @@ struct WorkerSupplyListScreen: View {
                         }
                         .frame(width: 48)
                         SmallTagsGroup<SupplyStatus>(selectedTags: $viewModel.supplyStatuses)
-                            .padding(.top, 8)
-                            .padding(.bottom, 16)
                     }
                     .padding(.leading, 16)
+                    .padding(.top, 8)
+                    .padding(.bottom, 16)
                 }
                 
                 VStack(alignment: .center) {
@@ -35,9 +35,9 @@ struct WorkerSupplyListScreen: View {
                         ListEmptyView()
                     }
                     
-                    ForEach(viewModel.supplies) { supply in
+                    ForEach($viewModel.supplies) { $supply in
                         NavigationLink {
-                            SupplyScreen(supplyModel: supply)
+                            SupplyScreen(supplyModel: $supply)
                         } label: {
                             SupplyCard(supplyModel: supply)
                         }

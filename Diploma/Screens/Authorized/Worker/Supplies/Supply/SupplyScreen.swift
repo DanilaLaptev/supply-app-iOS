@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct SupplyScreen: View {
-    let supplyModel: SupplyModel
+    @Binding var supplyModel: SupplyModel
     
     @StateObject var viewModel = SupplyViewModel()
     @State private var showAlert = false
@@ -75,15 +75,23 @@ struct SupplyScreen: View {
         .background(Color.customLightGray)
         .defaultScreenSettings()
         .onAppear {
+            viewModel.updateBindings = self
             self.viewModel.setup(supplyModel: self.supplyModel)
         }
+    }
+}
+
+extension SupplyScreen: UpdateBindingsProtocol {
+    func update() {
+        guard let supply = viewModel.supplyModel else { return }
+        supplyModel = supply
     }
 }
 
 struct SupplyScreen_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            SupplyScreen(supplyModel: .empty)
+            SupplyScreen(supplyModel: .constant(.empty))
         }
     }
 }

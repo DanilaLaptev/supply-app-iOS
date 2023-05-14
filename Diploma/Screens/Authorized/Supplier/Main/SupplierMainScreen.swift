@@ -9,7 +9,6 @@ struct SupplierMainScreen: View {
     @StateObject private var tools = ViewManager.shared
     
     @State private var tagSelection: String? = nil
-    @State private var showCreateProductView = false
 
     var body: some View {
         VStack {
@@ -20,30 +19,24 @@ struct SupplierMainScreen: View {
             )
             
             NavigationLink(
-                destination: EditProductScreen(initialStorageItem: viewModel.editedProduct),
+                destination: EditProductScreen(initialStorageItem: $viewModel.editedProduct),
                 isActive: $viewModel.showEditScreen,
                 label: { }
             )
             
             NavigationLink(
-                destination: CreateProductView(),
-                isActive: $showCreateProductView,
+                destination: CreateProductView(newProductCreated: $viewModel.newProductCreated),
+                isActive: $viewModel.showCreateProductView,
                 label: { }
             )
             
-            HStack {
-                CustomButton(icon: .customReload, isCircleShape: true) {
-                    viewModel.refreshData()
-                }
-                .frame(width: 48)
-                SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
-            }
+            SmallTagsGroup<ProductType>(selectedTags: $viewModel.selectedProductTypes)
             .padding(.top, 8)
             .padding([.leading, .bottom], 16)
             
             ScrollView(.vertical, showsIndicators: false) {
                 AddProductButton  {
-                    showCreateProductView.toggle()
+                    viewModel.showCreateProductView.toggle()
                 }
                 .padding(.horizontal, 16)
                 .alert(isPresented: $viewModel.showHideProductAlert) {
