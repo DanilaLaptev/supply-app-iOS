@@ -5,5 +5,5 @@ struct OrganizationBranchDto: Codable {
     var addressName: String?
     var longitude: Double?
     var latitude: Double?
-    var contactPersons: [ContactPersonDto]
+    var contactPeople: [ContactPersonDto]
 }

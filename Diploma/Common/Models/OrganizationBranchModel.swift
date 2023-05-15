@@ -7,7 +7,7 @@ struct OrganizationBranchModel: Identifiable {
     let contacts: [ContactPersonModel]
     
     static func from(_ dto: OrganizationBranchDto) -> OrganizationBranchModel {
-        let contacts = dto.contactPersons.map { ContactPersonModel.from($0) }
+        let contacts = dto.contactPeople.map { ContactPersonModel.from($0) }
         return OrganizationBranchModel(
             id: dto.id,
             address: Address(

@@ -101,7 +101,7 @@ class LocationViewModel: ObservableObject {
             addressName: selectedPlace.name,
             longitude: selectedPlace.location.longitude,
             latitude: selectedPlace.location.latitude,
-            contactPersons: []
+            contactPeople: []
         )
         
         guard let branchId = organization?.organizationBranchId else {

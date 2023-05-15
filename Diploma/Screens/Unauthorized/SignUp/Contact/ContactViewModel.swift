@@ -98,7 +98,7 @@ class ContactViewModel: ObservableObject {
         guard validateForm() else { return }
         
         let branchDto = OrganizationBranchDto(
-            contactPersons: []
+            contactPeople: []
         )
         
         organizationBranchService.createOrganizationBranch(branch: branchDto) { [weak self] result in
