@@ -11,15 +11,7 @@ class LoadingScreenViewModel: ObservableObject {
     
     @Published var navigateToAuthWrapper: Bool = false
     @Published var isLoading = false
-    @Published var ipFieldValue: String = {
-        let currentBaseUrl = RequestDefaults.baseUrl().absoluteString
-        let start = currentBaseUrl.index(currentBaseUrl.startIndex, offsetBy: 7)
-        let end = currentBaseUrl.index(currentBaseUrl.endIndex, offsetBy: -6)
-        let range = start..<end
-        
-        let ip = String(currentBaseUrl[range])
-        return ip
-    }()
+    @Published var ipFieldValue: String = "localhost"
         
     
     init(authorizationService: AuthorizationServiceProtocol = AuthorizationService()) {

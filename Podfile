@@ -9,4 +9,8 @@ target 'Diploma' do
   pod 'Moya', '~> 15.0'
   pod "Keychain"
   
+  target 'DiplomaTests' do
+    pod 'Moya', '~> 15.0'
+  end
+  
 end

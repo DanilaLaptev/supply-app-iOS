@@ -95,7 +95,20 @@ extension OrganizationBranchProvider: TargetType {
         case .addContactPerson:
             return .init()
         case .getStorageItems:
-            return .init()
+            let product1 = ProductDto(id: 1, productType: .meat, name: "Мясо", approved: true, image: "image1")
+            let storageItem1 = StorageItemDto(id: 1, price: 10.99, description: "Описание 1", quantity: 5, isHidden: false, product: product1)
+
+            let product2 = ProductDto(id: 2, productType: .fish, name: "Рыба", approved: true, image: "image2")
+            let storageItem2 = StorageItemDto(id: 2, price: 8.99, description: "Описание 2", quantity: 3, isHidden: true, product: product2)
+
+            let items = [storageItem1, storageItem2]
+            let total = 2
+
+            let response = PaginatedDto(items: items, total: total)
+            guard let body = try? JSONEncoder().encode(response) else {
+                return .init()
+            }
+            return body
         case .addStorageItems:
             return .init()
         case .updateStorageItem:

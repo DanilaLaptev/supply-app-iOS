@@ -8,7 +8,6 @@ class WorkerMainViewModel: ObservableObject {
     private let supplyService: SupplyServiceProtocol
     private var cancellableSet = Set<AnyCancellable>()
     
-    @Published private var viewManager = ViewManager.shared
     @Published private var authManager = AuthManager.shared
     
     @Published var storageItems: [StorageItemWrapper] = []

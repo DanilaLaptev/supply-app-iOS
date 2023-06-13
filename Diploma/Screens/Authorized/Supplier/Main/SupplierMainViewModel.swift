@@ -25,7 +25,6 @@ class SupplierMainViewModel: ObservableObject {
     
     private var branchId = AuthManager.shared.authData?.branchId ?? -1
     
-    
     private var selectedProducPublisher: AnyPublisher<StorageItemModel, Never> {
         $selectedProduct
             .compactMap { $0 }.eraseToAnyPublisher()
@@ -36,7 +35,7 @@ class SupplierMainViewModel: ObservableObject {
             .compactMap { $0 }.eraseToAnyPublisher()
     }
     
-    private var page = 0
+    private(set) var page = 0
     private let perPage = 10
     
     init(organizationBranchService: OrganizationBranchServiceProtocol = OrganizationBranchService()) {
@@ -160,7 +159,7 @@ class SupplierMainViewModel: ObservableObject {
         self.editedProduct = product
     }
     
-    func openCreateProductView(_ product: StorageItemModel? = nil) {
+    func openCreateProductView() {
         self.showCreateProductView.toggle()
     }
     

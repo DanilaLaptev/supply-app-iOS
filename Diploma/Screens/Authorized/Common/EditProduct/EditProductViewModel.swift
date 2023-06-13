@@ -14,12 +14,12 @@ class EditProductViewModel: ObservableObject {
     @Published var description = ""
     @Published var imageUrl = ""
     
-    @Published private var descriptionValidation = ""
-    @Published private var priceValidation = ""
+    @Published private(set) var descriptionValidation = ""
+    @Published private(set) var priceValidation = ""
     
     private let branchId = AuthManager.shared.authData?.branchId ?? -1
     
-    private var isDescriptionValid: AnyPublisher<String, Never> {
+    public var isDescriptionValid: AnyPublisher<String, Never> {
         $description
             .map { descrition in
                 guard !descrition.isEmpty else {
@@ -29,7 +29,7 @@ class EditProductViewModel: ObservableObject {
             }.eraseToAnyPublisher()
     }
     
-    private var isPriceValid: AnyPublisher<String, Never> {
+    public var isPriceValid: AnyPublisher<String, Never> {
         $price
             .map { price in
                 guard !price.isEmpty else {

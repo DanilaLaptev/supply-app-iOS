@@ -32,7 +32,7 @@ struct ClientsListView: View {
                                     viewModel.refreshData()
                                 }
                                 .frame(width: 48)
-                                CustomTextField(textFieldValue: .constant(""), icon: .customSearch, isDividerVisible: true, placeholder: "Поиск", background: .customWhite)
+                                CustomTextField(textFieldValue: $viewModel.organizationNameFilter, icon: .customSearch, isDividerVisible: true, placeholder: "Поиск", background: .customWhite)
                             }
                             .padding(.bottom, 16)
                             
